@@ -1,8 +1,8 @@
 # Trade-gunlugu
 ## Fikirler (`/fikirler/`)
-Fikir, plan, uygulama güncelleme takibi ve performans uygulaması.
-- **Fikirler:** fikirleri kaydet, durumunu ilerlet (Yeni → Planlandı → Yapılıyor → Bitti), plana çevir.
-- **Planlar:** tarih/saat, tekrar (günlük/haftalık/aylık), önem. Zamanı gelince bildirim; “Takvime” ile telefon takvimine alarmlı eklenir.
-- **Uygulamalar:** sürüm, kaç günde bir güncelleneceği; zamanı gelince hatırlatır, güncelleme geçmişi tutar.
-- **Performans:** 0–100 puan, seri, son 14 gün ve “Yapman gerekenler” listesi.
+Uygulamalarını, fikirlerini ve planlarını takip eder.
+- **Uygulamalar:** her uygulamanın kendi sayfası var: *Nerede kaldım*, *Eklemem gerekenler* (tarih, gerekli işareti), *Ekleyebileceklerim* (fikirler), *Yaptıklarım / eklediklerim* (tarihli, aya göre). İsteğe bağlı güncelleme hatırlatması.
+- **App Store Connect:** `.github/workflows/appstore-sync.yml` 6 saatte bir `scripts/appstore-sync.mjs` ile sürüm, inceleme durumu, build ve “Yenilikler” bilgilerini `fikirler/appstore.json` dosyasına yazar. Gerekli gizli değerler: `ASC_ISSUER_ID`, `ASC_KEY_ID`, `ASC_PRIVATE_KEY`.
+- **Fikirler:** genel ya da bir uygulamaya bağlı fikirler, tarihli.
+- **Planlar:** tarih/saat, tekrar, bildirim; “Takvime” ile telefon takvimine alarmlı eklenir.
 Veriler cihazda saklanır; Yedek indir / Yedekten yükle ile taşınabilir.

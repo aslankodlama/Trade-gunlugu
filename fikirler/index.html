@@ -40,24 +40,31 @@ body{background:var(--bg);color:var(--fg);font-family:var(--display);font-size:1
 button,input,textarea,select{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-h1{font-size:1.7rem;margin:0;letter-spacing:-.02em;text-wrap:balance}
-h2{font-size:1.1rem;margin:0}
+h1{font-size:1.7rem;margin:0;letter-spacing:-.02em;text-wrap:balance;overflow-wrap:anywhere}
+h2{font-size:1.05rem;margin:0}
 .lead{color:var(--muted);margin:4px 0 0;line-height:1.45}
+.small{font-size:.75rem;color:var(--muted);line-height:1.45}
 .head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
-.eyebrow{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
 .btn{background:var(--accent);color:var(--accent-fg);border:0;border-radius:10px;padding:10px 16px;font-weight:600;min-height:42px}
 .ghost{background:none;border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--muted);min-height:38px}
 .ghost:hover{border-color:var(--accent);color:var(--fg)}
 .danger{color:var(--down)}
-.sec{display:grid;gap:10px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;min-width:0}
-.empty{color:var(--muted);border:1px dashed var(--line);border-radius:14px;padding:22px;text-align:center;line-height:1.5}
+.sec{display:grid;gap:8px}
+.sechead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sechead h2 small{font-weight:400;color:var(--muted);font-family:var(--mono);font-size:.8rem;margin-left:4px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.empty{color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:16px;text-align:center;line-height:1.5;font-size:.85rem}
+.back{background:none;border:0;color:var(--muted);padding:4px 0;font-weight:600;justify-self:start}
+.back:hover{color:var(--fg)}
 
 /* Liste öğeleri */
 .list{display:grid;gap:8px}
 .item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;min-width:0}
+.item.click{cursor:pointer;text-align:left;width:100%;font:inherit}
+.item.click:hover{border-color:var(--accent)}
 .item .body{flex:1;min-width:0;display:grid;gap:4px}
-.item .t{font-weight:600;overflow-wrap:anywhere}
+.item .t{font-weight:600;overflow-wrap:anywhere;white-space:pre-wrap}
+.item .t.plain{font-weight:400}
 .item .n{color:var(--muted);font-size:.85rem;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
 .item .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.75rem;color:var(--muted)}
 .item .acts{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end}
@@ -72,44 +79,32 @@ h2{font-size:1.1rem;margin:0}
 .check:hover{border-color:var(--accent)}
 .check.on{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
 .check svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:3}
-.mini{background:none;border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:.78rem;color:var(--muted);min-height:30px}
+.mini{background:none;border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:.78rem;color:var(--muted);min-height:30px;text-decoration:none;display:inline-flex;align-items:center}
 .mini:hover{border-color:var(--accent);color:var(--fg)}
 .mini.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+
+/* Uygulama sayfası */
+.where{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.where .lbl,.lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.where p{margin:0;white-space:pre-wrap;line-height:1.5;overflow-wrap:anywhere}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.kv div{display:grid;gap:2px;min-width:0}
+.kv b{font-size:.95rem;overflow-wrap:anywhere}
+.notes{white-space:pre-wrap;color:var(--muted);font-size:.85rem;line-height:1.5;border-top:1px solid var(--line);padding-top:8px;overflow-wrap:anywhere}
+.daygrp{display:grid;gap:6px}
+.daygrp>.lbl{padding-left:2px;margin-top:4px}
+.counts{display:flex;gap:6px;flex-wrap:wrap}
 
 /* Filtre */
 .seg{display:flex;gap:6px;flex-wrap:wrap}
 .seg button{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.8rem;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
-
-/* Performans */
-.score{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
-.ring{--p:0;width:116px;height:116px;border-radius:50%;background:conic-gradient(var(--ring,var(--accent)) calc(var(--p)*1%),var(--sunk) 0);display:grid;place-items:center}
-.ring>div{width:92px;height:92px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
-.ring b{font-family:var(--mono);font-size:1.8rem;line-height:1}
-.ring span{font-size:.65rem;color:var(--muted)}
-.verdict b{font-size:1.15rem}
-.verdict p{margin:4px 0 0;color:var(--muted);line-height:1.45}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-@media (max-width:560px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.score{grid-template-columns:1fr;justify-items:center;text-align:center}}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:2px}
-.stat b{font-family:var(--mono);font-size:1.35rem}
-.stat span{font-size:.72rem;color:var(--muted)}
-.bars{display:grid;gap:6px}
-.barrow{display:grid;grid-template-columns:110px 1fr 44px;gap:10px;align-items:center;font-size:.8rem}
-.track{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden}
-.track i{display:block;height:100%;background:var(--accent);border-radius:99px}
-.strip{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:4px}
-.strip div{aspect-ratio:1;border-radius:5px;background:var(--sunk);display:grid;place-items:center;font-size:.6rem;font-family:var(--mono);color:var(--muted)}
-.strip div.l1{background:color-mix(in srgb,var(--accent) 30%,var(--sunk))}
-.strip div.l2{background:color-mix(in srgb,var(--accent) 60%,var(--sunk));color:var(--accent-fg)}
-.strip div.l3{background:var(--accent);color:var(--accent-fg)}
-.todo{display:grid;gap:6px;margin:0;padding:0;list-style:none}
-.todo li{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;line-height:1.45}
-.todo li .dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:6px;background:var(--accent)}
-.todo li.r .dot{background:var(--down)} .todo li.w .dot{background:var(--warn)}
-.todo li span{flex:1;min-width:0;overflow-wrap:anywhere}
 .notice{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--warn-bg);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);border-radius:12px;padding:10px 12px;font-size:.85rem}
 .notice span{flex:1;min-width:200px}
+details.help{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:.85rem;line-height:1.55}
+details.help summary{cursor:pointer;font-weight:600}
+details.help ol{padding-left:20px;margin:8px 0 0}
+details.help code{font-family:var(--mono);font-size:.8rem;background:var(--sunk);padding:1px 5px;border-radius:5px}
 
 /* Form */
 dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--fg);padding:0;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
@@ -119,30 +114,30 @@ dialog form{display:grid;gap:12px;padding:18px}
 .field label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 input,textarea,select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:16px;min-width:0}
+input[type=checkbox]{width:auto}
+.cb{display:flex;gap:8px;align-items:center;font-size:.9rem}
 textarea{resize:vertical;min-height:80px;line-height:1.45}
 .formacts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
 .formacts .left{margin-right:auto}
 
 /* Sekmeler */
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
-.tabs>div{display:contents}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
 .tabs button{position:relative;background:none;border:0;display:grid;justify-items:center;gap:3px;padding:6px 0;border-radius:10px;font-size:.7rem;font-weight:600;color:var(--muted);min-height:52px}
 .tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tabs button[aria-current="page"]{color:var(--accent);background:var(--sunk)}
 .badge{position:absolute;top:3px;left:calc(50% + 6px);min-width:17px;height:17px;border-radius:99px;background:var(--down);color:#fff;font-size:.62rem;display:grid;place-items:center;padding:0 4px;font-family:var(--mono)}
 @media (min-width:861px){.tabs{max-width:860px;margin:0 auto;bottom:12px;border:1px solid var(--line);border-radius:16px;padding:6px}}
 .toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.85rem;z-index:20;max-width:calc(100vw - 32px);box-shadow:0 6px 24px rgb(0 0 0 / .25)}
-.foot{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;color:var(--muted);font-size:.75rem}
+.foot{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 </style>
 </head>
 <body>
 <div class="wrap"><main id="view"></main></div>
 
 <nav class="tabs" id="tabs" aria-label="Ana menü">
-  <button data-tab="perf"><svg viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M4 16l5-5 4 3 7-8"/><path d="M15 6h5v5"/></svg>Performans</button>
+  <button data-tab="apps"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><path d="M16.5 13v7M13 16.5h7"/></svg>Uygulamalar</button>
   <button data-tab="ideas"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>Fikirler</button>
   <button data-tab="plans"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg>Planlar</button>
-  <button data-tab="apps"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><path d="M16.5 13v7M13 16.5h7"/></svg>Uygulamalar</button>
 </nav>
 
 <dialog id="dlg"><form id="form" method="dialog"></form></dialog>
@@ -155,6 +150,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const DAY=864e5;
 const AY=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"];
+const AYU=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
 const GUNU=["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
 const dkey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 const today=()=>dkey(new Date());
@@ -165,51 +161,117 @@ function niceDate(s){
   if(!s)return "";
   const d=parseDue(s), diff=daysBetween(new Date(),d);
   const time=s.length>10?` ${pad(d.getHours())}:${pad(d.getMinutes())}`:"";
-  const label=diff===0?"Bugün":diff===1?"Yarın":diff===-1?"Dün":`${d.getDate()} ${AY[d.getMonth()]} ${GUNU[d.getDay()]}`;
+  const label=diff===0?"Bugün":diff===1?"Yarın":diff===-1?"Dün":`${d.getDate()} ${AY[d.getMonth()]}${d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""} ${GUNU[d.getDay()]}`;
   return label+time;
 }
-const ago=ts=>{const d=daysBetween(new Date(ts),new Date());return d<=0?"bugün":d===1?"dün":`${d} gün önce`};
+const longDay=s=>{const d=parseDue(s);return `${d.getDate()} ${AYU[d.getMonth()]} ${d.getFullYear()}`};
+const isoDay=iso=>iso?dkey(new Date(iso)):"";
 
 /* ================= veri ================= */
 const LS="fikirler-v1";
-const blank=()=>({ideas:[],plans:[],apps:[],events:[],notified:{}});
+const blank=()=>({ideas:[],plans:[],apps:[],notified:{}});
 let db=blank();
 try{db=Object.assign(blank(),JSON.parse(localStorage.getItem(LS)||"{}"))}catch{}
+// eski sürümden gelen verileri tamamla
+delete db.events;
+for(const i of db.ideas){i.date=i.date||dkey(new Date(i.created||Date.now()))}
+for(const a of db.apps){a.items=a.items||[];a.history=a.history||[];a.imported=a.imported||{};a.where=a.where||{text:"",date:""}}
 const save=()=>{try{localStorage.setItem(LS,JSON.stringify(db))}catch{toast("Kaydedilemedi: depolama dolu olabilir")}};
-const logEv=type=>{db.events.push({t:Date.now(),type});if(db.events.length>3000)db.events=db.events.slice(-3000)};
 try{navigator.storage?.persist?.()}catch{}
 
-const IDEA_ST={yeni:"Yeni fikir",plan:"Planlandı",yapiliyor:"Yapılıyor",bitti:"Bitti"};
+const IDEA_ST={yeni:"Yeni fikir",plan:"Yapılacaklara alındı",yapiliyor:"Yapılıyor",bitti:"Yapıldı"};
 const REPEAT={none:"Tekrar yok",daily:"Her gün",weekly:"Her hafta",monthly:"Her ay"};
 const PRI={1:"Düşük",2:"Normal",3:"Yüksek"};
+const ASC_ST={READY_FOR_SALE:["Yayında","g"],READY_FOR_DISTRIBUTION:["Yayında","g"],ACCEPTED:["Kabul edildi","g"],
+  PREPARE_FOR_SUBMISSION:["Hazırlanıyor",""],WAITING_FOR_REVIEW:["İnceleme bekliyor","w"],IN_REVIEW:["İncelemede","w"],
+  PENDING_DEVELOPER_RELEASE:["Yayınlaman bekleniyor","w"],PENDING_APPLE_RELEASE:["Yayına hazırlanıyor","w"],
+  PROCESSING_FOR_APP_STORE:["İşleniyor","w"],PROCESSING_FOR_DISTRIBUTION:["İşleniyor","w"],WAITING_FOR_EXPORT_COMPLIANCE:["Şifreleme bilgisi bekleniyor","r"],
+  REJECTED:["Reddedildi","r"],METADATA_REJECTED:["Bilgiler reddedildi","r"],INVALID_BINARY:["Geçersiz build","r"],
+  DEVELOPER_REJECTED:["Geri çekildi",""],REMOVED_FROM_SALE:["Satıştan kaldırıldı","r"],DEVELOPER_REMOVED_FROM_SALE:["Satıştan kaldırıldı","r"],
+  REPLACED_WITH_NEW_VERSION:["Eski sürüm",""]};
+const BUILD_ST={PROCESSING:["İşleniyor","w"],VALID:["Hazır","g"],FAILED:["Hata","r"],INVALID:["Geçersiz","r"]};
+const stChip=(map,s)=>{const [l,c]=map[s]||[s||"?",""];return `<span class="chip ${c}">${esc(l)}</span>`};
+const RELEASED=new Set(["READY_FOR_SALE","READY_FOR_DISTRIBUTION","REPLACED_WITH_NEW_VERSION","DEVELOPER_REMOVED_FROM_SALE","REMOVED_FROM_SALE"]);
 
 /* ---------- plan durumu ---------- */
-function planState(p){
-  if(p.done)return "done";
-  const d=parseDue(p.due); if(!d)return "none";
+function dueState(due,done){
+  if(done)return "done";
+  const d=parseDue(due); if(!d)return "none";
   const now=new Date();
-  if(d<now)return "late";
+  if(daysBetween(now,d)<0||(due.length>10&&d<now))return "late";
   if(daysBetween(now,d)===0)return "today";
   if(d-now<2*DAY)return "soon";
   return "later";
 }
+const planState=p=>dueState(p.due,p.done);
 function advance(due,rep){
   const d=parseDue(due), hasTime=due.length>10, now=new Date();
   do{
     if(rep==="daily")d.setDate(d.getDate()+1);
     else if(rep==="weekly")d.setDate(d.getDate()+7);
     else d.setMonth(d.getMonth()+1);
-  }while(d<now && daysBetween(now,d)<0);
+  }while(daysBetween(now,d)<0);
   return hasTime?`${dkey(d)}T${pad(d.getHours())}:${pad(d.getMinutes())}`:dkey(d);
 }
-/* ---------- uygulama güncelleme durumu ---------- */
-function appNext(a){const d=new Date((a.last||today())+"T09:00");d.setDate(d.getDate()+(+a.every||30));return d}
-function appState(a){const left=daysBetween(new Date(),appNext(a));return left<0?"late":left===0?"today":left<=3?"soon":"ok"}
+/* ---------- uygulama güncelleme hatırlatması ---------- */
+function appNext(a){if(!+a.every)return null;const d=new Date((a.last||today())+"T09:00");d.setDate(d.getDate()+(+a.every));return d}
+function appState(a){const n=appNext(a);if(!n)return "off";const left=daysBetween(new Date(),n);return left<0?"late":left===0?"today":left<=3?"soon":"ok"}
+const appTodos=a=>a.items.filter(i=>i.kind==="todo"&&!i.done);
+const appIdeas=a=>db.ideas.filter(i=>i.appId===a.id&&i.status!=="bitti");
+const appLateCount=a=>appTodos(a).filter(t=>dueState(t.date,false)==="late").length+(["late","today"].includes(appState(a))?1:0);
+
+/* ================= App Store Connect ================= */
+let ASC=null; // fikirler/appstore.json (GitHub Actions yazar)
+async function loadAsc(){
+  try{
+    const r=await fetch("appstore.json",{cache:"no-store"}); if(!r.ok)return;
+    ASC=await r.json(); if(!Array.isArray(ASC.apps)){ASC=null;return}
+    if(syncAsc())save();
+    if(!$("dlg").open)render();
+  }catch{}
+}
+const ascFor=a=>ASC&&a.ascId?ASC.apps.find(x=>x.id===a.ascId):null;
+function syncAsc(){
+  let changed=false;
+  for(const x of ASC.apps){
+    let a=db.apps.find(y=>y.ascId===x.id)||db.apps.find(y=>!y.ascId&&y.name.trim().toLowerCase()===x.name.trim().toLowerCase());
+    if(!a)continue;
+    if(a.ascId!==x.id){a.ascId=x.id;changed=true}
+    changed=mergeAsc(a,x)||changed;
+  }
+  return changed;
+}
+function mergeAsc(a,x){
+  let ch=false;
+  // Yayındaki sürüm → sürüm numarası ve son güncelleme tarihi
+  const liveV=x.live?.version||x.versions.find(v=>v.state==="READY_FOR_SALE"||v.state==="READY_FOR_DISTRIBUTION")?.version;
+  if(liveV&&a.version!==liveV){a.version=liveV;ch=true}
+  const relDay=isoDay(x.live?.releaseDate);
+  if(relDay&&(!a.last||relDay>a.last)){a.last=relDay;a.history.push({date:relDay,version:liveV||"",note:"App Store'da yayınlandı",src:"asc"});ch=true}
+  // Yayınlanmış her sürümün "Yenilikler" metni → Yaptıklarım
+  for(const v of x.versions){
+    if(!RELEASED.has(v.state)||a.imported[v.id])continue;
+    const notes=(v.version===x.live?.version&&x.live?.notes)||v.whatsNew;
+    const date=(v.version===x.live?.version&&relDay)||isoDay(v.created);
+    a.items.push({id:uid(),kind:"done",text:notes||`${v.version} sürümü yayınlandı`,version:v.version,date,src:"asc"});
+    a.imported[v.id]=1;ch=true;
+  }
+  return ch;
+}
+function importAllAsc(){
+  let n=0;
+  for(const x of ASC.apps){
+    if(db.apps.some(y=>y.ascId===x.id))continue;
+    const a={id:uid(),name:x.name,version:"",url:x.live?.url||"",every:0,last:"",note:"",ascId:x.id,items:[],history:[],imported:{},where:{text:"",date:""}};
+    mergeAsc(a,x);db.apps.push(a);n++;
+  }
+  save();render();toast(n?`${n} uygulama eklendi`:"Hepsi zaten ekli");
+}
 
 /* ================= arayüz ================= */
-let tab="perf", filter={ideas:"aktif",plans:"aktif"};
-try{tab=localStorage.getItem(LS+"-tab")||"perf"}catch{}
-function go(t){tab=t;try{localStorage.setItem(LS+"-tab",t)}catch{}render();window.scrollTo(0,0)}
+let tab="apps", openApp=null, filter={ideas:"aktif",plans:"aktif"};
+try{const t=localStorage.getItem(LS+"-tab");if(["apps","ideas","plans"].includes(t))tab=t}catch{}
+function go(t,appId=null){tab=t;openApp=appId;try{localStorage.setItem(LS+"-tab",t)}catch{}render();window.scrollTo(0,0)}
 document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>go(b.dataset.tab));
 
 function toast(msg){
@@ -218,140 +280,248 @@ function toast(msg){
   document.body.appendChild(t);setTimeout(()=>t.remove(),2800);
 }
 const CHECK=`<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>`;
+const on=(sel,fn)=>document.querySelectorAll(sel).forEach(b=>b.onclick=e=>{e.stopPropagation();fn(b,e)});
 
 function render(){
   document.querySelectorAll("#tabs button").forEach(b=>{
-    b.toggleAttribute("aria-current",b.dataset.tab===tab);
-    if(b.dataset.tab===tab)b.setAttribute("aria-current","page");
+    if(b.dataset.tab===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
     b.querySelector(".badge")?.remove();
     const n=b.dataset.tab==="plans"?db.plans.filter(p=>planState(p)==="late").length
-           :b.dataset.tab==="apps"?db.apps.filter(a=>appState(a)==="late"||appState(a)==="today").length:0;
+           :b.dataset.tab==="apps"?db.apps.reduce((s,a)=>s+appLateCount(a),0):0;
     if(n)b.insertAdjacentHTML("beforeend",`<span class="badge">${n}</span>`);
   });
-  ({perf:viewPerf,ideas:viewIdeas,plans:viewPlans,apps:viewApps}[tab]||viewPerf)();
+  if(tab==="apps"&&openApp&&db.apps.some(a=>a.id===openApp))return viewApp(db.apps.find(a=>a.id===openApp));
+  ({ideas:viewIdeas,plans:viewPlans}[tab]||viewApps)();
 }
 
-/* ================= PERFORMANS ================= */
-function analyse(){
-  const now=Date.now(), wk=now-7*DAY, mo=now-30*DAY;
-  const ev7=db.events.filter(e=>e.t>=wk), ev30=db.events.filter(e=>e.t>=mo);
-  const done7=ev7.filter(e=>e.type==="plan").length;
-  const late=db.plans.filter(p=>planState(p)==="late");
-  const todayP=db.plans.filter(p=>planState(p)==="today");
-  const appsLate=db.apps.filter(a=>["late","today"].includes(appState(a)));
-  const stale=db.ideas.filter(i=>i.status==="yeni"&&now-i.updated>14*DAY);
-  const ideaMoves7=ev7.filter(e=>e.type==="idea").length;
-  const appUpd30=ev30.filter(e=>e.type==="app").length;
-
-  // Puan bileşenleri (verisi olmayan bileşen hesaba katılmaz)
-  const parts=[];
-  if(done7+late.length>0)parts.push({k:"Planları bitirme",v:done7/(done7+late.length),w:50});
-  if(db.apps.length)parts.push({k:"Güncel uygulamalar",v:1-appsLate.length/db.apps.length,w:25});
-  const activeIdeas=db.ideas.filter(i=>i.status!=="bitti").length;
-  if(activeIdeas)parts.push({k:"Fikirleri ilerletme",v:Math.min(1,(ideaMoves7+0.5*(activeIdeas-stale.length))/Math.max(1,activeIdeas)),w:25});
-  const W=parts.reduce((s,p)=>s+p.w,0);
-  const score=W?Math.round(parts.reduce((s,p)=>s+p.v*p.w,0)/W*100):null;
-
-  // Seri: art arda en az bir şey yapılan günler
-  const daysSet=new Set(db.events.map(e=>dkey(new Date(e.t))));
-  let streak=0;const d=new Date();
-  if(!daysSet.has(dkey(d)))d.setDate(d.getDate()-1);
-  while(daysSet.has(dkey(d))){streak++;d.setDate(d.getDate()-1)}
-
-  // Son 14 gün
-  const strip=[];
-  for(let i=13;i>=0;i--){const x=new Date();x.setDate(x.getDate()-i);const k=dkey(x);strip.push({k,d:x,n:db.events.filter(e=>dkey(new Date(e.t))===k).length})}
-
-  // Yapman gerekenler
-  const todo=[];
-  late.sort((a,b)=>parseDue(a.due)-parseDue(b.due)).forEach(p=>todo.push({c:"r",h:`<b>Gecikti:</b> “${esc(p.title)}” — ${esc(niceDate(p.due))} tarihliydi. Bugün bitir ya da yeni tarih ver.`}));
-  db.apps.filter(a=>appState(a)==="late").forEach(a=>todo.push({c:"r",h:`<b>Güncelleme gecikti:</b> ${esc(a.name)} ${a.version?"(v"+esc(a.version)+")":""} — ${-daysBetween(new Date(),appNext(a))} gündür bekliyor.`}));
-  todayP.sort((a,b)=>b.pri-a.pri).forEach(p=>todo.push({c:"w",h:`<b>Bugün:</b> “${esc(p.title)}”${p.due.length>10?" saat "+p.due.slice(11):""}.`}));
-  db.apps.filter(a=>appState(a)==="today").forEach(a=>todo.push({c:"w",h:`<b>Bugün güncelle:</b> ${esc(a.name)}.`}));
-  db.apps.filter(a=>appState(a)==="soon").forEach(a=>todo.push({c:"",h:`${esc(a.name)} için güncelleme ${daysBetween(new Date(),appNext(a))} gün sonra.`}));
-  stale.slice(0,3).forEach(i=>todo.push({c:"",h:`“${esc(i.title)}” fikri ${daysBetween(new Date(i.updated),new Date())} gündür bekliyor. Plana çevir ya da sil.`}));
-  const ideasNoPlan=db.ideas.filter(i=>i.status==="plan"&&!db.plans.some(p=>p.ideaId===i.id&&!p.done));
-  ideasNoPlan.slice(0,2).forEach(i=>todo.push({c:"",h:`“${esc(i.title)}” planlandı ama tarihli bir adımı yok. İlk adımı plan olarak ekle.`}));
-  if(late.length>=3)todo.push({c:"",h:`Geciken ${late.length} işin var. Planları daha küçük adımlara böl, günde en fazla 3 önemli iş koy.`});
-  if(!db.plans.some(p=>!p.done&&p.due))todo.push({c:"",h:`Tarihli bir planın yok. Bu hafta yapacağın bir şeyi tarih vererek ekle.`});
-  if(!db.ideas.length)todo.push({c:"",h:`Henüz fikir yok. Aklına gelen ilk fikri hemen “Fikirler” bölümüne yaz.`});
-  if(!db.apps.length)todo.push({c:"",h:`Takip ettiğin uygulamaları “Uygulamalar” bölümüne ekle; güncelleme zamanı gelince hatırlatırım.`});
-
-  let verdict,txt;
-  if(score===null){verdict="Başlamak için veri lazım";txt="Fikir, plan veya uygulama ekledikçe performansını burada göreceksin."}
-  else if(score>=85){verdict="Harika gidiyorsun";txt="İşlerinin neredeyse hepsi zamanında. Bu tempoyu koru."}
-  else if(score>=65){verdict="İyi, ama toparlanacak yerler var";txt="Aşağıdaki listeyi bitirirsen puanın hızla yükselir."}
-  else if(score>=40){verdict="Geride kalıyorsun";txt="Gecikenleri bitir veya yeniden tarihle. Önce kırmızı olanlar."}
-  else {verdict="Acil toparlanma lazım";txt="Çok iş birikmiş. Bugün sadece en önemli 1–3 işi seç ve bitir."}
-
-  return {score,verdict,txt,parts,streak,strip,todo,done7,late:late.length,appsLate:appsLate.length,ideas:activeIdeas,appUpd30};
-}
-
-function viewPerf(){
-  const a=analyse(), s=a.score??0;
-  const ring=a.score===null?"var(--muted)":s>=65?"var(--up)":s>=40?"var(--warn)":"var(--down)";
-  const max=Math.max(1,...a.strip.map(x=>x.n));
+/* ================= UYGULAMALAR (liste) ================= */
+function viewApps(){
+  const list=db.apps.slice().sort((a,b)=>appLateCount(b)-appLateCount(a)||(b.where.date||b.last||"").localeCompare(a.where.date||a.last||""));
+  const notTracked=ASC?ASC.apps.filter(x=>!db.apps.some(y=>y.ascId===x.id)):[];
   const notif=("Notification" in window)&&Notification.permission==="default";
   $("view").innerHTML=`
-  <div class="head"><div><div class="eyebrow">${new Date().toLocaleDateString("tr-TR",{weekday:"long",day:"numeric",month:"long"})}</div><h1>Performansın</h1></div></div>
-  ${notif?`<div class="notice"><span>Plan saati ve güncelleme zamanı gelince bildirim almak için izin ver.</span><button class="mini pri" id="askN">Bildirimleri aç</button></div>`:""}
-  <section class="panel score">
-    <div class="ring" style="--p:${s};--ring:${ring}"><div><div><b>${a.score===null?"–":s}</b><br><span>/ 100</span></div></div></div>
-    <div class="verdict"><b>${a.verdict}</b><p>${a.txt}</p></div>
-  </section>
-  <section class="stats">
-    <div class="stat"><b>${a.done7}</b><span>7 günde biten iş</span></div>
-    <div class="stat"><b style="color:${a.late?"var(--down)":"inherit"}">${a.late}</b><span>geciken plan</span></div>
-    <div class="stat"><b style="color:${a.appsLate?"var(--down)":"inherit"}">${a.appsLate}</b><span>güncelleme bekleyen</span></div>
-    <div class="stat"><b>${a.streak}</b><span>gün üst üste aktif</span></div>
-  </section>
-  <section class="sec"><h2>Yapman gerekenler</h2>
-    ${a.todo.length?`<ul class="todo">${a.todo.map(t=>`<li class="${t.c}"><i class="dot"></i><span>${t.h}</span></li>`).join("")}</ul>`:`<div class="empty">Şu an bekleyen bir şey yok. 🎉</div>`}
-  </section>
-  ${a.parts.length?`<section class="panel"><h2>Puan nereden geliyor</h2><div class="bars">${a.parts.map(p=>`<div class="barrow"><span>${p.k}</span><div class="track"><i style="width:${Math.round(p.v*100)}%"></i></div><span class="num">%${Math.round(p.v*100)}</span></div>`).join("")}</div></section>`:""}
-  <section class="panel"><h2>Son 14 gün</h2><div class="strip">${a.strip.map(x=>{const l=x.n?Math.ceil(x.n/max*3):0;return `<div class="${l?"l"+l:""}" title="${x.d.getDate()} ${AY[x.d.getMonth()]}: ${x.n} iş">${x.n||""}</div>`}).join("")}</div>
-  <div class="lead" style="font-size:.75rem">Her kare bir gün; içindeki sayı o gün tamamlanan iş, ilerletilen fikir ve güncelleme sayısı.</div></section>
-  <div class="foot"><button class="mini" id="exp">Yedek indir</button><button class="mini" id="imp">Yedekten yükle</button><a class="mini" href="../" style="text-decoration:none">Trade Günlüğü</a></div>`;
+  <div class="head"><div><h1>Uygulamalar</h1><p class="lead">Ne yaptın, ne ekleyeceksin, nerede kaldın.</p></div><button class="btn" id="add">+ Uygulama</button></div>
+  ${notif?`<div class="notice"><span>Yapılacakların tarihi gelince bildirim almak için izin ver.</span><button class="mini pri" id="askN">Bildirimleri aç</button></div>`:""}
+  ${notTracked.length?`<div class="notice"><span>App Store Connect'te ${notTracked.length} uygulaman burada yok: ${notTracked.map(x=>esc(x.name)).join(", ")}</span><button class="mini pri" id="impAsc">Hepsini ekle</button></div>`:""}
+  <div class="list">${list.length?list.map(a=>{
+    const x=ascFor(a), st=appState(a), todos=appTodos(a), ideas=appIdeas(a), late=todos.filter(t=>dueState(t.date)==="late").length;
+    const pending=x?.versions.find(v=>!RELEASED.has(v.state)&&v.state!=="DEVELOPER_REJECTED");
+    return `<button class="item click" data-open="${a.id}">
+      <div class="body"><div class="t">${esc(a.name)} ${a.version?`<span class="num" style="color:var(--muted);font-weight:400">v${esc(a.version)}</span>`:""}</div>
+        ${a.where.text?`<div class="n"><b>Nerede kaldım:</b> ${esc(a.where.text.length>140?a.where.text.slice(0,140)+"…":a.where.text)}</div>`:""}
+        <div class="meta">
+          ${pending?`${stChip(ASC_ST,pending.state)}<span>v${esc(pending.version)}</span>`:x?.live?stChip(ASC_ST,"READY_FOR_SALE"):""}
+          ${todos.length?`<span class="chip${late?" r":""}">${todos.length} yapılacak${late?` · ${late} gecikti`:""}</span>`:""}
+          ${ideas.length?`<span class="chip">${ideas.length} fikir</span>`:""}
+          ${st==="late"||st==="today"?`<span class="chip r">Güncelleme zamanı</span>`:""}
+          ${a.where.date?`<span>${esc(niceDate(a.where.date))}</span>`:""}
+        </div></div><span aria-hidden="true" style="color:var(--muted)">›</span></button>`}).join("")
+    :`<div class="empty">Henüz uygulama yok. “+ Uygulama” ile ekle${ASC?"":" ya da App Store Connect bağlantısını kur (aşağıda)"}.</div>`}</div>
+  ${ASC?`<p class="small">App Store Connect bilgileri: ${esc(niceDate(isoDay(ASC.updated)))} ${new Date(ASC.updated).toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit"})} itibarıyla.</p>`:`
+  <details class="help"><summary>App Store Connect'ten otomatik bilgi alma</summary>
+  <ol>
+    <li>App Store Connect → <b>Kullanıcılar ve Erişim</b> → <b>Entegrasyonlar</b> → <b>App Store Connect API</b> → “Ekip Anahtarları”nda yeni anahtar oluştur (erişim: <b>Geliştirici</b> yeterli). <code>.p8</code> dosyasını indir.</li>
+    <li>GitHub'da bu depo → <b>Settings</b> → <b>Secrets and variables</b> → <b>Actions</b> → üç gizli değer ekle: <code>ASC_ISSUER_ID</code>, <code>ASC_KEY_ID</code>, <code>ASC_PRIVATE_KEY</code> (.p8 dosyasının tüm içeriği).</li>
+    <li><b>Actions</b> sekmesinde “App Store Connect eşitle”yi bir kez elle çalıştır. Sonra 6 saatte bir kendisi güncellenir.</li>
+  </ol>
+  <p class="small">Sürümler, inceleme durumu, build'ler ve “Yenilikler” metinleri buraya gelir; yayınlanan sürümlerin notları “Yaptıklarım” listesine kendiliğinden eklenir.</p></details>`}
+  <div class="foot"><button class="mini" id="exp">Yedek indir</button><button class="mini" id="imp">Yedekten yükle</button><a class="mini" href="../">Trade Günlüğü</a></div>`;
+  $("add").onclick=()=>appForm();
   $("askN")&&($("askN").onclick=askNotify);
+  $("impAsc")&&($("impAsc").onclick=importAllAsc);
   $("exp").onclick=exportData; $("imp").onclick=importData;
+  on("[data-open]",b=>go("apps",b.dataset.open));
+}
+
+/* ================= UYGULAMA SAYFASI ================= */
+function viewApp(a){
+  const x=ascFor(a), st=appState(a), nx=appNext(a);
+  const todos=appTodos(a).sort((p,q)=>(q.must?1:0)-(p.must?1:0)||(p.date||"9").localeCompare(q.date||"9"));
+  const ideas=appIdeas(a).sort((p,q)=>(q.date||"").localeCompare(p.date||""));
+  const done=a.items.filter(i=>i.kind==="done"||(i.kind==="todo"&&i.done)).sort((p,q)=>(q.doneDate||q.date||"").localeCompare(p.doneDate||p.date||""));
+  // Yaptıklarımı aya göre grupla
+  const groups=[];for(const d of done){const day=d.doneDate||d.date||"";const k=day?day.slice(0,7):"—";let g=groups.find(g=>g.k===k);if(!g)groups.push(g={k,items:[]});g.items.push(d)}
+  const pending=x?.versions.filter(v=>!RELEASED.has(v.state)&&v.state!=="DEVELOPER_REJECTED")||[];
+  const lb=x?.builds?.[0];
+
+  $("view").innerHTML=`
+  <button class="back" id="back">‹ Uygulamalar</button>
+  <div class="head"><div><h1>${esc(a.name)}</h1><p class="lead">${a.version?`Sürüm <span class="num">${esc(a.version)}</span>`:"Sürüm yok"}${a.last?` · son güncelleme ${esc(niceDate(a.last))}`:""}</p></div>
+    <div class="counts"><button class="ghost" id="upd">Güncelledim</button><button class="ghost" id="edit">Düzenle</button>${a.url?`<a class="ghost" style="text-decoration:none" href="${esc(a.url)}" target="_blank" rel="noopener">Aç ↗</a>`:""}</div></div>
+
+  <section class="where">
+    <div class="sechead"><span class="lbl">Nerede kaldım${a.where.date?` · ${esc(niceDate(a.where.date))}`:""}</span><button class="mini" id="whereEdit">${a.where.text?"Güncelle":"Yaz"}</button></div>
+    <p>${a.where.text?esc(a.where.text):`<span style="color:var(--muted)">Bıraktığın yeri yaz; dönünce buradan devam et.</span>`}</p>
+  </section>
+
+  ${st==="late"||st==="today"?`<div class="notice"><span><b>Güncelleme zamanı.</b> Her ${a.every} günde bir güncellemeyi hedefliyorsun; son güncelleme ${esc(niceDate(a.last))}.</span></div>`:""}
+
+  ${x?`<section class="panel">
+    <div class="sechead"><h2>App Store Connect</h2>${x.live?.url?`<a class="mini" href="${esc(x.live.url)}" target="_blank" rel="noopener">Mağazada ↗</a>`:""}</div>
+    <div class="kv">
+      <div><span class="lbl">Yayındaki sürüm</span><b class="num">${esc(x.live?.version||"—")}</b>${x.live?.releaseDate?`<span class="small">${esc(longDay(isoDay(x.live.releaseDate)))}</span>`:""}</div>
+      ${pending.map(v=>`<div><span class="lbl">Sıradaki sürüm</span><b class="num">${esc(v.version)}</b><span>${stChip(ASC_ST,v.state)}</span></div>`).join("")}
+      ${lb?`<div><span class="lbl">Son derleme (build)</span><b class="num">${esc(lb.version)} (${esc(lb.build)})</b><span class="small">${stChip(BUILD_ST,lb.state)} ${esc(niceDate(isoDay(lb.uploaded)))}</span></div>`:""}
+      ${x.live?.ratings?`<div><span class="lbl">Puan</span><b class="num">${(+x.live.rating).toFixed(1)} ★</b><span class="small">${x.live.ratings} değerlendirme</span></div>`:""}
+    </div>
+    ${pending[0]?.whatsNew?`<div class="notes"><span class="lbl">${esc(pending[0].version)} yenilikleri (taslak)</span>\n${esc(pending[0].whatsNew)}</div>`:""}
+  </section>`:""}
+
+  <section class="sec">
+    <div class="sechead"><h2>Eklemem gerekenler<small>${todos.length}</small></h2><button class="mini pri" data-addk="todo">+ Ekle</button></div>
+    <div class="list">${todos.length?todos.map(t=>{const s=dueState(t.date);return `
+      <div class="item ${s==="late"?"late":s==="today"?"soon":""}">
+        <button class="check" data-tdone="${t.id}" aria-label="Yaptım"></button>
+        <div class="body"><div class="t plain">${esc(t.text)}</div>
+          <div class="meta">${t.must?`<span class="chip r">Gerekli</span>`:""}${t.date?`<span class="chip${s==="late"?" r":s==="today"?" w":""}">${s==="late"?"Gecikti · ":""}${esc(niceDate(t.date))}</span>`:""}${t.version?`<span class="chip">v${esc(t.version)}</span>`:""}</div></div>
+        <div class="acts"><button class="mini" data-iedit="${t.id}">Düzenle</button></div>
+      </div>`}).join(""):`<div class="empty">Eklemen gereken bir şey yok.</div>`}</div>
+  </section>
+
+  <section class="sec">
+    <div class="sechead"><h2>Ekleyebileceklerim<small>${ideas.length}</small></h2><button class="mini pri" data-addidea>+ Fikir</button></div>
+    <div class="list">${ideas.length?ideas.map(i=>`
+      <div class="item">
+        <div class="body"><div class="t plain">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:""}
+          <div class="meta">${i.date?`<span>${esc(niceDate(i.date))}</span>`:""}${i.status!=="yeni"?`<span class="chip w">${IDEA_ST[i.status]}</span>`:""}</div></div>
+        <div class="acts">${i.status==="yeni"?`<button class="mini pri" data-totodo="${i.id}">Ekleyeceğim</button>`:""}<button class="mini" data-ideaedit="${i.id}">Düzenle</button></div>
+      </div>`).join(""):`<div class="empty">Aklına gelen özellik fikirlerini buraya yaz.</div>`}</div>
+  </section>
+
+  <section class="sec">
+    <div class="sechead"><h2>Yaptıklarım / eklediklerim<small>${done.length}</small></h2><button class="mini pri" data-addk="done">+ Yaptım</button></div>
+    ${groups.length?groups.map(g=>`<div class="daygrp"><span class="lbl">${g.k==="—"?"Tarihsiz":`${AYU[+g.k.slice(5)-1]} ${g.k.slice(0,4)}`}</span>
+      ${g.items.map(d=>`<div class="item">
+        <div class="body"><div class="t plain">${esc(d.text)}</div>
+          <div class="meta"><span>${esc(niceDate(d.doneDate||d.date))}</span>${d.version?`<span class="chip">v${esc(d.version)}</span>`:""}${d.src==="asc"?`<span class="chip">App Store</span>`:""}${d.kind==="todo"?`<span class="chip g">Yapılacaklardan</span>`:""}</div></div>
+        <div class="acts"><button class="mini" data-iedit="${d.id}">Düzenle</button></div></div>`).join("")}</div>`).join("")
+      :`<div class="empty">Yaptığın ya da eklediğin şeyleri tarihleriyle buraya yaz.</div>`}
+  </section>
+
+  <section class="panel">
+    <div class="sechead"><h2>Güncelleme hatırlatması</h2></div>
+    <p class="small" style="margin:0">${+a.every?`Her ${a.every} günde bir. Sıradaki: <b>${esc(niceDate(dkey(nx)))}</b>.`:"Kapalı. “Düzenle”den kaç günde bir güncellemek istediğini yazabilirsin."}</p>
+    ${a.history.length?`<div class="small">${a.history.slice(-6).reverse().map(h=>`${esc(longDay(h.date))} · ${h.version?"v"+esc(h.version):""}${h.note?" — "+esc(h.note):""}`).join("<br>")}</div>`:""}
+  </section>`;
+
+  $("back").onclick=()=>go("apps");
+  $("edit").onclick=()=>appForm(a);
+  $("upd").onclick=()=>updateForm(a);
+  $("whereEdit").onclick=()=>whereForm(a);
+  on("[data-addk]",b=>itemForm(a,null,b.dataset.addk));
+  on("[data-iedit]",b=>itemForm(a,a.items.find(i=>i.id===b.dataset.iedit)));
+  on("[data-tdone]",b=>{const t=a.items.find(i=>i.id===b.dataset.tdone);t.done=true;t.doneDate=today();save();render();toast("Yaptıklarına eklendi ✔ (tarihini Düzenle'den değiştirebilirsin)")});
+  on("[data-addidea]",()=>ideaForm(null,a.id));
+  on("[data-ideaedit]",b=>ideaForm(db.ideas.find(i=>i.id===b.dataset.ideaedit)));
+  on("[data-totodo]",b=>{const i=db.ideas.find(x=>x.id===b.dataset.totodo);itemForm(a,null,"todo",{text:i.title+(i.note?"\n"+i.note:""),ideaId:i.id})});
+}
+
+function whereForm(a){
+  openForm(`<h2>Nerede kaldım?</h2>
+    <div class="field"><label for="f-w">Bıraktığın yer, sıradaki adım</label><textarea id="f-w" style="min-height:120px" placeholder="Ör: Grafik ekranının tasarımı bitti, veriyi bağlamak kaldı.">${esc(a.where.text)}</textarea></div>
+    <div class="field"><label for="f-d">Tarih</label><input id="f-d" type="date" value="${a.where.date||today()}"></div>`,
+  ()=>{a.where={text:$("f-w").value.trim(),date:$("f-d").value||today()};save();toast("Kaydedildi")});
+}
+
+function itemForm(a,it,kind,preset){
+  const x=it||Object.assign({kind,text:"",date:kind==="done"?today():"",version:"",must:false},preset);
+  const isTodo=x.kind==="todo";
+  openForm(`<h2>${it?"Düzenle":isTodo?"Eklemem gereken":"Yaptım / ekledim"}</h2>
+    <div class="field"><label for="f-t">${isTodo?"Ne eklenecek?":"Ne yaptın?"}</label><textarea id="f-t" required placeholder="${isTodo?"Ör: Karanlık mod":"Ör: Giriş ekranını yeniledim"}">${esc(x.text)}</textarea></div>
+    <div class="fields">
+      <div class="field"><label for="f-k">Tür</label><select id="f-k"><option value="todo"${isTodo&&!x.done?" selected":""}>Eklemem gerekiyor</option><option value="done"${!isTodo||x.done?" selected":""}>Yaptım / ekledim</option></select></div>
+      <div class="field"><label for="f-v">Sürüm (isteğe bağlı)</label><input id="f-v" maxlength="20" value="${esc(x.version)}" placeholder="${esc(a.version||"1.0")}"></div>
+      <div class="field"><label for="f-d" id="f-dl">Tarih</label><input id="f-d" type="date" value="${esc(x.done?x.doneDate||x.date:x.date)}"></div>
+      <div class="field" id="f-mw"><label>&nbsp;</label><label class="cb" style="text-transform:none;letter-spacing:0;font-size:.9rem;color:var(--fg)"><input type="checkbox" id="f-m"${x.must?" checked":""}> Gerekli (önemli)</label></div>
+    </div>`,
+  ()=>{
+    const text=$("f-t").value.trim(); if(!text)return false;
+    const k=$("f-k").value, date=$("f-d").value;
+    const v={text,version:$("f-v").value.trim(),must:$("f-m").checked};
+    if(k==="todo")Object.assign(v,{kind:"todo",date,done:false,doneDate:null});
+    else if(x.kind==="todo")Object.assign(v,{kind:"todo",done:true,doneDate:date||today()});
+    else Object.assign(v,{kind:"done",date:date||today()});
+    if(it)Object.assign(it,v);
+    else{a.items.push({id:uid(),...v,ideaId:x.ideaId||null});
+      const idea=x.ideaId&&db.ideas.find(i=>i.id===x.ideaId); if(idea){idea.status=k==="todo"?"plan":"bitti";idea.updated=Date.now()}}
+    save();toast("Kaydedildi");
+  }, it&&(()=>{a.items=a.items.filter(y=>y!==it);save()}));
+  const sync=()=>{const t=$("f-k").value==="todo";$("f-dl").textContent=t?"Ne zamana kadar? (isteğe bağlı)":"Ne zaman yaptın?";$("f-mw").style.visibility=t?"visible":"hidden";if(!t&&!$("f-d").value)$("f-d").value=today()};
+  $("f-k").onchange=sync;sync();
+}
+
+function updateForm(a){
+  const bump=v=>{const m=String(v||"").match(/^(.*?)(\d+)$/);return m?m[1]+(+m[2]+1):v};
+  openForm(`<h2>${esc(a.name)} güncellendi</h2>
+    <div class="fields"><div class="field"><label for="f-v">Yeni sürüm</label><input id="f-v" value="${esc(bump(a.version))}" placeholder="1.2.0"></div>
+    <div class="field"><label for="f-d">Tarih</label><input id="f-d" type="date" value="${today()}"></div></div>
+    <div class="field"><label for="f-n">Ne değişti? (Yaptıklarıma da eklenir)</label><textarea id="f-n" placeholder="Yeni özellikler, düzeltmeler…"></textarea></div>`,
+  ()=>{
+    const v=$("f-v").value.trim(),d=$("f-d").value||today(),n=$("f-n").value.trim();
+    a.history.push({date:d,version:v,note:n});
+    if(n)a.items.push({id:uid(),kind:"done",text:n,version:v,date:d});
+    a.version=v||a.version;if(!a.last||d>a.last)a.last=d;save();toast("Güncelleme kaydedildi");
+  });
+}
+function appForm(a){
+  const x=a||{name:"",version:"",url:"",every:0,last:"",note:""};
+  const ascOpts=ASC?ASC.apps.filter(z=>z.id===x.ascId||!db.apps.some(y=>y.ascId===z.id)):[];
+  openForm(`<h2>${a?"Uygulamayı düzenle":"Yeni uygulama"}</h2>
+    <div class="fields"><div class="field"><label for="f-a">Uygulama adı</label><input id="f-a" required maxlength="80" value="${esc(x.name)}" placeholder="Trade Günlüğü"></div>
+    <div class="field"><label for="f-v">Şu anki sürüm</label><input id="f-v" maxlength="20" value="${esc(x.version)}" placeholder="1.0"></div>
+    <div class="field"><label for="f-l">Son güncelleme</label><input id="f-l" type="date" value="${x.last||""}"></div>
+    <div class="field"><label for="f-e">Kaç günde bir güncelle? (0 = hatırlatma yok)</label><input id="f-e" type="number" min="0" max="365" value="${+x.every||0}"></div></div>
+    ${ASC?`<div class="field"><label for="f-s">App Store Connect bağlantısı</label><select id="f-s"><option value="">Bağlı değil</option>${ascOpts.map(z=>`<option value="${esc(z.id)}"${x.ascId===z.id?" selected":""}>${esc(z.name)} (${esc(z.bundleId)})</option>`).join("")}</select></div>`:""}
+    <div class="field"><label for="f-u">Bağlantı (isteğe bağlı)</label><input id="f-u" type="url" value="${esc(x.url)}" placeholder="https://…"></div>`,
+  ()=>{
+    let url=$("f-u").value.trim(); if(url&&!/^https?:\/\//i.test(url))url="https://"+url;
+    const v={name:$("f-a").value.trim(),version:$("f-v").value.trim(),every:Math.max(0,Math.min(365,+$("f-e").value||0)),last:$("f-l").value,url};
+    if(!v.name)return false;
+    if(ASC)v.ascId=$("f-s").value||null;
+    let t=a; if(a)Object.assign(a,v); else db.apps.push(t={id:uid(),...v,items:[],history:[],imported:{},where:{text:"",date:""}});
+    const z=ascFor(t); if(z)mergeAsc(t,z);
+    save();toast("Uygulama kaydedildi");
+  }, a&&(()=>{db.apps=db.apps.filter(y=>y!==a);db.ideas.forEach(i=>{if(i.appId===a.id)i.appId=null});save();openApp=null}));
 }
 
 /* ================= FİKİRLER ================= */
 function viewIdeas(){
   const f=filter.ideas;
-  let list=db.ideas.slice().sort((a,b)=>b.updated-a.updated);
-  if(f==="aktif")list=list.filter(i=>i.status!=="bitti"); else if(f!=="hepsi")list=list.filter(i=>i.status===f);
+  let list=db.ideas.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"")||b.updated-a.updated);
+  if(f==="aktif")list=list.filter(i=>i.status!=="bitti"); else if(f==="genel")list=list.filter(i=>!i.appId); else if(f!=="hepsi")list=list.filter(i=>i.status===f);
   $("view").innerHTML=`
-  <div class="head"><div><h1>Fikirler</h1><p class="lead">Aklına geleni hemen yaz. Hazır olunca plana çevir.</p></div><button class="btn" id="add">+ Fikir</button></div>
-  <div class="seg">${[["aktif","Aktif"],["yeni","Yeni"],["plan","Planlandı"],["yapiliyor","Yapılıyor"],["bitti","Bitti"],["hepsi","Hepsi"]].map(([k,l])=>`<button data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
-  <div class="list">${list.length?list.map(i=>`
+  <div class="head"><div><h1>Fikirler</h1><p class="lead">Aklına geleni hemen yaz. İstersen bir uygulamaya bağla.</p></div><button class="btn" id="add">+ Fikir</button></div>
+  <div class="seg">${[["aktif","Aktif"],["genel","Genel"],["yeni","Yeni"],["bitti","Yapıldı"],["hepsi","Hepsi"]].map(([k,l])=>`<button data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
+  <div class="list">${list.length?list.map(i=>{const app=i.appId&&db.apps.find(a=>a.id===i.appId);return `
     <div class="item${i.status==="bitti"?" done":""}">
       <div class="body"><div class="t">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:""}
-        <div class="meta"><span class="chip${i.status==="bitti"?" g":i.status==="yapiliyor"?" w":""}">${IDEA_ST[i.status]}</span>${i.tag?`<span class="chip">#${esc(i.tag)}</span>`:""}<span>${ago(i.updated)}</span></div></div>
-      <div class="acts">${i.status!=="bitti"?`<button class="mini pri" data-next="${i.id}">${i.status==="yeni"?"Plana çevir":i.status==="plan"?"Başladım":"Bitti"}</button>`:""}<button class="mini" data-edit="${i.id}">Düzenle</button></div>
-    </div>`).join(""):`<div class="empty">${db.ideas.length?"Bu filtrede fikir yok.":"Henüz fikir yok. “+ Fikir” ile ilkini ekle."}</div>`}</div>`;
+        <div class="meta">${i.date?`<span>${esc(niceDate(i.date))}</span>`:""}${app?`<span class="chip">📱 ${esc(app.name)}</span>`:""}${i.status!=="yeni"?`<span class="chip${i.status==="bitti"?" g":" w"}">${IDEA_ST[i.status]}</span>`:""}${i.tag?`<span class="chip">#${esc(i.tag)}</span>`:""}</div></div>
+      <div class="acts">${i.status==="yeni"?`<button class="mini pri" data-next="${i.id}">${app?"Ekleyeceğim":"Plana çevir"}</button>`:""}<button class="mini" data-edit="${i.id}">Düzenle</button></div>
+    </div>`}).join(""):`<div class="empty">${db.ideas.length?"Bu filtrede fikir yok.":"Henüz fikir yok. “+ Fikir” ile ilkini ekle."}</div>`}</div>`;
   $("add").onclick=()=>ideaForm();
-  document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter.ideas=b.dataset.f;render()});
-  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>ideaForm(db.ideas.find(i=>i.id===b.dataset.edit)));
-  document.querySelectorAll("[data-next]").forEach(b=>b.onclick=()=>{
-    const i=db.ideas.find(x=>x.id===b.dataset.next);
-    if(i.status==="yeni"){planForm(null,{title:i.title,note:i.note,ideaId:i.id});return}
-    i.status=i.status==="plan"?"yapiliyor":"bitti";i.updated=Date.now();logEv("idea");save();render();
-    toast(i.status==="bitti"?"Fikir tamamlandı 🎉":"İyi şanslar!");
+  on("[data-f]",b=>{filter.ideas=b.dataset.f;render()});
+  on("[data-edit]",b=>ideaForm(db.ideas.find(i=>i.id===b.dataset.edit)));
+  on("[data-next]",b=>{
+    const i=db.ideas.find(x=>x.id===b.dataset.next), app=i.appId&&db.apps.find(a=>a.id===i.appId);
+    if(app){go("apps",app.id);itemForm(app,null,"todo",{text:i.title+(i.note?"\n"+i.note:""),ideaId:i.id})}
+    else planForm(null,{title:i.title,note:i.note,ideaId:i.id});
   });
 }
-function ideaForm(i){
-  const x=i||{title:"",note:"",tag:"",status:"yeni"};
+function ideaForm(i,appId){
+  const x=i||{title:"",note:"",tag:"",status:"yeni",date:today(),appId:appId||null};
   openForm(`<h2>${i?"Fikri düzenle":"Yeni fikir"}</h2>
-    <div class="field"><label for="f-t">Fikir</label><input id="f-t" required maxlength="200" value="${esc(x.title)}" placeholder="Ör: Trade günlüğüne grafik ekle"></div>
+    <div class="field"><label for="f-t">Fikir</label><input id="f-t" required maxlength="200" value="${esc(x.title)}" placeholder="Ör: Grafik ekranı ekle"></div>
     <div class="field"><label for="f-n">Not</label><textarea id="f-n" placeholder="Detaylar, neden önemli, ilk adım…">${esc(x.note)}</textarea></div>
-    <div class="fields"><div class="field"><label for="f-g">Etiket</label><input id="f-g" maxlength="30" value="${esc(x.tag)}" placeholder="iş, uygulama…"></div>
-    <div class="field"><label for="f-s">Durum</label><select id="f-s">${Object.entries(IDEA_ST).map(([k,l])=>`<option value="${k}"${x.status===k?" selected":""}>${l}</option>`).join("")}</select></div></div>`,
+    <div class="fields">
+      <div class="field"><label for="f-p">Uygulama</label><select id="f-p"><option value="">Genel (uygulamasız)</option>${db.apps.map(a=>`<option value="${a.id}"${x.appId===a.id?" selected":""}>${esc(a.name)}</option>`).join("")}</select></div>
+      <div class="field"><label for="f-d">Tarih</label><input id="f-d" type="date" value="${esc(x.date)}"></div>
+      <div class="field"><label for="f-s">Durum</label><select id="f-s">${Object.entries(IDEA_ST).map(([k,l])=>`<option value="${k}"${x.status===k?" selected":""}>${l}</option>`).join("")}</select></div>
+      <div class="field"><label for="f-g">Etiket</label><input id="f-g" maxlength="30" value="${esc(x.tag)}" placeholder="tasarım, hız…"></div>
+    </div>`,
   ()=>{
-    const v={title:$("f-t").value.trim(),note:$("f-n").value.trim(),tag:$("f-g").value.trim().replace(/^#/,""),status:$("f-s").value};
+    const v={title:$("f-t").value.trim(),note:$("f-n").value.trim(),tag:$("f-g").value.trim().replace(/^#/,""),status:$("f-s").value,date:$("f-d").value||today(),appId:$("f-p").value||null};
     if(!v.title)return false;
-    if(i){if(i.status!==v.status)logEv("idea");Object.assign(i,v,{updated:Date.now()})}
-    else{db.ideas.push({id:uid(),...v,created:Date.now(),updated:Date.now()});logEv("idea")}
+    if(i)Object.assign(i,v,{updated:Date.now()}); else db.ideas.push({id:uid(),...v,created:Date.now(),updated:Date.now()});
     save();toast("Fikir kaydedildi");
   }, i&&(()=>{db.ideas=db.ideas.filter(y=>y!==i);save()}));
 }
@@ -360,104 +530,56 @@ function ideaForm(i){
 function viewPlans(){
   const f=filter.plans, order={late:0,today:1,soon:2,later:3,none:4,done:5};
   let list=db.plans.slice().sort((a,b)=>order[planState(a)]-order[planState(b)]||(parseDue(a.due)||Infinity)-(parseDue(b.due)||Infinity)||b.pri-a.pri);
-  if(f==="aktif")list=list.filter(p=>!p.done); else if(f==="bugun")list=list.filter(p=>["late","today"].includes(planState(p))); else if(f==="bitti")list=list.filter(p=>p.done).sort((a,b)=>b.doneAt-a.doneAt);
+  if(f==="aktif")list=list.filter(p=>!p.done); else if(f==="bugun")list=list.filter(p=>["late","today"].includes(planState(p))); else if(f==="bitti")list=list.filter(p=>p.done).sort((a,b)=>(b.doneDate||"").localeCompare(a.doneDate||""));
   $("view").innerHTML=`
   <div class="head"><div><h1>Planlar</h1><p class="lead">Tarih ve saat ver, zamanı gelince hatırlatayım.</p></div><button class="btn" id="add">+ Plan</button></div>
   <div class="seg">${[["aktif","Yapılacak"],["bugun","Bugün / geciken"],["bitti","Biten"]].map(([k,l])=>`<button data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
-  <div class="list">${list.length?list.map(p=>{const st=planState(p);const idea=p.ideaId&&db.ideas.find(i=>i.id===p.ideaId);return `
+  <div class="list">${list.length?list.map(p=>{const st=planState(p);return `
     <div class="item ${st==="late"?"late":st==="today"?"soon":st==="done"?"done":""}">
       <button class="check${p.done?" on":""}" data-done="${p.id}" aria-label="${p.done?"Geri al":"Tamamlandı"}">${p.done?CHECK:""}</button>
       <div class="body"><div class="t">${esc(p.title)}</div>${p.note?`<div class="n">${esc(p.note)}</div>`:""}
-        <div class="meta">${p.due?`<span class="chip${st==="late"?" r":st==="today"?" w":""}">${st==="late"?"Gecikti · ":""}${esc(niceDate(p.due))}</span>`:""}${p.repeat!=="none"?`<span class="chip">↻ ${REPEAT[p.repeat]}</span>`:""}${p.pri==3?`<span class="chip r">Önemli</span>`:""}${idea?`<span class="chip">💡 ${esc(idea.title)}</span>`:""}${p.done?`<span>${ago(p.doneAt)} bitti</span>`:""}</div></div>
+        <div class="meta">${p.due?`<span class="chip${st==="late"?" r":st==="today"?" w":""}">${st==="late"?"Gecikti · ":""}${esc(niceDate(p.due))}</span>`:""}${p.repeat!=="none"?`<span class="chip">↻ ${REPEAT[p.repeat]}</span>`:""}${p.pri==3?`<span class="chip r">Önemli</span>`:""}${p.done?`<span>${esc(niceDate(p.doneDate))} bitti</span>`:""}</div></div>
       <div class="acts">${p.due&&!p.done?`<button class="mini" data-ics="${p.id}" title="Telefon takvimine alarmlı ekle">Takvime</button>`:""}<button class="mini" data-edit="${p.id}">Düzenle</button></div>
     </div>`}).join(""):`<div class="empty">${db.plans.length?"Bu filtrede plan yok.":"Henüz plan yok. “+ Plan” ile ekle."}</div>`}</div>
-  <p class="lead" style="font-size:.75rem">İpucu: Uygulama kapalıyken de hatırlatma istiyorsan “Takvime” ile planı telefon takvimine alarmlı ekle.</p>`;
+  <p class="small">İpucu: Uygulama kapalıyken de hatırlatma istiyorsan “Takvime” ile planı telefon takvimine alarmlı ekle.</p>`;
   $("add").onclick=()=>planForm();
-  document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter.plans=b.dataset.f;render()});
-  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>planForm(db.plans.find(p=>p.id===b.dataset.edit)));
-  document.querySelectorAll("[data-ics]").forEach(b=>b.onclick=()=>icsFor(db.plans.find(p=>p.id===b.dataset.ics)));
-  document.querySelectorAll("[data-done]").forEach(b=>b.onclick=()=>togglePlan(db.plans.find(p=>p.id===b.dataset.done)));
+  on("[data-f]",b=>{filter.plans=b.dataset.f;render()});
+  on("[data-edit]",b=>planForm(db.plans.find(p=>p.id===b.dataset.edit)));
+  on("[data-ics]",b=>icsFor(db.plans.find(p=>p.id===b.dataset.ics)));
+  on("[data-done]",b=>togglePlan(db.plans.find(p=>p.id===b.dataset.done)));
 }
 function togglePlan(p){
-  if(p.done){p.done=false;p.doneAt=null;const i=db.events.map(e=>e.type).lastIndexOf("plan");if(i>=0)db.events.splice(i,1);save();render();return}
-  logEv("plan");
+  if(p.done){p.done=false;p.doneDate=null;save();render();return}
   if(p.repeat!=="none"&&p.due){p.due=advance(p.due,p.repeat);p.count=(p.count||0)+1;toast(`Tamamlandı. Sıradaki: ${niceDate(p.due)}`)}
-  else{p.done=true;p.doneAt=Date.now();toast("Tamamlandı ✔")}
+  else{p.done=true;p.doneDate=today();toast("Tamamlandı ✔")}
   save();render();
 }
 function planForm(p,preset){
   const x=p||Object.assign({title:"",note:"",due:"",repeat:"none",pri:2},preset);
   const date=x.due?x.due.slice(0,10):"", time=x.due&&x.due.length>10?x.due.slice(11,16):"";
   openForm(`<h2>${p?"Planı düzenle":"Yeni plan"}</h2>
-    <div class="field"><label for="f-t">Ne yapacaksın?</label><input id="f-t" required maxlength="200" value="${esc(x.title)}" placeholder="Ör: Uygulamayı yeni sürüme güncelle"></div>
+    <div class="field"><label for="f-t">Ne yapacaksın?</label><input id="f-t" required maxlength="200" value="${esc(x.title)}"></div>
     <div class="field"><label for="f-n">Not</label><textarea id="f-n">${esc(x.note)}</textarea></div>
     <div class="fields"><div class="field"><label for="f-d">Tarih</label><input id="f-d" type="date" value="${date||(p?"":today())}"></div>
     <div class="field"><label for="f-h">Saat (isteğe bağlı)</label><input id="f-h" type="time" value="${time}"></div>
     <div class="field"><label for="f-r">Tekrar</label><select id="f-r">${Object.entries(REPEAT).map(([k,l])=>`<option value="${k}"${x.repeat===k?" selected":""}>${l}</option>`).join("")}</select></div>
-    <div class="field"><label for="f-p">Önem</label><select id="f-p">${Object.entries(PRI).map(([k,l])=>`<option value="${k}"${x.pri==k?" selected":""}>${l}</option>`).join("")}</select></div></div>`,
+    <div class="field"><label for="f-p">Önem</label><select id="f-p">${Object.entries(PRI).map(([k,l])=>`<option value="${k}"${x.pri==k?" selected":""}>${l}</option>`).join("")}</select></div>
+    ${p?.done?`<div class="field"><label for="f-dd">Bitirdiğin tarih</label><input id="f-dd" type="date" value="${esc(p.doneDate||"")}"></div>`:""}</div>`,
   ()=>{
     const d=$("f-d").value,h=$("f-h").value;
     const v={title:$("f-t").value.trim(),note:$("f-n").value.trim(),due:d?(h?`${d}T${h}`:d):"",repeat:$("f-r").value,pri:+$("f-p").value};
     if(!v.title)return false;
     if(v.repeat!=="none"&&!v.due){toast("Tekrarlayan plan için tarih seç");return false}
+    if($("f-dd"))v.doneDate=$("f-dd").value||p.doneDate;
     if(p)Object.assign(p,v);
     else{
       db.plans.push({id:uid(),...v,done:false,created:Date.now(),ideaId:x.ideaId||null});
       const idea=x.ideaId&&db.ideas.find(i=>i.id===x.ideaId);
-      if(idea&&idea.status==="yeni"){idea.status="plan";idea.updated=Date.now();logEv("idea")}
+      if(idea&&idea.status==="yeni"){idea.status="plan";idea.updated=Date.now()}
     }
     save();toast("Plan kaydedildi");
     if(preset?.ideaId){filter.plans="aktif";go("plans")}
   }, p&&(()=>{db.plans=db.plans.filter(y=>y!==p);save()}));
-}
-
-/* ================= UYGULAMALAR ================= */
-function viewApps(){
-  const order={late:0,today:1,soon:2,ok:3};
-  const list=db.apps.slice().sort((a,b)=>order[appState(a)]-order[appState(b)]||appNext(a)-appNext(b));
-  $("view").innerHTML=`
-  <div class="head"><div><h1>Uygulamalar</h1><p class="lead">Takip ettiğin uygulamalar. Güncelleme zamanı gelince söylerim.</p></div><button class="btn" id="add">+ Uygulama</button></div>
-  <div class="list">${list.length?list.map(a=>{const st=appState(a),left=daysBetween(new Date(),appNext(a));return `
-    <div class="item ${st==="late"?"late":st==="today"?"soon":""}">
-      <div class="body"><div class="t">${esc(a.name)} ${a.version?`<span class="num" style="color:var(--muted);font-weight:400">v${esc(a.version)}</span>`:""}</div>
-        ${a.note?`<div class="n">${esc(a.note)}</div>`:""}
-        <div class="meta"><span class="chip${st==="late"?" r":st==="today"||st==="soon"?" w":" g"}">${st==="late"?`${-left} gün gecikti`:st==="today"?"Bugün güncelle":`${left} gün sonra`}</span>
-        <span>Son güncelleme: ${a.last?esc(niceDate(a.last)):"—"}</span><span>· her ${a.every} günde bir</span>${(a.history||[]).length?`<span>· ${(a.history||[]).length} güncelleme</span>`:""}</div></div>
-      <div class="acts"><button class="mini pri" data-upd="${a.id}">Güncelledim</button>${a.url?`<a class="mini" style="text-decoration:none" href="${esc(a.url)}" target="_blank" rel="noopener">Aç</a>`:""}<button class="mini" data-edit="${a.id}">Düzenle</button></div>
-    </div>`}).join(""):`<div class="empty">Henüz uygulama yok. Takip etmek istediğin uygulamayı ekle; ne sıklıkla güncellemen gerektiğini yaz.</div>`}</div>`;
-  $("add").onclick=()=>appForm();
-  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>appForm(db.apps.find(a=>a.id===b.dataset.edit)));
-  document.querySelectorAll("[data-upd]").forEach(b=>b.onclick=()=>updateForm(db.apps.find(a=>a.id===b.dataset.upd)));
-}
-function bumpVersion(v){const m=String(v||"").match(/^(.*?)(\d+)$/);return m?m[1]+(+m[2]+1):v}
-function updateForm(a){
-  openForm(`<h2>${esc(a.name)} güncellendi</h2>
-    <div class="fields"><div class="field"><label for="f-v">Yeni sürüm</label><input id="f-v" value="${esc(bumpVersion(a.version))}" placeholder="1.2.0"></div>
-    <div class="field"><label for="f-d">Tarih</label><input id="f-d" type="date" value="${today()}"></div></div>
-    <div class="field"><label for="f-n">Ne değişti?</label><textarea id="f-n" placeholder="Yeni özellikler, düzeltmeler…"></textarea></div>
-    ${(a.history||[]).length?`<div class="field"><label>Geçmiş</label><div class="n" style="color:var(--muted);font-size:.8rem;line-height:1.6">${a.history.slice(-5).reverse().map(h=>`${esc(h.date)} · v${esc(h.version||"?")}${h.note?" — "+esc(h.note):""}`).join("<br>")}</div></div>`:""}`,
-  ()=>{
-    const v=$("f-v").value.trim(),d=$("f-d").value||today();
-    a.history=a.history||[];a.history.push({date:d,version:v,note:$("f-n").value.trim()});
-    a.version=v||a.version;a.last=d;logEv("app");save();toast(`Sıradaki güncelleme: ${niceDate(dkey(appNext(a)))}`);
-  });
-}
-function appForm(a){
-  const x=a||{name:"",version:"",url:"",every:30,last:today(),note:""};
-  openForm(`<h2>${a?"Uygulamayı düzenle":"Yeni uygulama"}</h2>
-    <div class="fields"><div class="field"><label for="f-a">Uygulama adı</label><input id="f-a" required maxlength="80" value="${esc(x.name)}" placeholder="Trade Günlüğü"></div>
-    <div class="field"><label for="f-v">Şu anki sürüm</label><input id="f-v" maxlength="20" value="${esc(x.version)}" placeholder="1.0"></div>
-    <div class="field"><label for="f-e">Kaç günde bir güncelle?</label><input id="f-e" type="number" min="1" max="365" value="${x.every}"></div>
-    <div class="field"><label for="f-l">Son güncelleme</label><input id="f-l" type="date" value="${x.last||""}"></div></div>
-    <div class="field"><label for="f-u">Bağlantı (isteğe bağlı)</label><input id="f-u" type="url" value="${esc(x.url)}" placeholder="https://…"></div>
-    <div class="field"><label for="f-n">Sıradaki güncellemede yapılacaklar</label><textarea id="f-n">${esc(x.note)}</textarea></div>`,
-  ()=>{
-    let url=$("f-u").value.trim(); if(url&&!/^https?:\/\//i.test(url))url="https://"+url;
-    const v={name:$("f-a").value.trim(),version:$("f-v").value.trim(),every:Math.max(1,Math.min(365,+$("f-e").value||30)),last:$("f-l").value||today(),url,note:$("f-n").value.trim()};
-    if(!v.name)return false;
-    if(a)Object.assign(a,v); else db.apps.push({id:uid(),...v,history:[]});
-    save();toast("Uygulama kaydedildi");
-  }, a&&(()=>{db.apps=db.apps.filter(y=>y!==a);save()}));
 }
 
 /* ================= ortak form ================= */
@@ -467,8 +589,8 @@ function openForm(html,onSave,onDelete){
   form.onsubmit=e=>{e.preventDefault();if(onSave()===false)return;dlg.close();render()};
   $("f-x").onclick=()=>dlg.close();
   if(onDelete)$("f-del").onclick=()=>{if(confirm("Silinsin mi? Bu geri alınamaz.")){onDelete();dlg.close();render();toast("Silindi")}};
-  dlg.showModal();
-  setTimeout(()=>form.querySelector("input:not([type=date]):not([type=time]),textarea")?.focus(),30);
+  if(!dlg.open)dlg.showModal();
+  setTimeout(()=>form.querySelector("input:not([type=date]):not([type=time]):not([type=checkbox]),textarea")?.focus(),30);
 }
 
 /* ================= hatırlatma ================= */
@@ -487,14 +609,11 @@ async function notify(title,body,tag){
 }
 function checkReminders(){
   const now=new Date(); let changed=false;
-  for(const p of db.plans){
-    if(p.done||!p.due)continue;
-    const k="p:"+p.id+":"+p.due;
-    if(parseDue(p.due)<=now&&!db.notified[k]){db.notified[k]=1;changed=true;notify("Plan zamanı",p.title,k)}
-  }
+  const fire=(k,title,body)=>{if(db.notified[k])return;db.notified[k]=1;changed=true;notify(title,body,k)};
+  for(const p of db.plans)if(!p.done&&p.due&&parseDue(p.due)<=now)fire("p:"+p.id+":"+p.due,"Plan zamanı",p.title);
   for(const a of db.apps){
-    const k="a:"+a.id+":"+a.last+":"+today();
-    if(["late","today"].includes(appState(a))&&!db.notified[k]){db.notified[k]=1;changed=true;notify("Güncelleme zamanı",`${a.name} güncellenmeyi bekliyor`,k)}
+    if(["late","today"].includes(appState(a)))fire("a:"+a.id+":"+a.last+":"+today(),"Güncelleme zamanı",`${a.name} güncellenmeyi bekliyor`);
+    for(const t of appTodos(a))if(t.date&&parseDue(t.date)<=now)fire("t:"+t.id+":"+t.date,a.name,t.text.split("\n")[0]);
   }
   if(changed){
     const keys=Object.keys(db.notified); if(keys.length>500)keys.slice(0,keys.length-500).forEach(k=>delete db.notified[k]);
@@ -502,9 +621,9 @@ function checkReminders(){
   }
 }
 setInterval(checkReminders,30000);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden){checkReminders();if(!$("dlg").open)render()}});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){checkReminders();loadAsc();if(!$("dlg").open)render()}});
 
-/* Takvim dosyası (.ics): telefonun takvimine alarmlı ekler, uygulama kapalıyken de hatırlatır */
+/* Takvim dosyası (.ics): telefonun takvimine alarmlı ekler */
 function icsFor(p){
   const d=parseDue(p.due), allDay=p.due.length===10;
   const f=x=>`${x.getFullYear()}${pad(x.getMonth()+1)}${pad(x.getDate())}`;
@@ -525,12 +644,13 @@ function exportData(){download(new Blob([JSON.stringify(db,null,1)],{type:"appli
 function importData(){
   const inp=document.createElement("input");inp.type="file";inp.accept="application/json,.json";
   inp.onchange=async()=>{try{const d=JSON.parse(await inp.files[0].text());if(!Array.isArray(d.ideas)||!Array.isArray(d.plans))throw 0;
-    if(!confirm("Mevcut verilerin yedekle değiştirilsin mi?"))return;db=Object.assign(blank(),d);save();render();toast("Yedek yüklendi")}catch{toast("Bu dosya geçerli bir yedek değil")}};
+    if(!confirm("Mevcut verilerin yedekle değiştirilsin mi?"))return;localStorage.setItem(LS,JSON.stringify(d));location.reload()}catch{toast("Bu dosya geçerli bir yedek değil")}};
   inp.click();
 }
 
 render();
 checkReminders();
+loadAsc();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
