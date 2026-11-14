@@ -84,6 +84,7 @@ h2{font-size:1.02rem;margin:0}
 .acard .nm{font-weight:700;font-size:1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .acard .sub{font-size:.78rem;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:3px}
 .acard .wh{grid-column:1/-1;font-size:.8rem;color:var(--muted);line-height:1.45;border-top:1px solid var(--line);padding-top:8px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.acard .sub .chip{max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .acard .cnt{position:absolute;top:10px;right:10px;min-width:22px;height:22px;border-radius:99px;background:var(--sunk);font-size:.7rem;font-family:var(--mono);display:grid;place-items:center;padding:0 6px;color:var(--muted)}
 .acard .cnt.r{background:var(--down);color:#fff}
 
@@ -289,9 +290,73 @@ textarea{resize:vertical;min-height:84px;line-height:1.45}
 .mic svg{width:34px;height:34px}
 .mic.off{background:var(--accent);box-shadow:none}
 @media (prefers-reduced-motion:reduce){.wave i{animation:none;height:18px}.swipe>.item{transition:none}}
+
+/* ===== Cam (glass) tema ===== */
+:root[data-theme="glass"]{
+  --bg:#0b0f14; --surface:rgb(255 255 255 / .075); --sunk:rgb(255 255 255 / .07); --fg:#eef3f1; --muted:rgb(226 236 232 / .62); --line:rgb(255 255 255 / .13);
+  --accent:#6ff0c0; --accent-fg:#05261b; --up:#6ff0a8; --up-bg:rgb(111 240 168 / .12); --down:#ff7a85; --down-bg:rgb(255 90 110 / .15); --warn:#ffc46b; --warn-bg:rgb(255 196 107 / .13);
+  --shadow:0 8px 30px rgb(0 0 0 / .28); color-scheme:dark}
+[data-theme="glass"] body{background:#0b0f14}
+[data-theme="glass"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(55vmax 55vmax at 8% -5%,rgb(120 52 170 / .55),transparent 62%),radial-gradient(45vmax 45vmax at 105% 38%,rgb(28 112 156 / .5),transparent 62%),radial-gradient(55vmax 55vmax at 18% 105%,rgb(28 120 96 / .55),transparent 62%)}
+[data-theme="glass"] :is(.acard,.panel,.where,.week,.subtabs,.search,.col){backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%)}
+[data-theme="glass"] :is(.acard,.panel,.where,.week){border-color:rgb(255 255 255 / .14);box-shadow:0 8px 30px rgb(0 0 0 / .22),inset 0 1px 0 rgb(255 255 255 / .06)}
+[data-theme="glass"] .acard{border-radius:20px}
+[data-theme="glass"] .top{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+[data-theme="glass"] .top.scrolled{background:rgb(11 15 20 / .5);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+[data-theme="glass"] :is(.tabs,.qbar){background:rgb(16 20 27 / .62);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);border-color:rgb(255 255 255 / .12)}
+[data-theme="glass"] dialog{background:rgb(20 24 31 / .9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-color:rgb(255 255 255 / .14)}
+[data-theme="glass"] :is(input,textarea,select){background:rgb(255 255 255 / .06);border-color:rgb(255 255 255 / .14)}
+[data-theme="glass"] :is(.chip,.check,.qsug button,.ghost){background:rgb(255 255 255 / .05)}
+[data-theme="glass"] .acard .ic,[data-theme="glass"] .hero .ic,[data-theme="glass"] .today .ic{box-shadow:0 0 26px hsl(var(--h) 75% 55% / .55)}
+[data-theme="glass"] .ring>.ic{box-shadow:0 0 0 3px rgb(14 18 24 / .9),0 0 26px hsl(var(--h) 75% 55% / .5)}
+[data-theme="glass"] .today{background:linear-gradient(135deg,rgb(111 240 192 / .2),rgb(170 80 220 / .22));color:var(--fg);border:1px solid rgb(255 255 255 / .16);box-shadow:0 10px 34px rgb(0 0 0 / .3);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+[data-theme="glass"] .today .last{background:rgb(255 255 255 / .08)}
+[data-theme="glass"] .today .go{background:var(--accent);color:var(--accent-fg)}
+[data-theme="glass"] .today .sec2{background:rgb(255 255 255 / .1)}
+[data-theme="glass"] .fab{box-shadow:0 0 30px rgb(111 240 192 / .35)}
+[data-theme="glass"] .where{border-left-color:var(--accent)}
+[data-theme="glass"] .subtabs button[aria-pressed="true"]{background:rgb(255 255 255 / .14)}
+[data-theme="glass"] .tabs button[aria-current="page"]{background:rgb(111 240 192 / .12)}
+[data-theme="glass"] .toast{background:rgb(240 245 243 / .95);color:#0b0f14}
+
+/* ===== Mac / geniş ekran: kenar çubuğu ===== */
+#side{display:none}
+@media (min-width:1000px){
+  body{padding-left:272px}
+  #side{display:flex;flex-direction:column;gap:2px;position:fixed;left:12px;top:12px;bottom:12px;width:248px;z-index:11;padding:14px 10px;border-radius:22px;
+    background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow-y:auto;scrollbar-width:none}
+  [data-theme="glass"] #side{background:rgb(255 255 255 / .06);backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%)}
+  :root:not([data-theme="glass"]) #side{background:var(--surface)}
+  .wrap{max-width:940px;padding-inline:28px}
+  .top{margin-inline:-28px;padding-inline:20px}
+  .tabs{display:none!important}
+  #btnMenu{display:none}
+  .qbar{left:288px;right:16px;bottom:16px;max-width:none;margin:0;border:1px solid var(--line);border-radius:18px}
+  .fab{right:24px;bottom:24px}
+  .wrap.qpad{padding-bottom:130px}
+  .toast{bottom:110px;left:calc(50% + 136px)}
+  .agrid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+}
+.sbrand{display:flex;align-items:center;gap:10px;padding:4px 8px 12px;font-weight:800;font-size:1.05rem}
+.ssearch{display:flex;align-items:center;gap:8px;margin:0 2px 10px;padding:8px 10px;border-radius:11px;border:1px solid var(--line);background:var(--sunk);color:var(--muted);font-size:.82rem;cursor:pointer;text-align:left}
+.ssearch kbd{margin-left:auto;font-family:var(--mono);font-size:.7rem;border:1px solid var(--line);border-radius:6px;padding:0 5px}
+.sitem{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;border-radius:11px;padding:8px 10px;color:var(--fg);font-size:.88rem;text-align:left;min-height:38px}
+.sitem:hover{background:var(--sunk)}
+.sitem.on{background:var(--accent);color:var(--accent-fg);font-weight:600}
+[data-theme="glass"] .sitem.on{background:rgb(111 240 192 / .16);color:var(--fg);box-shadow:inset 0 0 0 1px rgb(111 240 192 / .35)}
+.sitem .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sitem .n{font-family:var(--mono);font-size:.72rem;color:var(--muted);min-width:20px;text-align:right}
+.sitem.on .n{color:inherit;opacity:.8}
+.sitem .n.r{color:#fff;background:var(--down);border-radius:99px;padding:0 6px;text-align:center}
+.sitem .e{width:24px;text-align:center;flex:none}
+.sitem .ic{--s:24px;font-size:11px}
+.slbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:14px 10px 4px}
+.sgap{flex:1;min-height:12px}
 </style>
 </head>
 <body>
+<aside id="side" aria-label="Kenar çubuğu"></aside>
 <div class="wrap">
   <header class="top" id="top">
     <button class="iconbtn" id="btnBack" aria-label="Geri" hidden><svg class="i" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -563,7 +628,11 @@ function toast(msg){
 const on=(sel,fn)=>document.querySelectorAll(sel).forEach(b=>b.onclick=e=>{e.stopPropagation();fn(b,e)});
 
 /* ---------- tema ---------- */
-function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;else delete document.documentElement.dataset.theme}
+function applyTheme(t){
+  t=t||"glass";
+  if(t==="auto")delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme=t;
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m,i)=>m.content=t==="glass"?"#0b0f14":t==="dark"?"#0e1412":t==="light"?"#f3f5f4":(i?"#0e1412":"#f3f5f4"));
+}
 applyTheme(pref("theme"));
 
 /* ---------- alt sayfa: eylem listesi ---------- */
@@ -577,7 +646,7 @@ const sheetBtn=(id,ic,t,d)=>`<button data-s="${id}"><span class="ai">${ic}</span
 function bindSheet(map){document.querySelectorAll("#sheetBody [data-s]").forEach(b=>b.onclick=()=>{$("sheet").close();map[b.dataset.s]?.()})}
 
 function openMenu(){
-  const th=pref("theme")||"auto";
+  const th=pref("theme")||"glass";
   const notif=("Notification" in window)&&Notification.permission!=="granted";
   sheet(`
     <h3>Bölümler</h3>
@@ -587,7 +656,7 @@ function openMenu(){
     ${sheetBtn("plans",svg("plan"),"Planlar",`${db.plans.filter(p=>!p.done).length} yapılacak plan`)}
     ${sheetBtn("week",svg("week"),"Haftalık özet","Geçen hafta ne yaptın")}
     <hr><h3>Görünüm</h3>
-    <div class="themes">${[["auto","Otomatik"],["light","Açık"],["dark","Koyu"]].map(([k,l])=>`<button class="ghost" data-th="${k}" aria-pressed="${th===k}">${l}</button>`).join("")}</div>
+    <div class="themes">${[["glass","Cam"],["dark","Koyu"],["light","Açık"],["auto","Oto"]].map(([k,l])=>`<button class="ghost" data-th="${k}" aria-pressed="${th===k}">${l}</button>`).join("")}</div>
     <hr><h3>Ayarlar</h3>
     ${notif?sheetBtn("notif",svg("bell"),"Bildirimleri aç","Tarihi gelen işler için hatırlatma"):""}
     ${sheetBtn("exp",svg("down"),"Yedek indir","Tüm verileri dosya olarak kaydet")}
@@ -632,13 +701,44 @@ function render(){
   $("fabTxt").textContent=tab==="ideas"?"Fikir":"Plan";
   const qb=tab==="apps";
   $("qbar").hidden=!qb; $("fab").hidden=qb; document.querySelector(".wrap").classList.toggle("qpad",qb);
-  $("qin").placeholder=a?`${a.name} için yaz… (yarın, bugün)`:db.apps.length?`${db.apps[0].name.split(/[\s:]/)[0]}: ne yapılacak…`:"Fikrini yaz…";
+  $("qin").placeholder=a?`${a.name} için yaz… (yarın, bugün)`:db.apps.length?`${db.apps[0].name.split(":")[0].trim()}: ne yapılacak…`:"Fikrini yaz…";
   qSuggest();
   if(a)viewApp(a); else ({ideas:viewIdeas,plans:viewPlans}[tab]||viewApps)();
+  renderSide();
   hydrateImgs();
 }
 const searchBox=ph=>searchOn?`<label class="search">${svg("search")}<input id="q" type="search" placeholder="${ph}" value="${esc(query)}" autocomplete="off"></label>`:"";
 function bindSearch(){const q=$("q");if(!q)return;q.oninput=()=>{query=q.value;const pos=q.selectionStart;render();const n=$("q");n.focus();n.setSelectionRange(pos,pos)}}
+
+/* ================= KENAR ÇUBUĞU (Mac) ================= */
+function renderSide(){
+  const el=$("side"); if(!el)return;
+  const lateApps=db.apps.reduce((s,a)=>s+appLateCount(a),0), latePlans=db.plans.filter(p=>planState(p)==="late").length;
+  const cnt=(n,r)=>n?`<span class="n${r?" r":""}">${n}</span>`:"";
+  el.innerHTML=`
+    <div class="sbrand"><span class="ic" style="--s:30px;--h:160;font-size:15px">💡</span>Fikirler</div>
+    <button class="ssearch" id="sq">${svg("search")}<span>Yaz ya da ara…</span><kbd>⌘K</kbd></button>
+    <button class="sitem${tab==="apps"&&!openApp?" on":""}" data-sgo="apps"><span class="e">☀️</span><span class="nm">Bugün</span>${cnt(todayTasks().length,lateApps>0)}</button>
+    <button class="sitem${tab==="ideas"?" on":""}" data-sgo="ideas"><span class="e">💡</span><span class="nm">Fikirler</span>${cnt(db.ideas.filter(i=>i.status!=="bitti").length)}</button>
+    <button class="sitem${tab==="plans"?" on":""}" data-sgo="plans"><span class="e">📅</span><span class="nm">Planlar</span>${cnt(db.plans.filter(p=>!p.done).length,latePlans>0)}</button>
+    <div class="slbl">Uygulamalar</div>
+    ${db.apps.map(a=>{const l=appLateCount(a),n=appTodos(a).length;return `<button class="sitem${openApp===a.id?" on":""}" data-sapp="${a.id}">${iconHtml(a,24)}<span class="nm">${esc(a.name)}</span>${l?cnt(l,true):cnt(n)}</button>`}).join("")}
+    <button class="sitem" data-snew style="color:var(--muted)"><span class="e">＋</span><span class="nm">Uygulama ekle</span></button>
+    <div class="sgap"></div>
+    <button class="sitem" data-sweek><span class="e">📊</span><span class="nm">Haftalık özet</span></button>
+    <button class="sitem" data-smenu><span class="e">⚙︎</span><span class="nm">Tema, yedek, ayarlar</span></button>`;
+  el.querySelectorAll("[data-sgo]").forEach(b=>b.onclick=()=>{if(openApp&&history.state?.app)history.back();go(b.dataset.sgo)});
+  el.querySelectorAll("[data-sapp]").forEach(b=>b.onclick=()=>go("apps",b.dataset.sapp));
+  el.querySelector("[data-snew]").onclick=()=>appForm();
+  el.querySelector("[data-sweek]").onclick=()=>sheet(`<div style="display:grid;gap:10px">${weekHtml(weekStats(0),false)}${weekHtml(weekStats(1),false)}</div>`);
+  el.querySelector("[data-smenu]").onclick=openMenu;
+  $("sq").onclick=focusQuick;
+}
+function focusQuick(){if(tab!=="apps")go("apps",openApp);setTimeout(()=>$("qin").focus(),30)}
+document.addEventListener("keydown",e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();focusQuick()}
+  else if(e.key==="Escape"&&document.activeElement===$("qin")){$("qin").value="";qSuggest();$("qin").blur()}
+});
 
 /* ================= UYGULAMALAR ================= */
 function viewApps(){
@@ -732,7 +832,7 @@ function viewApp(a){
       <div class="kv">
         <div><span class="lbl">Yayındaki sürüm</span><b class="num">${esc(x.live?.version||"—")}</b>${x.live?.releaseDate?`<span class="small">${esc(longDay(isoDay(x.live.releaseDate)))}</span>`:x.live?"":`<span class="small">Henüz yayında değil</span>`}</div>
         ${pending.map(v=>`<div><span class="lbl">Sıradaki sürüm</span><b class="num">${esc(v.version)}</b><span>${stChip(ASC_ST,v.state)}</span></div>`).join("")}
-        ${lb?`<div><span class="lbl">Son derleme (build)</span><b class="num">${lb.version?esc(lb.version)+" ":""}(build ${esc(lb.build)})</b><span class="small">${stChip(BUILD_ST,lb.state)} ${esc(niceDate(isoDay(lb.uploaded)))}</span></div>`:""}
+        ${lb?`<div><span class="lbl">Son derleme</span><b class="num">${lb.version?esc(lb.version)+" ":""}(build ${esc(lb.build)})</b><span class="small">${stChip(BUILD_ST,lb.state)} ${esc(niceDate(isoDay(lb.uploaded)))}</span></div>`:""}
         ${x.live?.ratings?`<div><span class="lbl">Puan</span><b class="num">${(+x.live.rating).toFixed(1)} ★</b><span class="small">${x.live.ratings} değerlendirme</span></div>`:""}
       </div>
       ${pending[0]?.whatsNew?`<div class="notes"><span class="lbl">${esc(pending[0].version)} yenilikleri (taslak)</span>\n${esc(pending[0].whatsNew)}</div>`:""}
