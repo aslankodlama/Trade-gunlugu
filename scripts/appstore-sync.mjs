@@ -78,9 +78,12 @@ for (const a of apps) {
   }
 
   // Son build'ler
-  const builds = await safe(api(`/v1/builds?filter[app]=${a.id}&sort=-uploadedDate&limit=10&fields[builds]=version,uploadedDate,processingState,expired&include=preReleaseVersion&fields[preReleaseVersions]=version`), { data: [], included: [] });
+  const builds = await safe(api(`/v1/builds?filter[app]=${a.id}&sort=-uploadedDate&limit=10&fields[builds]=version,uploadedDate,processingState,expired,iconAssetToken&include=preReleaseVersion&fields[preReleaseVersions]=version`), { data: [], included: [] });
   const pre = Object.fromEntries((builds.included || []).map(i => [i.id, i.attributes.version]));
   for (const b of builds.data) {
+    // Build'in içindeki uygulama ikonu (yayınlanmamış uygulamalarda da var)
+    const tpl = b.attributes.iconAssetToken?.templateUrl;
+    if (tpl && !app.icon) app.icon = tpl.replace("{w}", "256").replace("{h}", "256").replace("{f}", "png");
     app.builds.push({
       build: b.attributes.version,
       version: pre[b.relationships?.preReleaseVersion?.data?.id] || "",
@@ -93,6 +96,7 @@ for (const a of apps) {
   // Mağazadaki canlı sürüm ve yayın tarihi (herkese açık arama servisi)
   const lk = await safe(fetch(`https://itunes.apple.com/lookup?bundleId=${encodeURIComponent(app.bundleId)}&country=tr`).then(r => r.json()), null);
   const it = lk?.results?.[0];
+  if (it?.artworkUrl512) app.icon = it.artworkUrl512;
   if (it) app.live = { version: it.version, releaseDate: it.currentVersionReleaseDate, url: it.trackViewUrl, notes: it.releaseNotes || "", rating: it.averageUserRating ?? null, ratings: it.userRatingCount ?? 0 };
 
   out.apps.push(app);

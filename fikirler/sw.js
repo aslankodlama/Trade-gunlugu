@@ -1,5 +1,5 @@
 // Fikirler: internetsiz açılabilsin diye dosyaları önbelleğe alır, bildirime dokununca uygulamayı açar.
-const CACHE = "fikirler-v2";
+const CACHE = "fikirler-v3";
 const FILES = ["./", "index.html", "manifest.webmanifest", "../icon-192-v2.png", "../icon-512-v2.png", "../apple-touch-icon-v2.png"];
 
 self.addEventListener("install", e => {
