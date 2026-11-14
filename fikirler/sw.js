@@ -1,6 +1,6 @@
 // Fikirler: internetsiz açılabilsin diye dosyaları önbelleğe alır, bildirime dokununca uygulamayı açar.
-const CACHE = "fikirler-v5";
-const FILES = ["./", "index.html", "manifest.webmanifest", "../icon-192-v2.png", "../icon-512-v2.png", "../apple-touch-icon-v2.png"];
+const CACHE = "fikirler-v6";
+const FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));

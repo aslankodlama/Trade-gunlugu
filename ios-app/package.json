@@ -1,0 +1,16 @@
+{
+  "name": "fikirler-ios",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Fikirler web uygulamasını iPhone uygulaması olarak paketler (Capacitor).",
+  "scripts": {
+    "www": "node prepare-www.mjs"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/ios": "^8.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.0.0"
+  }
+}
