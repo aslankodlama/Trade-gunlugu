@@ -1,0 +1,195 @@
+{
+ "updated": "2026-11-14T02:15:59.659Z",
+ "apps": [
+  {
+   "id": "6834604273",
+   "name": "Ne Giysem: Dijital Gardırop",
+   "bundleId": "com.abdullah.gardirop",
+   "sku": "negiysem",
+   "versions": [
+    {
+     "id": "324f306e-e7a4-4183-954c-b81f2733cb6e",
+     "version": "1.0",
+     "state": "PREPARE_FOR_SUBMISSION",
+     "platform": "IOS",
+     "created": "2026-11-13T15:31:12-08:00",
+     "whatsNew": ""
+    }
+   ],
+   "builds": [
+    {
+     "build": "4",
+     "version": "",
+     "uploaded": "2026-11-13T16:32:52-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "3",
+     "version": "",
+     "uploaded": "2026-11-13T16:12:49-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "2",
+     "version": "",
+     "uploaded": "2026-11-13T15:55:36-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "1",
+     "version": "",
+     "uploaded": "2026-11-13T15:34:05-08:00",
+     "state": "VALID",
+     "expired": false
+    }
+   ],
+   "live": null
+  },
+  {
+   "id": "6831280168",
+   "name": "Son Siper",
+   "bundleId": "com.abdullahaslan.sonsiper",
+   "sku": "sonsiper001",
+   "versions": [
+    {
+     "id": "2aa1a0ec-5fcf-4546-a0dc-b43c36c8b4b4",
+     "version": "1.0",
+     "state": "READY_FOR_REVIEW",
+     "platform": "IOS",
+     "created": "2026-11-05T10:20:58-08:00",
+     "whatsNew": ""
+    }
+   ],
+   "builds": [
+    {
+     "build": "9",
+     "version": "",
+     "uploaded": "2026-11-13T13:13:54-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "8",
+     "version": "",
+     "uploaded": "2026-11-13T12:34:29-08:00",
+     "state": "VALID",
+     "expired": true
+    },
+    {
+     "build": "7",
+     "version": "",
+     "uploaded": "2026-11-10T05:51:13-08:00",
+     "state": "VALID",
+     "expired": true
+    },
+    {
+     "build": "6",
+     "version": "",
+     "uploaded": "2026-11-10T02:57:40-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "5",
+     "version": "",
+     "uploaded": "2026-11-08T14:36:05-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "4",
+     "version": "",
+     "uploaded": "2026-11-08T11:24:58-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "3",
+     "version": "",
+     "uploaded": "2026-11-08T09:15:49-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "2",
+     "version": "",
+     "uploaded": "2026-11-07T02:39:35-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "1",
+     "version": "",
+     "uploaded": "2026-11-05T13:13:52-08:00",
+     "state": "VALID",
+     "expired": false
+    }
+   ],
+   "live": null
+  },
+  {
+   "id": "6832213447",
+   "name": "Kaleo",
+   "bundleId": "com.abdullahaslan.kaleo",
+   "sku": "kaleo001",
+   "versions": [
+    {
+     "id": "8188c842-ce12-49bb-87ab-c3c8d470c1b9",
+     "version": "1.0",
+     "state": "PREPARE_FOR_SUBMISSION",
+     "platform": "IOS",
+     "created": "2026-11-08T02:01:52-08:00",
+     "whatsNew": ""
+    }
+   ],
+   "builds": [
+    {
+     "build": "7",
+     "version": "",
+     "uploaded": "2026-11-08T03:33:08-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "5",
+     "version": "",
+     "uploaded": "2026-11-08T03:12:15-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "4",
+     "version": "",
+     "uploaded": "2026-11-08T03:04:46-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "3",
+     "version": "",
+     "uploaded": "2026-11-08T02:27:33-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "2",
+     "version": "",
+     "uploaded": "2026-11-08T02:14:32-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "1",
+     "version": "",
+     "uploaded": "2026-11-08T02:05:53-08:00",
+     "state": "VALID",
+     "expired": false
+    }
+   ],
+   "live": null
+  }
+ ]
+}
