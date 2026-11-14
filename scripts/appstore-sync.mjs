@@ -3,15 +3,38 @@
 //   ASC_ISSUER_ID   – App Store Connect → Kullanıcılar ve Erişim → Entegrasyonlar → API Anahtarları → "Issuer ID"
 //   ASC_KEY_ID      – Oluşturduğun anahtarın "Key ID" değeri
 //   ASC_PRIVATE_KEY – İndirdiğin AuthKey_XXXX.p8 dosyasının tüm içeriği
-import { createSign } from "node:crypto";
+import { createSign, createPrivateKey } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-const { ASC_ISSUER_ID, ASC_KEY_ID, ASC_PRIVATE_KEY } = process.env;
+const ASC_ISSUER_ID = process.env.ASC_ISSUER_ID?.trim(), ASC_KEY_ID = process.env.ASC_KEY_ID?.trim(), ASC_PRIVATE_KEY = process.env.ASC_PRIVATE_KEY;
 const OUT = process.argv[2] || "fikirler/appstore.json";
 if (!ASC_ISSUER_ID || !ASC_KEY_ID || !ASC_PRIVATE_KEY) {
   console.error("ASC_ISSUER_ID, ASC_KEY_ID ve ASC_PRIVATE_KEY tanımlı olmalı.");
   process.exit(1);
 }
+
+// Anahtar nasıl yapıştırılmış olursa olsun (tek satır, fazladan boşluk, tırnak, \\n, başlıksız) düzgün PEM'e çevir
+function loadKey(raw) {
+  const body = String(raw)
+    .replace(/\\n/g, "\n")
+    .replace(/-----(BEGIN|END)[^-]*-----/g, "")
+    .replace(/["'\s]/g, "");
+  if (!/^[A-Za-z0-9+/=]+$/.test(body) || body.length < 100) {
+    console.error(`ASC_PRIVATE_KEY geçersiz görünüyor (${body.length} karakter). .p8 dosyasının TAMAMINI yapıştır: "-----BEGIN PRIVATE KEY-----" satırından "-----END PRIVATE KEY-----" satırına kadar.`);
+    process.exit(1);
+  }
+  const pem = `-----BEGIN PRIVATE KEY-----\n${body.match(/.{1,64}/g).join("\n")}\n-----END PRIVATE KEY-----\n`;
+  try {
+    return createPrivateKey(pem);
+  } catch {
+    try { return createPrivateKey({ key: Buffer.from(body, "base64"), format: "der", type: "pkcs8" }); }
+    catch (e) {
+      console.error(`ASC_PRIVATE_KEY okunamadı (${body.length} karakter): ${e.message}. Doğru .p8 dosyasını mı yapıştırdın? Key ID ya da Issuer ID değil, dosyanın içeriği olmalı.`);
+      process.exit(1);
+    }
+  }
+}
+const KEY = loadKey(ASC_PRIVATE_KEY);
 
 const b64u = b => Buffer.from(b).toString("base64url");
 function token() {
@@ -20,13 +43,14 @@ function token() {
   const body = b64u(JSON.stringify({ iss: ASC_ISSUER_ID, iat: now, exp: now + 15 * 60, aud: "appstoreconnect-v1" }));
   const s = createSign("SHA256");
   s.update(`${head}.${body}`);
-  const key = ASC_PRIVATE_KEY.replace(/\\n/g, "\n");
-  return `${head}.${body}.${b64u(s.sign({ key, dsaEncoding: "ieee-p1363" }))}`;
+  return `${head}.${body}.${b64u(s.sign({ key: KEY, dsaEncoding: "ieee-p1363" }))}`;
 }
 const JWT = token();
 
 async function api(path) {
   const r = await fetch("https://api.appstoreconnect.apple.com" + path, { headers: { Authorization: `Bearer ${JWT}` } });
+  if (r.status === 401) { console.error("401: Apple anahtarı kabul etmedi. ASC_KEY_ID ve ASC_ISSUER_ID değerlerini kontrol et; anahtar iptal edilmiş olabilir."); process.exit(1); }
+  if (r.status === 403) { console.error("403: Anahtarın yetkisi yetmiyor. App Store Connect'te anahtara en az 'Geliştirici' erişimi ver."); process.exit(1); }
   if (!r.ok) throw new Error(`${r.status} ${path}: ${(await r.text()).slice(0, 300)}`);
   return r.json();
 }
