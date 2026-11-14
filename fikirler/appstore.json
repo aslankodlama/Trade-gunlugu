@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-14T02:15:59.659Z",
+ "updated": "2026-11-14T02:29:19.077Z",
  "apps": [
   {
    "id": "6834604273",
@@ -46,7 +46,8 @@
      "expired": false
     }
    ],
-   "live": null
+   "live": null,
+   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ad/71/ca/ad71caef-df76-43f5-d830-8b04be252718/AppIcon60x60@2x.png/256x256bb.png"
   },
   {
    "id": "6831280168",
@@ -128,7 +129,8 @@
      "expired": false
     }
    ],
-   "live": null
+   "live": null,
+   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ff/76/f3/ff76f3bc-e4a8-d2e3-747c-54e3f451697b/AppIcon60x60@2x.png/256x256bb.png"
   },
   {
    "id": "6832213447",
@@ -189,7 +191,8 @@
      "expired": false
     }
    ],
-   "live": null
+   "live": null,
+   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/1d/5e/8f/1d5e8f6c-e215-9308-fca7-67007c719e46/AppIcon60x60@2x.png/256x256bb.png"
   }
  ]
 }
