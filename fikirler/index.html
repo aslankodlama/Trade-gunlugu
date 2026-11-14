@@ -20,127 +20,198 @@
   --bg:#f3f5f4; --surface:#ffffff; --sunk:#e8ecea; --fg:#14201b; --muted:#5d6b65; --line:#d5dcd8;
   --accent:#1f6f5c; --accent-fg:#ffffff;
   --up:#178a4c; --up-bg:#dff3e7; --down:#c8323a; --down-bg:#fbe1e2; --warn:#a86400; --warn-bg:#fdf0d8;
+  --shadow:0 1px 2px rgb(20 32 27 / .06),0 4px 14px rgb(20 32 27 / .06);
   --display:"Sora",ui-sans-serif,system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0e1412; --surface:#151d1a; --sunk:#1c2622; --fg:#e4ece8; --muted:#8c9a94; --line:#26332e;
   --accent:#4cc3a2; --accent-fg:#06221a;
-  --up:#3fcf83; --up-bg:#123323; --down:#ff6b72; --down-bg:#3a161a; --warn:#f2b552; --warn-bg:#3a2a10; color-scheme:dark}}
+  --up:#3fcf83; --up-bg:#123323; --down:#ff6b72; --down-bg:#3a161a; --warn:#f2b552; --warn-bg:#3a2a10;
+  --shadow:0 1px 2px rgb(0 0 0 / .3); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0e1412; --surface:#151d1a; --sunk:#1c2622; --fg:#e4ece8; --muted:#8c9a94; --line:#26332e;
   --accent:#4cc3a2; --accent-fg:#06221a;
-  --up:#3fcf83; --up-bg:#123323; --down:#ff6b72; --down-bg:#3a161a; --warn:#f2b552; --warn-bg:#3a2a10; color-scheme:dark}
+  --up:#3fcf83; --up-bg:#123323; --down:#ff6b72; --down-bg:#3a161a; --warn:#f2b552; --warn-bg:#3a2a10;
+  --shadow:0 1px 2px rgb(0 0 0 / .3); color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--fg);font-family:var(--display);font-size:14px}
-.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:calc(14px + env(safe-area-inset-top,0px)) 110px;display:grid;gap:18px}
+body{background:var(--bg);color:var(--fg);font-family:var(--display);font-size:14px;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:0 130px;display:grid;gap:16px}
 #view{display:grid;gap:16px;min-width:0}
 .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
 button,input,textarea,select{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-h1{font-size:1.7rem;margin:0;letter-spacing:-.02em;text-wrap:balance;overflow-wrap:anywhere}
-h2{font-size:1.05rem;margin:0}
-.lead{color:var(--muted);margin:4px 0 0;line-height:1.45}
-.small{font-size:.75rem;color:var(--muted);line-height:1.45}
-.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
-.btn{background:var(--accent);color:var(--accent-fg);border:0;border-radius:10px;padding:10px 16px;font-weight:600;min-height:42px}
-.ghost{background:none;border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--muted);min-height:38px}
-.ghost:hover{border-color:var(--accent);color:var(--fg)}
+svg.i{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+h1{font-size:1.6rem;margin:0;letter-spacing:-.02em;text-wrap:balance;overflow-wrap:anywhere}
+h2{font-size:1.02rem;margin:0}
+.lead{color:var(--muted);margin:2px 0 0;line-height:1.45}
+.small{font-size:.75rem;color:var(--muted);line-height:1.5}
+.lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.btn{background:var(--accent);color:var(--accent-fg);border:0;border-radius:10px;padding:10px 16px;font-weight:600;min-height:44px}
+.ghost{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--fg);min-height:40px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.ghost:hover{border-color:var(--accent)}
 .danger{color:var(--down)}
 .sec{display:grid;gap:8px}
 .sechead{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .sechead h2 small{font-weight:400;color:var(--muted);font-family:var(--mono);font-size:.8rem;margin-left:4px}
+.link{background:none;border:0;color:var(--accent);font-weight:600;font-size:.8rem;padding:4px 0}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:8px;min-width:0}
-.empty{color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:16px;text-align:center;line-height:1.5;font-size:.85rem}
-.back{background:none;border:0;color:var(--muted);padding:4px 0;font-weight:600;justify-self:start}
-.back:hover{color:var(--fg)}
+.empty{color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:18px;text-align:center;line-height:1.5;font-size:.85rem}
+
+/* Üst çubuk */
+.top{position:sticky;top:0;z-index:8;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-inline:-16px;padding:calc(8px + env(safe-area-inset-top,0px)) 12px 8px;display:flex;align-items:center;gap:6px;border-bottom:1px solid transparent}
+.top.scrolled{border-bottom-color:var(--line)}
+.top .ttl{flex:1;min-width:0;font-weight:700;font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:8px}
+.top .ttl .ic{--s:28px}
+.iconbtn{background:none;border:0;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--fg);flex:none}
+.iconbtn:hover{background:var(--sunk)}
+.iconbtn[hidden]{display:none}
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 12px}
+.search input{border:0;background:none;padding:11px 0;outline:none}
+.search svg{color:var(--muted)}
+
+/* İkon */
+.ic{--s:48px;--h:160;position:relative;width:var(--s);height:var(--s);border-radius:calc(var(--s)*.225);flex:none;display:grid;place-items:center;overflow:hidden;
+  background:linear-gradient(140deg,hsl(var(--h) 55% 52%),hsl(calc(var(--h) + 40) 60% 38%));color:#fff;font-weight:700;font-size:calc(var(--s)*.42);box-shadow:inset 0 0 0 1px rgb(0 0 0 / .08)}
+.ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--surface)}
+
+/* Uygulama ızgarası */
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.acard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:left;box-shadow:var(--shadow);min-width:0;position:relative}
+.acard:hover{border-color:var(--accent)}
+.acard .nm{font-weight:700;font-size:1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acard .sub{font-size:.78rem;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:3px}
+.acard .wh{grid-column:1/-1;font-size:.8rem;color:var(--muted);line-height:1.45;border-top:1px solid var(--line);padding-top:8px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.acard .cnt{position:absolute;top:10px;right:10px;min-width:22px;height:22px;border-radius:99px;background:var(--sunk);font-size:.7rem;font-family:var(--mono);display:grid;place-items:center;padding:0 6px;color:var(--muted)}
+.acard .cnt.r{background:var(--down);color:#fff}
+
+/* Uygulama sayfası başlığı */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.hero .ic{--s:76px}
+.hero .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.subtabs{position:sticky;top:calc(58px + env(safe-area-inset-top,0px));z-index:7;display:flex;gap:4px;background:var(--sunk);border-radius:12px;padding:4px;overflow-x:auto;scrollbar-width:none}
+.subtabs::-webkit-scrollbar{display:none}
+.subtabs button{flex:1 0 auto;background:none;border:0;border-radius:9px;padding:8px 12px;font-size:.82rem;font-weight:600;color:var(--muted);white-space:nowrap}
+.subtabs button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:var(--shadow)}
+.subtabs small{font-family:var(--mono);font-weight:400;opacity:.8;margin-left:3px}
 
 /* Liste öğeleri */
 .list{display:grid;gap:8px}
 .item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;min-width:0}
-.item.click{cursor:pointer;text-align:left;width:100%;font:inherit}
-.item.click:hover{border-color:var(--accent)}
 .item .body{flex:1;min-width:0;display:grid;gap:4px}
-.item .t{font-weight:600;overflow-wrap:anywhere;white-space:pre-wrap}
-.item .t.plain{font-weight:400}
+.item .t{overflow-wrap:anywhere;white-space:pre-wrap;line-height:1.45}
+.item .t.b{font-weight:600}
 .item .n{color:var(--muted);font-size:.85rem;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
 .item .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.75rem;color:var(--muted)}
-.item .acts{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end}
+.item .acts{display:flex;gap:6px;flex:none;align-items:center}
 .item.late{border-color:color-mix(in srgb,var(--down) 45%,transparent);background:var(--down-bg)}
 .item.soon{border-color:color-mix(in srgb,var(--warn) 45%,transparent);background:var(--warn-bg)}
 .item.done .t{text-decoration:line-through;color:var(--muted)}
+.item.tap{cursor:pointer}
+.item.tap:hover{border-color:var(--accent)}
 .chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:1px 8px;font-size:.72rem;background:var(--bg);white-space:nowrap}
 .chip.r{color:var(--down);border-color:color-mix(in srgb,var(--down) 40%,transparent)}
 .chip.w{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 40%,transparent)}
 .chip.g{color:var(--up);border-color:color-mix(in srgb,var(--up) 40%,transparent)}
-.check{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--line);background:var(--bg);display:grid;place-items:center;padding:0;margin-top:1px}
+.check{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--line);background:var(--bg);display:grid;place-items:center;padding:0;margin-top:1px;color:var(--accent-fg)}
 .check:hover{border-color:var(--accent)}
-.check.on{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.check.on{background:var(--accent);border-color:var(--accent)}
 .check svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:3}
-.mini{background:none;border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:.78rem;color:var(--muted);min-height:30px;text-decoration:none;display:inline-flex;align-items:center}
+.mini{background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-size:.78rem;color:var(--muted);min-height:32px;text-decoration:none;display:inline-flex;align-items:center;white-space:nowrap}
 .mini:hover{border-color:var(--accent);color:var(--fg)}
 .mini.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
-
-/* Uygulama sayfası */
-.where{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
-.where .lbl,.lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.more{background:none;border:0;color:var(--muted);width:32px;height:32px;border-radius:8px;display:grid;place-items:center;flex:none}
+.more:hover{background:var(--sunk);color:var(--fg)}
+.where{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:12px 14px;display:grid;gap:6px;cursor:pointer;text-align:left;width:100%}
+.where:hover{border-color:var(--accent)}
 .where p{margin:0;white-space:pre-wrap;line-height:1.5;overflow-wrap:anywhere}
-.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.kv div{display:grid;gap:2px;min-width:0}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.kv div{display:grid;gap:3px;min-width:0;align-content:start}
 .kv b{font-size:.95rem;overflow-wrap:anywhere}
 .notes{white-space:pre-wrap;color:var(--muted);font-size:.85rem;line-height:1.5;border-top:1px solid var(--line);padding-top:8px;overflow-wrap:anywhere}
 .daygrp{display:grid;gap:6px}
-.daygrp>.lbl{padding-left:2px;margin-top:4px}
-.counts{display:flex;gap:6px;flex-wrap:wrap}
-
-/* Filtre */
-.seg{display:flex;gap:6px;flex-wrap:wrap}
-.seg button{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.8rem;color:var(--muted)}
+.daygrp>.lbl{padding-left:2px;margin-top:6px}
+.seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}
+.seg::-webkit-scrollbar{display:none}
+.seg button{flex:none;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:.8rem;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
 .notice{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--warn-bg);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);border-radius:12px;padding:10px 12px;font-size:.85rem}
-.notice span{flex:1;min-width:200px}
+.notice span{flex:1;min-width:180px}
 details.help{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:.85rem;line-height:1.55}
 details.help summary{cursor:pointer;font-weight:600}
 details.help ol{padding-left:20px;margin:8px 0 0}
 details.help code{font-family:var(--mono);font-size:.8rem;background:var(--sunk);padding:1px 5px;border-radius:5px}
 
-/* Form */
-dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--fg);padding:0;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
+/* Ekle düğmesi */
+.fab{position:fixed;right:max(16px,calc(50vw - 414px));bottom:calc(82px + env(safe-area-inset-bottom,0px));z-index:9;height:56px;min-width:56px;padding:0 20px 0 16px;border-radius:18px;border:0;background:var(--accent);color:var(--accent-fg);font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 6px 20px color-mix(in srgb,var(--accent) 40%,transparent)}
+.fab svg{width:24px;height:24px}
+@media (min-width:861px){.fab{bottom:96px}}
+
+/* Diyaloglar */
+dialog{border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--fg);padding:0;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
 dialog::backdrop{background:rgb(0 0 0 / .45)}
 dialog form{display:grid;gap:12px;padding:18px}
+@media (max-width:600px){
+  dialog.sheet{margin:auto 0 0;width:100vw;max-width:100vw;border-radius:20px 20px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+}
 .field{display:grid;gap:4px;min-width:0}
-.field label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.field>label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 input,textarea,select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:16px;min-width:0}
-input[type=checkbox]{width:auto}
-.cb{display:flex;gap:8px;align-items:center;font-size:.9rem}
-textarea{resize:vertical;min-height:80px;line-height:1.45}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent)}
+.cb{display:flex;gap:8px;align-items:center;font-size:.9rem;padding-top:22px}
+textarea{resize:vertical;min-height:84px;line-height:1.45}
 .formacts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
 .formacts .left{margin-right:auto}
+.iconpick{display:flex;gap:12px;align-items:center}
+.iconpick .ic{--s:56px}
+/* Eylem listesi (ekle menüsü, ☰ menü) */
+.acts-list{display:grid;gap:4px;padding:10px}
+.acts-list h3{margin:6px 10px 4px;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.acts-list button,.acts-list a{display:flex;align-items:center;gap:14px;background:none;border:0;border-radius:12px;padding:12px;text-align:left;color:var(--fg);text-decoration:none;font-size:.95rem;min-height:52px}
+.acts-list button:hover,.acts-list a:hover{background:var(--sunk)}
+.acts-list .ai{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--sunk);color:var(--accent);flex:none}
+.acts-list .ai svg{width:20px;height:20px}
+.acts-list b{display:block;font-weight:600}
+.acts-list span.d{display:block;font-size:.78rem;color:var(--muted);margin-top:1px}
+.acts-list hr{border:0;border-top:1px solid var(--line);margin:4px 8px}
+.acts-list .ic{--s:38px;font-size:15px}
+.themes{display:flex;gap:6px;padding:4px 12px 8px}
+.themes button{flex:1;justify-content:center;min-height:40px;padding:8px;border:1px solid var(--line);font-size:.85rem}
+.themes button[aria-pressed="true"]{border-color:var(--accent);background:var(--sunk);font-weight:600}
 
-/* Sekmeler */
+/* Alt sekmeler */
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
-.tabs button{position:relative;background:none;border:0;display:grid;justify-items:center;gap:3px;padding:6px 0;border-radius:10px;font-size:.7rem;font-weight:600;color:var(--muted);min-height:52px}
-.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabs button{position:relative;background:none;border:0;display:grid;justify-items:center;gap:3px;padding:6px 0;border-radius:12px;font-size:.7rem;font-weight:600;color:var(--muted);min-height:54px}
 .tabs button[aria-current="page"]{color:var(--accent);background:var(--sunk)}
 .badge{position:absolute;top:3px;left:calc(50% + 6px);min-width:17px;height:17px;border-radius:99px;background:var(--down);color:#fff;font-size:.62rem;display:grid;place-items:center;padding:0 4px;font-family:var(--mono)}
-@media (min-width:861px){.tabs{max-width:860px;margin:0 auto;bottom:12px;border:1px solid var(--line);border-radius:16px;padding:6px}}
-.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.85rem;z-index:20;max-width:calc(100vw - 32px);box-shadow:0 6px 24px rgb(0 0 0 / .25)}
-.foot{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+@media (min-width:861px){.tabs{max-width:860px;margin:0 auto;bottom:12px;border:1px solid var(--line);border-radius:18px;padding:6px;box-shadow:var(--shadow)}}
+.toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.85rem;z-index:20;max-width:calc(100vw - 32px);box-shadow:0 6px 24px rgb(0 0 0 / .25)}
 </style>
 </head>
 <body>
-<div class="wrap"><main id="view"></main></div>
+<div class="wrap">
+  <header class="top" id="top">
+    <button class="iconbtn" id="btnBack" aria-label="Geri" hidden><svg class="i" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="ttl" id="ttl">Fikirler</div>
+    <button class="iconbtn" id="btnSearch" aria-label="Ara"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    <button class="iconbtn" id="btnMenu" aria-label="Menü"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </header>
+  <main id="view"></main>
+</div>
+
+<button class="fab" id="fab"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span id="fabTxt">Ekle</span></button>
 
 <nav class="tabs" id="tabs" aria-label="Ana menü">
-  <button data-tab="apps"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><path d="M16.5 13v7M13 16.5h7"/></svg>Uygulamalar</button>
-  <button data-tab="ideas"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>Fikirler</button>
-  <button data-tab="plans"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg>Planlar</button>
+  <button data-tab="apps"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>Uygulamalar</button>
+  <button data-tab="ideas"><svg class="i" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>Fikirler</button>
+  <button data-tab="plans"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg>Planlar</button>
 </nav>
 
 <dialog id="dlg"><form id="form" method="dialog"></form></dialog>
+<dialog id="sheet" class="sheet"><div class="acts-list" id="sheetBody"></div></dialog>
 
 <script>
 /* ================= yardımcılar ================= */
@@ -154,7 +225,7 @@ const AYU=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos"
 const GUNU=["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
 const dkey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 const today=()=>dkey(new Date());
-const parseDue=s=>s?new Date(s.length===10?s+"T09:00":s):null;   // sadece tarih → 09:00
+const parseDue=s=>s?new Date(s.length===10?s+"T09:00":s):null;
 const startOfDay=d=>{const x=new Date(d);x.setHours(0,0,0,0);return x};
 const daysBetween=(a,b)=>Math.round((startOfDay(b)-startOfDay(a))/DAY);
 function niceDate(s){
@@ -166,18 +237,30 @@ function niceDate(s){
 }
 const longDay=s=>{const d=parseDue(s);return `${d.getDate()} ${AYU[d.getMonth()]} ${d.getFullYear()}`};
 const isoDay=iso=>iso?dkey(new Date(iso)):"";
+const norm=s=>String(s||"").toLocaleLowerCase("tr");
+const I={ // simgeler
+  check:`<path d="M5 12l5 5 9-10"/>`, search:`<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>`, plus:`<path d="M12 5v14M5 12h14"/>`, dots:`<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>`,
+  done:`<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>`, todo:`<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/>`,
+  idea:`<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>`,
+  pin:`<path d="M12 21s-6-5.4-6-11a6 6 0 0 1 12 0c0 5.6-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>`,
+  app:`<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9h6v6H9z"/>`, plan:`<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>`,
+  up:`<path d="M12 19V5M6 11l6-6 6 6"/>`, edit:`<path d="M4 20h4L19 9l-4-4L4 16z"/>`, trash:`<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>`,
+  bell:`<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>`, down:`<path d="M12 4v12M6 10l6 6 6-6M5 20h14"/>`, upl:`<path d="M12 16V4M6 10l6-6 6 6M5 20h14"/>`,
+  ext:`<path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/>`, chart:`<path d="M3 20h18"/><path d="M4 16l5-5 4 3 7-8"/>`, store:`<path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/>`
+};
+const svg=(k,c="i")=>`<svg class="${c}" viewBox="0 0 24 24">${I[k]}</svg>`;
 
 /* ================= veri ================= */
 const LS="fikirler-v1";
 const blank=()=>({ideas:[],plans:[],apps:[],notified:{}});
 let db=blank();
 try{db=Object.assign(blank(),JSON.parse(localStorage.getItem(LS)||"{}"))}catch{}
-// eski sürümden gelen verileri tamamla
 delete db.events;
 for(const i of db.ideas){i.date=i.date||dkey(new Date(i.created||Date.now()))}
 for(const a of db.apps){a.items=a.items||[];a.history=a.history||[];a.imported=a.imported||{};a.where=a.where||{text:"",date:""}}
 const save=()=>{try{localStorage.setItem(LS,JSON.stringify(db))}catch{toast("Kaydedilemedi: depolama dolu olabilir")}};
 try{navigator.storage?.persist?.()}catch{}
+const pref=(k,v)=>{try{if(v===undefined)return localStorage.getItem(LS+"-"+k);localStorage.setItem(LS+"-"+k,v)}catch{}};
 
 const IDEA_ST={yeni:"Yeni fikir",plan:"Yapılacaklara alındı",yapiliyor:"Yapılıyor",bitti:"Yapıldı"};
 const REPEAT={none:"Tekrar yok",daily:"Her gün",weekly:"Her hafta",monthly:"Her ay"};
@@ -193,7 +276,7 @@ const BUILD_ST={PROCESSING:["İşleniyor","w"],VALID:["Hazır","g"],FAILED:["Hat
 const stChip=(map,s)=>{const [l,c]=map[s]||[s||"?",""];return `<span class="chip ${c}">${esc(l)}</span>`};
 const RELEASED=new Set(["READY_FOR_SALE","READY_FOR_DISTRIBUTION","REPLACED_WITH_NEW_VERSION","DEVELOPER_REMOVED_FROM_SALE","REMOVED_FROM_SALE"]);
 
-/* ---------- plan durumu ---------- */
+/* ---------- durum hesapları ---------- */
 function dueState(due,done){
   if(done)return "done";
   const d=parseDue(due); if(!d)return "none";
@@ -206,35 +289,47 @@ function dueState(due,done){
 const planState=p=>dueState(p.due,p.done);
 function advance(due,rep){
   const d=parseDue(due), hasTime=due.length>10, now=new Date();
-  do{
-    if(rep==="daily")d.setDate(d.getDate()+1);
-    else if(rep==="weekly")d.setDate(d.getDate()+7);
-    else d.setMonth(d.getMonth()+1);
-  }while(daysBetween(now,d)<0);
+  do{ if(rep==="daily")d.setDate(d.getDate()+1); else if(rep==="weekly")d.setDate(d.getDate()+7); else d.setMonth(d.getMonth()+1); }while(daysBetween(now,d)<0);
   return hasTime?`${dkey(d)}T${pad(d.getHours())}:${pad(d.getMinutes())}`:dkey(d);
 }
-/* ---------- uygulama güncelleme hatırlatması ---------- */
 function appNext(a){if(!+a.every)return null;const d=new Date((a.last||today())+"T09:00");d.setDate(d.getDate()+(+a.every));return d}
 function appState(a){const n=appNext(a);if(!n)return "off";const left=daysBetween(new Date(),n);return left<0?"late":left===0?"today":left<=3?"soon":"ok"}
-const appTodos=a=>a.items.filter(i=>i.kind==="todo"&&!i.done);
-const appIdeas=a=>db.ideas.filter(i=>i.appId===a.id&&i.status!=="bitti");
+const appTodos=a=>a.items.filter(i=>i.kind==="todo"&&!i.done).sort((p,q)=>(q.must?1:0)-(p.must?1:0)||(p.date||"9").localeCompare(q.date||"9"));
+const appDone=a=>a.items.filter(i=>i.kind==="done"||(i.kind==="todo"&&i.done)).sort((p,q)=>(q.doneDate||q.date||"").localeCompare(p.doneDate||p.date||""));
+const appIdeas=a=>db.ideas.filter(i=>i.appId===a.id&&i.status!=="bitti").sort((p,q)=>(q.date||"").localeCompare(p.date||""));
 const appLateCount=a=>appTodos(a).filter(t=>dueState(t.date,false)==="late").length+(["late","today"].includes(appState(a))?1:0);
 
+/* ---------- ikon ---------- */
+function hue(s){let h=0;for(const c of String(s))h=(h*31+c.charCodeAt(0))%360;return h}
+function iconHtml(a,size){
+  const src=a.icon||a.ascIcon, letter=(a.name||"?").trim().charAt(0).toLocaleUpperCase("tr");
+  return `<span class="ic" style="--h:${hue(a.name)}${size?`;--s:${size}px`:""}" aria-hidden="true">${esc(letter)}${src?`<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span>`;
+}
+// Seçilen resmi 256px kareye küçültüp cihazda sakla
+function pickIcon(cb){
+  const inp=document.createElement("input");inp.type="file";inp.accept="image/*";
+  inp.onchange=()=>{const f=inp.files[0];if(!f)return;const img=new Image();img.onload=()=>{
+    const S=256,c=document.createElement("canvas");c.width=c.height=S;const x=c.getContext("2d");
+    const m=Math.min(img.width,img.height);x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,S,S);
+    URL.revokeObjectURL(img.src);cb(c.toDataURL("image/jpeg",.85));};img.onerror=()=>toast("Resim açılamadı");img.src=URL.createObjectURL(f)};
+  inp.click();
+}
+
 /* ================= App Store Connect ================= */
-let ASC=null; // fikirler/appstore.json (GitHub Actions yazar)
+let ASC=null;
 async function loadAsc(){
   try{
     const r=await fetch("appstore.json",{cache:"no-store"}); if(!r.ok)return;
     ASC=await r.json(); if(!Array.isArray(ASC.apps)){ASC=null;return}
     if(syncAsc())save();
-    if(!$("dlg").open)render();
+    if(!anyOpen())render();
   }catch{}
 }
 const ascFor=a=>ASC&&a.ascId?ASC.apps.find(x=>x.id===a.ascId):null;
 function syncAsc(){
   let changed=false;
   for(const x of ASC.apps){
-    let a=db.apps.find(y=>y.ascId===x.id)||db.apps.find(y=>!y.ascId&&y.name.trim().toLowerCase()===x.name.trim().toLowerCase());
+    let a=db.apps.find(y=>y.ascId===x.id)||db.apps.find(y=>!y.ascId&&norm(y.name.trim())===norm(x.name.trim()));
     if(!a)continue;
     if(a.ascId!==x.id){a.ascId=x.id;changed=true}
     changed=mergeAsc(a,x)||changed;
@@ -243,12 +338,12 @@ function syncAsc(){
 }
 function mergeAsc(a,x){
   let ch=false;
-  // Yayındaki sürüm → sürüm numarası ve son güncelleme tarihi
+  if(x.icon&&a.ascIcon!==x.icon){a.ascIcon=x.icon;ch=true}
   const liveV=x.live?.version||x.versions.find(v=>v.state==="READY_FOR_SALE"||v.state==="READY_FOR_DISTRIBUTION")?.version;
   if(liveV&&a.version!==liveV){a.version=liveV;ch=true}
+  if(!a.version&&x.versions[0]){a.version=x.versions[0].version;ch=true}
   const relDay=isoDay(x.live?.releaseDate);
   if(relDay&&(!a.last||relDay>a.last)){a.last=relDay;a.history.push({date:relDay,version:liveV||"",note:"App Store'da yayınlandı",src:"asc"});ch=true}
-  // Yayınlanmış her sürümün "Yenilikler" metni → Yaptıklarım
   for(const v of x.versions){
     if(!RELEASED.has(v.state)||a.imported[v.id])continue;
     const notes=(v.version===x.live?.version&&x.live?.notes)||v.whatsNew;
@@ -262,177 +357,256 @@ function importAllAsc(){
   let n=0;
   for(const x of ASC.apps){
     if(db.apps.some(y=>y.ascId===x.id))continue;
-    const a={id:uid(),name:x.name,version:"",url:x.live?.url||"",every:0,last:"",note:"",ascId:x.id,items:[],history:[],imported:{},where:{text:"",date:""}};
+    const a={id:uid(),name:x.name,version:"",url:x.live?.url||"",every:0,last:"",ascId:x.id,items:[],history:[],imported:{},where:{text:"",date:""}};
     mergeAsc(a,x);db.apps.push(a);n++;
   }
   save();render();toast(n?`${n} uygulama eklendi`:"Hepsi zaten ekli");
 }
 
-/* ================= arayüz ================= */
-let tab="apps", openApp=null, filter={ideas:"aktif",plans:"aktif"};
-try{const t=localStorage.getItem(LS+"-tab");if(["apps","ideas","plans"].includes(t))tab=t}catch{}
-function go(t,appId=null){tab=t;openApp=appId;try{localStorage.setItem(LS+"-tab",t)}catch{}render();window.scrollTo(0,0)}
-document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>go(b.dataset.tab));
+/* ================= gezinme ================= */
+let tab="apps", openApp=null, appTab="ozet", query="", searchOn=false, filter={ideas:"aktif",plans:"aktif"};
+{const t=pref("tab");if(["apps","ideas","plans"].includes(t))tab=t}
+const TITLES={apps:"Uygulamalar",ideas:"Fikirler",plans:"Planlar"};
+function go(t,appId=null,sub="ozet"){
+  const pushing=appId&&!openApp;
+  tab=t;openApp=appId;appTab=sub;query="";searchOn=false;pref("tab",t);
+  if(pushing)history.pushState({app:appId},"");
+  render();window.scrollTo(0,0);
+}
+window.addEventListener("popstate",()=>{if(openApp){openApp=null;render()}});
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{if(openApp)history.back();go(b.dataset.tab)});
+$("btnBack").onclick=()=>history.state?.app?history.back():go("apps");
+$("btnSearch").onclick=()=>{searchOn=!searchOn;if(!searchOn)query="";render();if(searchOn)setTimeout(()=>$("q")?.focus(),20)};
+$("btnMenu").onclick=openMenu;
+$("fab").onclick=fabAction;
+window.addEventListener("scroll",()=>$("top").classList.toggle("scrolled",scrollY>4),{passive:true});
+const anyOpen=()=>$("dlg").open||$("sheet").open;
 
 function toast(msg){
   document.querySelector(".toast")?.remove();
   const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=msg;
   document.body.appendChild(t);setTimeout(()=>t.remove(),2800);
 }
-const CHECK=`<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>`;
 const on=(sel,fn)=>document.querySelectorAll(sel).forEach(b=>b.onclick=e=>{e.stopPropagation();fn(b,e)});
 
+/* ---------- tema ---------- */
+function applyTheme(t){if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;else delete document.documentElement.dataset.theme}
+applyTheme(pref("theme"));
+
+/* ---------- alt sayfa: eylem listesi ---------- */
+function sheet(html,bind){
+  $("sheetBody").innerHTML=html;
+  const s=$("sheet"); if(!s.open)s.showModal();
+  s.onclick=e=>{if(e.target===s)s.close()};
+  bind&&bind();
+}
+const sheetBtn=(id,ic,t,d)=>`<button data-s="${id}"><span class="ai">${ic}</span><span><b>${t}</b>${d?`<span class="d">${d}</span>`:""}</span></button>`;
+function bindSheet(map){document.querySelectorAll("#sheetBody [data-s]").forEach(b=>b.onclick=()=>{$("sheet").close();map[b.dataset.s]?.()})}
+
+function openMenu(){
+  const th=pref("theme")||"auto";
+  const notif=("Notification" in window)&&Notification.permission!=="granted";
+  sheet(`
+    <h3>Bölümler</h3>
+    ${sheetBtn("apps",svg("app"),"Uygulamalar",`${db.apps.length} uygulama`)}
+    ${db.apps.slice(0,6).map(a=>`<button data-app="${a.id}">${iconHtml(a,38)}<span><b>${esc(a.name)}</b><span class="d">${a.version?"v"+esc(a.version):""} ${appTodos(a).length?`· ${appTodos(a).length} yapılacak`:""}</span></span></button>`).join("")}
+    ${sheetBtn("ideas",svg("idea"),"Fikirler",`${db.ideas.filter(i=>i.status!=="bitti").length} aktif fikir`)}
+    ${sheetBtn("plans",svg("plan"),"Planlar",`${db.plans.filter(p=>!p.done).length} yapılacak plan`)}
+    <hr><h3>Görünüm</h3>
+    <div class="themes">${[["auto","Otomatik"],["light","Açık"],["dark","Koyu"]].map(([k,l])=>`<button class="ghost" data-th="${k}" aria-pressed="${th===k}">${l}</button>`).join("")}</div>
+    <hr><h3>Ayarlar</h3>
+    ${notif?sheetBtn("notif",svg("bell"),"Bildirimleri aç","Tarihi gelen işler için hatırlatma"):""}
+    ${sheetBtn("exp",svg("down"),"Yedek indir","Tüm verileri dosya olarak kaydet")}
+    ${sheetBtn("imp",svg("upl"),"Yedekten yükle","Başka cihazdan aktar")}
+    ${ASC?sheetBtn("asc",svg("store"),"App Store Connect",`${ASC.apps.length} uygulama · ${niceDate(isoDay(ASC.updated))} güncellendi`):""}
+    <a href="../"><span class="ai">${svg("chart")}</span><span><b>Trade Günlüğü</b><span class="d">Diğer uygulamana geç</span></span></a>`,
+  ()=>{
+    bindSheet({apps:()=>go("apps"),ideas:()=>go("ideas"),plans:()=>go("plans"),notif:askNotify,exp:exportData,imp:importData,
+      asc:()=>{go("apps");const n=ASC.apps.filter(x=>!db.apps.some(y=>y.ascId===x.id)).length;n?importAllAsc():toast("App Store Connect'teki tüm uygulamalar ekli")}});
+    document.querySelectorAll("#sheetBody [data-app]").forEach(b=>b.onclick=()=>{$("sheet").close();go("apps",b.dataset.app)});
+    document.querySelectorAll("#sheetBody [data-th]").forEach(b=>b.onclick=()=>{pref("theme",b.dataset.th);applyTheme(b.dataset.th);openMenu()});
+  });
+}
+
+function fabAction(){
+  const a=openApp&&db.apps.find(x=>x.id===openApp);
+  if(a)return sheet(`<h3>${esc(a.name)} için ekle</h3>
+    ${sheetBtn("done",svg("done"),"Yaptım / ekledim","Bitirdiğin bir şeyi tarihiyle yaz")}
+    ${sheetBtn("todo",svg("todo"),"Eklemem gerekiyor","Yapılacaklar listesine ekle")}
+    ${sheetBtn("idea",svg("idea"),"Fikir","Ekleyebileceğin bir özellik")}
+    ${sheetBtn("where",svg("pin"),"Nerede kaldım","Bıraktığın yeri güncelle")}
+    ${sheetBtn("upd",svg("up"),"Yeni sürüm çıkardım","Sürüm numarası ve yenilikler")}`,
+    ()=>bindSheet({done:()=>itemForm(a,null,"done"),todo:()=>itemForm(a,null,"todo"),idea:()=>ideaForm(null,a.id),where:()=>whereForm(a),upd:()=>updateForm(a)}));
+  if(tab==="ideas")return ideaForm();
+  if(tab==="plans")return planForm();
+  appForm();
+}
+
+/* ================= ana çizim ================= */
 function render(){
   document.querySelectorAll("#tabs button").forEach(b=>{
     if(b.dataset.tab===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
     b.querySelector(".badge")?.remove();
-    const n=b.dataset.tab==="plans"?db.plans.filter(p=>planState(p)==="late").length
-           :b.dataset.tab==="apps"?db.apps.reduce((s,a)=>s+appLateCount(a),0):0;
+    const n=b.dataset.tab==="plans"?db.plans.filter(p=>planState(p)==="late").length:b.dataset.tab==="apps"?db.apps.reduce((s,a)=>s+appLateCount(a),0):0;
     if(n)b.insertAdjacentHTML("beforeend",`<span class="badge">${n}</span>`);
   });
-  if(tab==="apps"&&openApp&&db.apps.some(a=>a.id===openApp))return viewApp(db.apps.find(a=>a.id===openApp));
+  const a=tab==="apps"&&openApp&&db.apps.find(x=>x.id===openApp);
+  if(openApp&&!a)openApp=null;
+  $("btnBack").hidden=!a;
+  $("btnSearch").hidden=!!a||tab==="plans";
+  $("ttl").innerHTML=a?`${iconHtml(a,28)}<span style="overflow:hidden;text-overflow:ellipsis">${esc(a.name)}</span>`:TITLES[tab];
+  $("fabTxt").textContent=a?"Ekle":tab==="ideas"?"Fikir":tab==="plans"?"Plan":"Uygulama";
+  if(a)return viewApp(a);
   ({ideas:viewIdeas,plans:viewPlans}[tab]||viewApps)();
 }
+const searchBox=ph=>searchOn?`<label class="search">${svg("search")}<input id="q" type="search" placeholder="${ph}" value="${esc(query)}" autocomplete="off"></label>`:"";
+function bindSearch(){const q=$("q");if(!q)return;q.oninput=()=>{query=q.value;const pos=q.selectionStart;render();const n=$("q");n.focus();n.setSelectionRange(pos,pos)}}
 
-/* ================= UYGULAMALAR (liste) ================= */
+/* ================= UYGULAMALAR ================= */
 function viewApps(){
-  const list=db.apps.slice().sort((a,b)=>appLateCount(b)-appLateCount(a)||(b.where.date||b.last||"").localeCompare(a.where.date||a.last||""));
+  let list=db.apps.slice().sort((a,b)=>appLateCount(b)-appLateCount(a)||(b.where.date||b.last||"").localeCompare(a.where.date||a.last||""));
+  if(query){const q=norm(query);list=list.filter(a=>norm(a.name+" "+a.where.text+" "+a.items.map(i=>i.text).join(" ")).includes(q))}
   const notTracked=ASC?ASC.apps.filter(x=>!db.apps.some(y=>y.ascId===x.id)):[];
-  const notif=("Notification" in window)&&Notification.permission==="default";
   $("view").innerHTML=`
-  <div class="head"><div><h1>Uygulamalar</h1><p class="lead">Ne yaptın, ne ekleyeceksin, nerede kaldın.</p></div><button class="btn" id="add">+ Uygulama</button></div>
-  ${notif?`<div class="notice"><span>Yapılacakların tarihi gelince bildirim almak için izin ver.</span><button class="mini pri" id="askN">Bildirimleri aç</button></div>`:""}
-  ${notTracked.length?`<div class="notice"><span>App Store Connect'te ${notTracked.length} uygulaman burada yok: ${notTracked.map(x=>esc(x.name)).join(", ")}</span><button class="mini pri" id="impAsc">Hepsini ekle</button></div>`:""}
-  <div class="list">${list.length?list.map(a=>{
-    const x=ascFor(a), st=appState(a), todos=appTodos(a), ideas=appIdeas(a), late=todos.filter(t=>dueState(t.date)==="late").length;
+  ${searchBox("Uygulama, not, yapılacak ara…")}
+  ${notTracked.length?`<div class="notice"><span>App Store Connect'te ${notTracked.length} uygulaman burada yok: <b>${notTracked.map(x=>esc(x.name)).join(", ")}</b></span><button class="mini pri" id="impAsc">Hepsini ekle</button></div>`:""}
+  <div class="agrid">${list.length?list.map(a=>{
+    const x=ascFor(a), todos=appTodos(a), late=appLateCount(a), ideas=appIdeas(a).length;
     const pending=x?.versions.find(v=>!RELEASED.has(v.state)&&v.state!=="DEVELOPER_REJECTED");
-    return `<button class="item click" data-open="${a.id}">
-      <div class="body"><div class="t">${esc(a.name)} ${a.version?`<span class="num" style="color:var(--muted);font-weight:400">v${esc(a.version)}</span>`:""}</div>
-        ${a.where.text?`<div class="n"><b>Nerede kaldım:</b> ${esc(a.where.text.length>140?a.where.text.slice(0,140)+"…":a.where.text)}</div>`:""}
-        <div class="meta">
-          ${pending?`${stChip(ASC_ST,pending.state)}<span>v${esc(pending.version)}</span>`:x?.live?stChip(ASC_ST,"READY_FOR_SALE"):""}
-          ${todos.length?`<span class="chip${late?" r":""}">${todos.length} yapılacak${late?` · ${late} gecikti`:""}</span>`:""}
-          ${ideas.length?`<span class="chip">${ideas.length} fikir</span>`:""}
-          ${st==="late"||st==="today"?`<span class="chip r">Güncelleme zamanı</span>`:""}
-          ${a.where.date?`<span>${esc(niceDate(a.where.date))}</span>`:""}
-        </div></div><span aria-hidden="true" style="color:var(--muted)">›</span></button>`}).join("")
-    :`<div class="empty">Henüz uygulama yok. “+ Uygulama” ile ekle${ASC?"":" ya da App Store Connect bağlantısını kur (aşağıda)"}.</div>`}</div>
-  ${ASC?`<p class="small">App Store Connect bilgileri: ${esc(niceDate(isoDay(ASC.updated)))} ${new Date(ASC.updated).toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit"})} itibarıyla.</p>`:`
-  <details class="help"><summary>App Store Connect'ten otomatik bilgi alma</summary>
+    return `<button class="acard" data-open="${a.id}">
+      ${iconHtml(a,58)}
+      <div style="min-width:0;padding-right:24px"><div class="nm">${esc(a.name)}</div>
+        <div class="sub">${a.version?`<span class="num">v${esc(a.version)}</span>`:""}${pending?stChip(ASC_ST,pending.state):x?.live?stChip(ASC_ST,"READY_FOR_SALE"):""}${ideas?`<span>· ${ideas} fikir</span>`:""}</div></div>
+      ${todos.length||late?`<span class="cnt${late?" r":""}" title="${todos.length} yapılacak">${late||todos.length}</span>`:""}
+      ${a.where.text?`<div class="wh">📍 ${esc(a.where.text)}</div>`:""}
+    </button>`}).join("")
+    :`<div class="empty">${query?"Sonuç yok.":`Henüz uygulama yok. Sağ alttaki <b>+ Uygulama</b> ile ekle${ASC?"":" ya da App Store Connect bağlantısını kur"}.`}</div>`}</div>
+  ${!ASC&&!query?`<details class="help"><summary>App Store Connect'ten otomatik bilgi alma</summary>
   <ol>
-    <li>App Store Connect → <b>Kullanıcılar ve Erişim</b> → <b>Entegrasyonlar</b> → <b>App Store Connect API</b> → “Ekip Anahtarları”nda yeni anahtar oluştur (erişim: <b>Geliştirici</b> yeterli). <code>.p8</code> dosyasını indir.</li>
-    <li>GitHub'da bu depo → <b>Settings</b> → <b>Secrets and variables</b> → <b>Actions</b> → üç gizli değer ekle: <code>ASC_ISSUER_ID</code>, <code>ASC_KEY_ID</code>, <code>ASC_PRIVATE_KEY</code> (.p8 dosyasının tüm içeriği).</li>
-    <li><b>Actions</b> sekmesinde “App Store Connect eşitle”yi bir kez elle çalıştır. Sonra 6 saatte bir kendisi güncellenir.</li>
-  </ol>
-  <p class="small">Sürümler, inceleme durumu, build'ler ve “Yenilikler” metinleri buraya gelir; yayınlanan sürümlerin notları “Yaptıklarım” listesine kendiliğinden eklenir.</p></details>`}
-  <div class="foot"><button class="mini" id="exp">Yedek indir</button><button class="mini" id="imp">Yedekten yükle</button><a class="mini" href="../">Trade Günlüğü</a></div>`;
-  $("add").onclick=()=>appForm();
-  $("askN")&&($("askN").onclick=askNotify);
+    <li>App Store Connect → <b>Kullanıcılar ve Erişim</b> → <b>Entegrasyonlar</b> → <b>App Store Connect API</b> → yeni anahtar (erişim: <b>Geliştirici</b>). <code>.p8</code> dosyasını indir.</li>
+    <li>GitHub → depo → <b>Settings</b> → <b>Secrets and variables</b> → <b>Actions</b>: <code>ASC_ISSUER_ID</code>, <code>ASC_KEY_ID</code>, <code>ASC_PRIVATE_KEY</code>.</li>
+    <li><b>Actions</b> → “App Store Connect eşitle” → <b>Run workflow</b>.</li>
+  </ol></details>`:""}`;
   $("impAsc")&&($("impAsc").onclick=importAllAsc);
-  $("exp").onclick=exportData; $("imp").onclick=importData;
   on("[data-open]",b=>go("apps",b.dataset.open));
+  bindSearch();
 }
 
 /* ================= UYGULAMA SAYFASI ================= */
+function todoRow(a,t){const s=dueState(t.date);return `
+  <div class="item ${s==="late"?"late":s==="today"?"soon":""}">
+    <button class="check" data-tdone="${t.id}" aria-label="Yaptım"></button>
+    <div class="body"><div class="t">${esc(t.text)}</div>
+      ${t.must||t.date||t.version?`<div class="meta">${t.must?`<span class="chip r">Gerekli</span>`:""}${t.date?`<span class="chip${s==="late"?" r":s==="today"?" w":""}">${s==="late"?"Gecikti · ":""}${esc(niceDate(t.date))}</span>`:""}${t.version?`<span class="chip">v${esc(t.version)}</span>`:""}</div>`:""}</div>
+    <button class="more" data-iedit="${t.id}" aria-label="Düzenle">${svg("dots")}</button>
+  </div>`}
+function doneRow(d){return `<div class="item tap" data-iedit="${d.id}">
+    <div class="body"><div class="t">${esc(d.text)}</div>
+      <div class="meta"><span>${esc(niceDate(d.doneDate||d.date))}</span>${d.version?`<span class="chip">v${esc(d.version)}</span>`:""}${d.src==="asc"?`<span class="chip">App Store</span>`:""}${d.kind==="todo"?`<span class="chip g">Yapılacaklardan</span>`:""}</div></div>
+    <span class="more" aria-hidden="true">${svg("dots")}</span></div>`}
+function ideaRow(i){return `<div class="item">
+    <div class="body"><div class="t">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:""}
+      <div class="meta">${i.date?`<span>${esc(niceDate(i.date))}</span>`:""}${i.status!=="yeni"?`<span class="chip w">${IDEA_ST[i.status]}</span>`:""}${i.tag?`<span class="chip">#${esc(i.tag)}</span>`:""}</div></div>
+    <div class="acts">${i.status==="yeni"?`<button class="mini pri" data-totodo="${i.id}">Ekleyeceğim</button>`:""}<button class="more" data-ideaedit="${i.id}" aria-label="Düzenle">${svg("dots")}</button></div></div>`}
+
 function viewApp(a){
   const x=ascFor(a), st=appState(a), nx=appNext(a);
-  const todos=appTodos(a).sort((p,q)=>(q.must?1:0)-(p.must?1:0)||(p.date||"9").localeCompare(q.date||"9"));
-  const ideas=appIdeas(a).sort((p,q)=>(q.date||"").localeCompare(p.date||""));
-  const done=a.items.filter(i=>i.kind==="done"||(i.kind==="todo"&&i.done)).sort((p,q)=>(q.doneDate||q.date||"").localeCompare(p.doneDate||p.date||""));
-  // Yaptıklarımı aya göre grupla
-  const groups=[];for(const d of done){const day=d.doneDate||d.date||"";const k=day?day.slice(0,7):"—";let g=groups.find(g=>g.k===k);if(!g)groups.push(g={k,items:[]});g.items.push(d)}
+  const todos=appTodos(a), ideas=appIdeas(a), done=appDone(a);
   const pending=x?.versions.filter(v=>!RELEASED.has(v.state)&&v.state!=="DEVELOPER_REJECTED")||[];
   const lb=x?.builds?.[0];
-
+  const T=[["ozet","Özet",""],["todo","Yapılacak",todos.length],["idea","Fikirler",ideas.length],["done","Yaptıklarım",done.length]];
+  let body="";
+  if(appTab==="ozet"){
+    body=`
+    <button class="where" id="whereEdit">
+      <span class="sechead"><span class="lbl">📍 Nerede kaldım${a.where.date?` · ${esc(niceDate(a.where.date))}`:""}</span><span class="link">${a.where.text?"Güncelle":"Yaz"}</span></span>
+      <p>${a.where.text?esc(a.where.text):`<span style="color:var(--muted)">Bıraktığın yeri yaz; dönünce buradan devam et.</span>`}</p>
+    </button>
+    ${st==="late"||st==="today"?`<div class="notice"><span><b>Güncelleme zamanı.</b> Her ${a.every} günde bir güncellemeyi hedefliyorsun; son güncelleme ${esc(niceDate(a.last))}.</span><button class="mini pri" id="updNow">Güncelledim</button></div>`:""}
+    <section class="sec">
+      <div class="sechead"><h2>Sıradaki işler<small>${todos.length}</small></h2>${todos.length>3?`<button class="link" data-sub="todo">Tümü ›</button>`:""}</div>
+      <div class="list">${todos.length?todos.slice(0,3).map(t=>todoRow(a,t)).join(""):`<div class="empty">Eklemen gereken bir şey yok. Sağ alttaki <b>+ Ekle</b> ile yazabilirsin.</div>`}</div>
+    </section>
+    ${x?`<section class="panel">
+      <div class="sechead"><h2>App Store Connect</h2>${x.live?.url?`<a class="mini" href="${esc(x.live.url)}" target="_blank" rel="noopener">Mağazada ↗</a>`:""}</div>
+      <div class="kv">
+        <div><span class="lbl">Yayındaki sürüm</span><b class="num">${esc(x.live?.version||"—")}</b>${x.live?.releaseDate?`<span class="small">${esc(longDay(isoDay(x.live.releaseDate)))}</span>`:x.live?"":`<span class="small">Henüz yayında değil</span>`}</div>
+        ${pending.map(v=>`<div><span class="lbl">Sıradaki sürüm</span><b class="num">${esc(v.version)}</b><span>${stChip(ASC_ST,v.state)}</span></div>`).join("")}
+        ${lb?`<div><span class="lbl">Son derleme (build)</span><b class="num">${lb.version?esc(lb.version)+" ":""}(build ${esc(lb.build)})</b><span class="small">${stChip(BUILD_ST,lb.state)} ${esc(niceDate(isoDay(lb.uploaded)))}</span></div>`:""}
+        ${x.live?.ratings?`<div><span class="lbl">Puan</span><b class="num">${(+x.live.rating).toFixed(1)} ★</b><span class="small">${x.live.ratings} değerlendirme</span></div>`:""}
+      </div>
+      ${pending[0]?.whatsNew?`<div class="notes"><span class="lbl">${esc(pending[0].version)} yenilikleri (taslak)</span>\n${esc(pending[0].whatsNew)}</div>`:""}
+    </section>`:""}
+    <section class="sec">
+      <div class="sechead"><h2>Son yaptıkların<small>${done.length}</small></h2>${done.length>3?`<button class="link" data-sub="done">Tümü ›</button>`:""}</div>
+      <div class="list">${done.length?done.slice(0,3).map(doneRow).join(""):`<div class="empty">Yaptığın şeyleri tarihleriyle buraya yaz.</div>`}</div>
+    </section>
+    ${ideas.length?`<section class="sec"><div class="sechead"><h2>Fikirler<small>${ideas.length}</small></h2><button class="link" data-sub="idea">Tümü ›</button></div><div class="list">${ideas.slice(0,2).map(ideaRow).join("")}</div></section>`:""}
+    <section class="panel">
+      <div class="sechead"><h2>Uygulama bilgileri</h2><button class="mini" id="edit">Düzenle</button></div>
+      <div class="kv">
+        <div><span class="lbl">Sürüm</span><b class="num">${esc(a.version||"—")}</b></div>
+        <div><span class="lbl">Son güncelleme</span><b>${a.last?esc(niceDate(a.last)):"—"}</b></div>
+        <div><span class="lbl">Hatırlatma</span><b>${+a.every?`Her ${a.every} gün`:"Kapalı"}</b>${nx?`<span class="small">Sıradaki: ${esc(niceDate(dkey(nx)))}</span>`:""}</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="mini" id="upd">Yeni sürüm çıkardım</button>${a.url?`<a class="mini" href="${esc(a.url)}" target="_blank" rel="noopener">Bağlantıyı aç ↗</a>`:""}</div>
+      ${a.history.length?`<div class="small">${a.history.slice(-5).reverse().map(h=>`${esc(longDay(h.date))} · ${h.version?"v"+esc(h.version):""}${h.note?" — "+esc(h.note):""}`).join("<br>")}</div>`:""}
+    </section>`;
+  }else if(appTab==="todo"){
+    body=`<div class="list">${todos.length?todos.map(t=>todoRow(a,t)).join(""):`<div class="empty">Eklemen gereken bir şey yok.</div>`}</div>
+      <button class="ghost" data-add="todo" style="justify-self:start">${svg("plus")} Yapılacak ekle</button>`;
+  }else if(appTab==="idea"){
+    body=`<div class="list">${ideas.length?ideas.map(ideaRow).join(""):`<div class="empty">Aklına gelen özellik fikirlerini buraya yaz.</div>`}</div>
+      <button class="ghost" data-add="idea" style="justify-self:start">${svg("plus")} Fikir ekle</button>`;
+  }else{
+    const groups=[];for(const d of done){const day=d.doneDate||d.date||"";const k=day?day.slice(0,7):"—";let g=groups.find(g=>g.k===k);if(!g)groups.push(g={k,items:[]});g.items.push(d)}
+    body=`${groups.length?groups.map(g=>`<div class="daygrp"><span class="lbl">${g.k==="—"?"Tarihsiz":`${AYU[+g.k.slice(5)-1]} ${g.k.slice(0,4)}`}</span>${g.items.map(doneRow).join("")}</div>`).join(""):`<div class="empty">Yaptığın ya da eklediğin şeyleri tarihleriyle buraya yaz.</div>`}
+      <button class="ghost" data-add="done" style="justify-self:start">${svg("plus")} Yaptım ekle</button>`;
+  }
   $("view").innerHTML=`
-  <button class="back" id="back">‹ Uygulamalar</button>
-  <div class="head"><div><h1>${esc(a.name)}</h1><p class="lead">${a.version?`Sürüm <span class="num">${esc(a.version)}</span>`:"Sürüm yok"}${a.last?` · son güncelleme ${esc(niceDate(a.last))}`:""}</p></div>
-    <div class="counts"><button class="ghost" id="upd">Güncelledim</button><button class="ghost" id="edit">Düzenle</button>${a.url?`<a class="ghost" style="text-decoration:none" href="${esc(a.url)}" target="_blank" rel="noopener">Aç ↗</a>`:""}</div></div>
+  <div class="hero">
+    <button id="icn" style="background:none;border:0;padding:0" aria-label="İkonu değiştir">${iconHtml(a,76)}</button>
+    <div style="min-width:0"><h1>${esc(a.name)}</h1>
+      <div class="meta">${a.version?`<span class="chip num">v${esc(a.version)}</span>`:""}${pending[0]?stChip(ASC_ST,pending[0].state):x?.live?stChip(ASC_ST,"READY_FOR_SALE"):""}${appLateCount(a)?`<span class="chip r">${appLateCount(a)} gecikmiş</span>`:""}</div></div>
+  </div>
+  <div class="subtabs" role="tablist">${T.map(([k,l,n])=>`<button data-sub="${k}" aria-pressed="${appTab===k}">${l}${n!==""?`<small>${n}</small>`:""}</button>`).join("")}</div>
+  ${body}`;
 
-  <section class="where">
-    <div class="sechead"><span class="lbl">Nerede kaldım${a.where.date?` · ${esc(niceDate(a.where.date))}`:""}</span><button class="mini" id="whereEdit">${a.where.text?"Güncelle":"Yaz"}</button></div>
-    <p>${a.where.text?esc(a.where.text):`<span style="color:var(--muted)">Bıraktığın yeri yaz; dönünce buradan devam et.</span>`}</p>
-  </section>
-
-  ${st==="late"||st==="today"?`<div class="notice"><span><b>Güncelleme zamanı.</b> Her ${a.every} günde bir güncellemeyi hedefliyorsun; son güncelleme ${esc(niceDate(a.last))}.</span></div>`:""}
-
-  ${x?`<section class="panel">
-    <div class="sechead"><h2>App Store Connect</h2>${x.live?.url?`<a class="mini" href="${esc(x.live.url)}" target="_blank" rel="noopener">Mağazada ↗</a>`:""}</div>
-    <div class="kv">
-      <div><span class="lbl">Yayındaki sürüm</span><b class="num">${esc(x.live?.version||"—")}</b>${x.live?.releaseDate?`<span class="small">${esc(longDay(isoDay(x.live.releaseDate)))}</span>`:""}</div>
-      ${pending.map(v=>`<div><span class="lbl">Sıradaki sürüm</span><b class="num">${esc(v.version)}</b><span>${stChip(ASC_ST,v.state)}</span></div>`).join("")}
-      ${lb?`<div><span class="lbl">Son derleme (build)</span><b class="num">${esc(lb.version)} (${esc(lb.build)})</b><span class="small">${stChip(BUILD_ST,lb.state)} ${esc(niceDate(isoDay(lb.uploaded)))}</span></div>`:""}
-      ${x.live?.ratings?`<div><span class="lbl">Puan</span><b class="num">${(+x.live.rating).toFixed(1)} ★</b><span class="small">${x.live.ratings} değerlendirme</span></div>`:""}
-    </div>
-    ${pending[0]?.whatsNew?`<div class="notes"><span class="lbl">${esc(pending[0].version)} yenilikleri (taslak)</span>\n${esc(pending[0].whatsNew)}</div>`:""}
-  </section>`:""}
-
-  <section class="sec">
-    <div class="sechead"><h2>Eklemem gerekenler<small>${todos.length}</small></h2><button class="mini pri" data-addk="todo">+ Ekle</button></div>
-    <div class="list">${todos.length?todos.map(t=>{const s=dueState(t.date);return `
-      <div class="item ${s==="late"?"late":s==="today"?"soon":""}">
-        <button class="check" data-tdone="${t.id}" aria-label="Yaptım"></button>
-        <div class="body"><div class="t plain">${esc(t.text)}</div>
-          <div class="meta">${t.must?`<span class="chip r">Gerekli</span>`:""}${t.date?`<span class="chip${s==="late"?" r":s==="today"?" w":""}">${s==="late"?"Gecikti · ":""}${esc(niceDate(t.date))}</span>`:""}${t.version?`<span class="chip">v${esc(t.version)}</span>`:""}</div></div>
-        <div class="acts"><button class="mini" data-iedit="${t.id}">Düzenle</button></div>
-      </div>`}).join(""):`<div class="empty">Eklemen gereken bir şey yok.</div>`}</div>
-  </section>
-
-  <section class="sec">
-    <div class="sechead"><h2>Ekleyebileceklerim<small>${ideas.length}</small></h2><button class="mini pri" data-addidea>+ Fikir</button></div>
-    <div class="list">${ideas.length?ideas.map(i=>`
-      <div class="item">
-        <div class="body"><div class="t plain">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:""}
-          <div class="meta">${i.date?`<span>${esc(niceDate(i.date))}</span>`:""}${i.status!=="yeni"?`<span class="chip w">${IDEA_ST[i.status]}</span>`:""}</div></div>
-        <div class="acts">${i.status==="yeni"?`<button class="mini pri" data-totodo="${i.id}">Ekleyeceğim</button>`:""}<button class="mini" data-ideaedit="${i.id}">Düzenle</button></div>
-      </div>`).join(""):`<div class="empty">Aklına gelen özellik fikirlerini buraya yaz.</div>`}</div>
-  </section>
-
-  <section class="sec">
-    <div class="sechead"><h2>Yaptıklarım / eklediklerim<small>${done.length}</small></h2><button class="mini pri" data-addk="done">+ Yaptım</button></div>
-    ${groups.length?groups.map(g=>`<div class="daygrp"><span class="lbl">${g.k==="—"?"Tarihsiz":`${AYU[+g.k.slice(5)-1]} ${g.k.slice(0,4)}`}</span>
-      ${g.items.map(d=>`<div class="item">
-        <div class="body"><div class="t plain">${esc(d.text)}</div>
-          <div class="meta"><span>${esc(niceDate(d.doneDate||d.date))}</span>${d.version?`<span class="chip">v${esc(d.version)}</span>`:""}${d.src==="asc"?`<span class="chip">App Store</span>`:""}${d.kind==="todo"?`<span class="chip g">Yapılacaklardan</span>`:""}</div></div>
-        <div class="acts"><button class="mini" data-iedit="${d.id}">Düzenle</button></div></div>`).join("")}</div>`).join("")
-      :`<div class="empty">Yaptığın ya da eklediğin şeyleri tarihleriyle buraya yaz.</div>`}
-  </section>
-
-  <section class="panel">
-    <div class="sechead"><h2>Güncelleme hatırlatması</h2></div>
-    <p class="small" style="margin:0">${+a.every?`Her ${a.every} günde bir. Sıradaki: <b>${esc(niceDate(dkey(nx)))}</b>.`:"Kapalı. “Düzenle”den kaç günde bir güncellemek istediğini yazabilirsin."}</p>
-    ${a.history.length?`<div class="small">${a.history.slice(-6).reverse().map(h=>`${esc(longDay(h.date))} · ${h.version?"v"+esc(h.version):""}${h.note?" — "+esc(h.note):""}`).join("<br>")}</div>`:""}
-  </section>`;
-
-  $("back").onclick=()=>go("apps");
-  $("edit").onclick=()=>appForm(a);
-  $("upd").onclick=()=>updateForm(a);
-  $("whereEdit").onclick=()=>whereForm(a);
-  on("[data-addk]",b=>itemForm(a,null,b.dataset.addk));
+  on("[data-sub]",b=>{appTab=b.dataset.sub;render();window.scrollTo({top:0})});
+  $("icn").onclick=()=>iconMenu(a);
+  $("whereEdit")&&($("whereEdit").onclick=()=>whereForm(a));
+  $("edit")&&($("edit").onclick=()=>appForm(a));
+  $("upd")&&($("upd").onclick=()=>updateForm(a));
+  $("updNow")&&($("updNow").onclick=()=>updateForm(a));
+  on("[data-add]",b=>({todo:()=>itemForm(a,null,"todo"),done:()=>itemForm(a,null,"done"),idea:()=>ideaForm(null,a.id)})[b.dataset.add]());
   on("[data-iedit]",b=>itemForm(a,a.items.find(i=>i.id===b.dataset.iedit)));
-  on("[data-tdone]",b=>{const t=a.items.find(i=>i.id===b.dataset.tdone);t.done=true;t.doneDate=today();save();render();toast("Yaptıklarına eklendi ✔ (tarihini Düzenle'den değiştirebilirsin)")});
-  on("[data-addidea]",()=>ideaForm(null,a.id));
+  on("[data-tdone]",b=>{const t=a.items.find(i=>i.id===b.dataset.tdone);t.done=true;t.doneDate=today();save();render();toast("Yaptıklarına eklendi ✔")});
   on("[data-ideaedit]",b=>ideaForm(db.ideas.find(i=>i.id===b.dataset.ideaedit)));
   on("[data-totodo]",b=>{const i=db.ideas.find(x=>x.id===b.dataset.totodo);itemForm(a,null,"todo",{text:i.title+(i.note?"\n"+i.note:""),ideaId:i.id})});
 }
+function iconMenu(a){
+  sheet(`<h3>${esc(a.name)} ikonu</h3>
+    ${sheetBtn("pick",svg("upl"),"Resim seç","Fotoğraflardan ya da dosyalardan")}
+    ${a.icon?sheetBtn("reset",svg("trash"),a.ascIcon?"App Store ikonuna dön":"Resmi kaldır",""):""}`,
+  ()=>bindSheet({pick:()=>pickIcon(d=>{a.icon=d;save();render();toast("İkon güncellendi")}),reset:()=>{delete a.icon;save();render()}}));
+}
 
 function whereForm(a){
-  openForm(`<h2>Nerede kaldım?</h2>
-    <div class="field"><label for="f-w">Bıraktığın yer, sıradaki adım</label><textarea id="f-w" style="min-height:120px" placeholder="Ör: Grafik ekranının tasarımı bitti, veriyi bağlamak kaldı.">${esc(a.where.text)}</textarea></div>
+  openForm(`<h2>📍 Nerede kaldım?</h2>
+    <div class="field"><label for="f-w">Bıraktığın yer, sıradaki adım</label><textarea id="f-w" style="min-height:130px" placeholder="Ör: Giriş ekranı bitti, şifre sıfırlama kaldı.">${esc(a.where.text)}</textarea></div>
     <div class="field"><label for="f-d">Tarih</label><input id="f-d" type="date" value="${a.where.date||today()}"></div>`,
   ()=>{a.where={text:$("f-w").value.trim(),date:$("f-d").value||today()};save();toast("Kaydedildi")});
 }
-
 function itemForm(a,it,kind,preset){
   const x=it||Object.assign({kind,text:"",date:kind==="done"?today():"",version:"",must:false},preset);
   const isTodo=x.kind==="todo";
   openForm(`<h2>${it?"Düzenle":isTodo?"Eklemem gereken":"Yaptım / ekledim"}</h2>
-    <div class="field"><label for="f-t">${isTodo?"Ne eklenecek?":"Ne yaptın?"}</label><textarea id="f-t" required placeholder="${isTodo?"Ör: Karanlık mod":"Ör: Giriş ekranını yeniledim"}">${esc(x.text)}</textarea></div>
+    <div class="field"><label for="f-t">${isTodo&&!x.done?"Ne eklenecek?":"Ne yaptın?"}</label><textarea id="f-t" required placeholder="${isTodo?"Ör: Karanlık mod":"Ör: Giriş ekranını yeniledim"}">${esc(x.text)}</textarea></div>
     <div class="fields">
       <div class="field"><label for="f-k">Tür</label><select id="f-k"><option value="todo"${isTodo&&!x.done?" selected":""}>Eklemem gerekiyor</option><option value="done"${!isTodo||x.done?" selected":""}>Yaptım / ekledim</option></select></div>
       <div class="field"><label for="f-v">Sürüm (isteğe bağlı)</label><input id="f-v" maxlength="20" value="${esc(x.version)}" placeholder="${esc(a.version||"1.0")}"></div>
       <div class="field"><label for="f-d" id="f-dl">Tarih</label><input id="f-d" type="date" value="${esc(x.done?x.doneDate||x.date:x.date)}"></div>
-      <div class="field" id="f-mw"><label>&nbsp;</label><label class="cb" style="text-transform:none;letter-spacing:0;font-size:.9rem;color:var(--fg)"><input type="checkbox" id="f-m"${x.must?" checked":""}> Gerekli (önemli)</label></div>
+      <div class="field" id="f-mw"><label class="cb"><input type="checkbox" id="f-m"${x.must?" checked":""}> Gerekli (önemli)</label></div>
     </div>`,
   ()=>{
     const text=$("f-t").value.trim(); if(!text)return false;
@@ -446,13 +620,12 @@ function itemForm(a,it,kind,preset){
       const idea=x.ideaId&&db.ideas.find(i=>i.id===x.ideaId); if(idea){idea.status=k==="todo"?"plan":"bitti";idea.updated=Date.now()}}
     save();toast("Kaydedildi");
   }, it&&(()=>{a.items=a.items.filter(y=>y!==it);save()}));
-  const sync=()=>{const t=$("f-k").value==="todo";$("f-dl").textContent=t?"Ne zamana kadar? (isteğe bağlı)":"Ne zaman yaptın?";$("f-mw").style.visibility=t?"visible":"hidden";if(!t&&!$("f-d").value)$("f-d").value=today()};
+  const sync=()=>{const t=$("f-k").value==="todo";$("f-dl").textContent=t?"Son tarih (isteğe bağlı)":"Ne zaman yaptın?";$("f-mw").style.visibility=t?"visible":"hidden";if(!t&&!$("f-d").value)$("f-d").value=today()};
   $("f-k").onchange=sync;sync();
 }
-
 function updateForm(a){
   const bump=v=>{const m=String(v||"").match(/^(.*?)(\d+)$/);return m?m[1]+(+m[2]+1):v};
-  openForm(`<h2>${esc(a.name)} güncellendi</h2>
+  openForm(`<h2>${esc(a.name)} — yeni sürüm</h2>
     <div class="fields"><div class="field"><label for="f-v">Yeni sürüm</label><input id="f-v" value="${esc(bump(a.version))}" placeholder="1.2.0"></div>
     <div class="field"><label for="f-d">Tarih</label><input id="f-d" type="date" value="${today()}"></div></div>
     <div class="field"><label for="f-n">Ne değişti? (Yaptıklarıma da eklenir)</label><textarea id="f-n" placeholder="Yeni özellikler, düzeltmeler…"></textarea></div>`,
@@ -460,55 +633,68 @@ function updateForm(a){
     const v=$("f-v").value.trim(),d=$("f-d").value||today(),n=$("f-n").value.trim();
     a.history.push({date:d,version:v,note:n});
     if(n)a.items.push({id:uid(),kind:"done",text:n,version:v,date:d});
-    a.version=v||a.version;if(!a.last||d>a.last)a.last=d;save();toast("Güncelleme kaydedildi");
+    a.version=v||a.version;if(!a.last||d>a.last)a.last=d;save();toast("Sürüm kaydedildi");
   });
 }
 function appForm(a){
-  const x=a||{name:"",version:"",url:"",every:0,last:"",note:""};
+  const x=a||{name:"",version:"",url:"",every:0,last:""};
+  let icon=x.icon;
   const ascOpts=ASC?ASC.apps.filter(z=>z.id===x.ascId||!db.apps.some(y=>y.ascId===z.id)):[];
   openForm(`<h2>${a?"Uygulamayı düzenle":"Yeni uygulama"}</h2>
-    <div class="fields"><div class="field"><label for="f-a">Uygulama adı</label><input id="f-a" required maxlength="80" value="${esc(x.name)}" placeholder="Trade Günlüğü"></div>
-    <div class="field"><label for="f-v">Şu anki sürüm</label><input id="f-v" maxlength="20" value="${esc(x.version)}" placeholder="1.0"></div>
-    <div class="field"><label for="f-l">Son güncelleme</label><input id="f-l" type="date" value="${x.last||""}"></div>
-    <div class="field"><label for="f-e">Kaç günde bir güncelle? (0 = hatırlatma yok)</label><input id="f-e" type="number" min="0" max="365" value="${+x.every||0}"></div></div>
+    <div class="iconpick"><span id="f-ic">${iconHtml({...x,icon},56)}</span><div style="display:grid;gap:6px"><button type="button" class="mini" id="f-ip">Resim seç</button>${icon?`<button type="button" class="mini" id="f-ir">Resmi kaldır</button>`:""}</div></div>
+    <div class="field"><label for="f-a">Uygulama adı</label><input id="f-a" required maxlength="80" value="${esc(x.name)}" placeholder="Uygulamanın adı"></div>
+    <div class="fields">
+      <div class="field"><label for="f-v">Şu anki sürüm</label><input id="f-v" maxlength="20" value="${esc(x.version)}" placeholder="1.0"></div>
+      <div class="field"><label for="f-l">Son güncelleme</label><input id="f-l" type="date" value="${x.last||""}"></div>
+    </div>
+    <div class="field"><label for="f-e">Kaç günde bir güncellemeyi hatırlatayım? (0 = hatırlatma yok)</label><input id="f-e" type="number" inputmode="numeric" min="0" max="365" value="${+x.every||0}"></div>
     ${ASC?`<div class="field"><label for="f-s">App Store Connect bağlantısı</label><select id="f-s"><option value="">Bağlı değil</option>${ascOpts.map(z=>`<option value="${esc(z.id)}"${x.ascId===z.id?" selected":""}>${esc(z.name)} (${esc(z.bundleId)})</option>`).join("")}</select></div>`:""}
     <div class="field"><label for="f-u">Bağlantı (isteğe bağlı)</label><input id="f-u" type="url" value="${esc(x.url)}" placeholder="https://…"></div>`,
   ()=>{
     let url=$("f-u").value.trim(); if(url&&!/^https?:\/\//i.test(url))url="https://"+url;
-    const v={name:$("f-a").value.trim(),version:$("f-v").value.trim(),every:Math.max(0,Math.min(365,+$("f-e").value||0)),last:$("f-l").value,url};
+    const v={name:$("f-a").value.trim(),version:$("f-v").value.trim(),every:Math.max(0,Math.min(365,+$("f-e").value||0)),last:$("f-l").value,url,icon};
     if(!v.name)return false;
+    if(!icon)delete v.icon;
     if(ASC)v.ascId=$("f-s").value||null;
-    let t=a; if(a)Object.assign(a,v); else db.apps.push(t={id:uid(),...v,items:[],history:[],imported:{},where:{text:"",date:""}});
+    let t=a; if(a){Object.assign(a,v);if(!icon)delete a.icon} else db.apps.push(t={id:uid(),...v,items:[],history:[],imported:{},where:{text:"",date:""}});
     const z=ascFor(t); if(z)mergeAsc(t,z);
     save();toast("Uygulama kaydedildi");
-  }, a&&(()=>{db.apps=db.apps.filter(y=>y!==a);db.ideas.forEach(i=>{if(i.appId===a.id)i.appId=null});save();openApp=null}));
+    if(!a)go("apps",t.id);
+  }, a&&(()=>{db.apps=db.apps.filter(y=>y!==a);db.ideas.forEach(i=>{if(i.appId===a.id)i.appId=null});save();if(history.state?.app)history.back();openApp=null}));
+  const refresh=()=>{$("f-ic").innerHTML=iconHtml({...x,name:$("f-a").value||x.name,icon},56)};
+  $("f-ip").onclick=()=>pickIcon(d=>{icon=d;refresh()});
+  $("f-ir")&&($("f-ir").onclick=()=>{icon=null;refresh()});
+  $("f-a").addEventListener("input",refresh);
 }
 
 /* ================= FİKİRLER ================= */
 function viewIdeas(){
   const f=filter.ideas;
   let list=db.ideas.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"")||b.updated-a.updated);
-  if(f==="aktif")list=list.filter(i=>i.status!=="bitti"); else if(f==="genel")list=list.filter(i=>!i.appId); else if(f!=="hepsi")list=list.filter(i=>i.status===f);
+  if(f==="aktif")list=list.filter(i=>i.status!=="bitti"); else if(f==="genel")list=list.filter(i=>!i.appId); else if(f==="bitti")list=list.filter(i=>i.status==="bitti"); else if(f.startsWith("app:"))list=list.filter(i=>i.appId===f.slice(4));
+  if(query){const q=norm(query);list=list.filter(i=>norm(i.title+" "+i.note+" "+i.tag).includes(q))}
+  const appsWithIdeas=db.apps.filter(a=>db.ideas.some(i=>i.appId===a.id));
   $("view").innerHTML=`
-  <div class="head"><div><h1>Fikirler</h1><p class="lead">Aklına geleni hemen yaz. İstersen bir uygulamaya bağla.</p></div><button class="btn" id="add">+ Fikir</button></div>
-  <div class="seg">${[["aktif","Aktif"],["genel","Genel"],["yeni","Yeni"],["bitti","Yapıldı"],["hepsi","Hepsi"]].map(([k,l])=>`<button data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
+  ${searchBox("Fikir ara…")}
+  <div class="seg">${[["aktif","Aktif"],["genel","Genel"],...appsWithIdeas.map(a=>["app:"+a.id,a.name]),["bitti","Yapıldı"],["hepsi","Hepsi"]].map(([k,l])=>`<button data-f="${esc(k)}" aria-pressed="${f===k}">${esc(l)}</button>`).join("")}</div>
   <div class="list">${list.length?list.map(i=>{const app=i.appId&&db.apps.find(a=>a.id===i.appId);return `
     <div class="item${i.status==="bitti"?" done":""}">
-      <div class="body"><div class="t">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:""}
-        <div class="meta">${i.date?`<span>${esc(niceDate(i.date))}</span>`:""}${app?`<span class="chip">📱 ${esc(app.name)}</span>`:""}${i.status!=="yeni"?`<span class="chip${i.status==="bitti"?" g":" w"}">${IDEA_ST[i.status]}</span>`:""}${i.tag?`<span class="chip">#${esc(i.tag)}</span>`:""}</div></div>
-      <div class="acts">${i.status==="yeni"?`<button class="mini pri" data-next="${i.id}">${app?"Ekleyeceğim":"Plana çevir"}</button>`:""}<button class="mini" data-edit="${i.id}">Düzenle</button></div>
-    </div>`}).join(""):`<div class="empty">${db.ideas.length?"Bu filtrede fikir yok.":"Henüz fikir yok. “+ Fikir” ile ilkini ekle."}</div>`}</div>`;
-  $("add").onclick=()=>ideaForm();
+      ${app?iconHtml(app,32):`<span class="ic" style="--s:32px;--h:45;font-size:15px">💡</span>`}
+      <div class="body"><div class="t b">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:""}
+        <div class="meta">${i.date?`<span>${esc(niceDate(i.date))}</span>`:""}${app?`<span>· ${esc(app.name)}</span>`:""}${i.status!=="yeni"?`<span class="chip${i.status==="bitti"?" g":" w"}">${IDEA_ST[i.status]}</span>`:""}${i.tag?`<span class="chip">#${esc(i.tag)}</span>`:""}</div></div>
+      <div class="acts">${i.status==="yeni"?`<button class="mini pri" data-next="${i.id}">${app?"Ekleyeceğim":"Plana çevir"}</button>`:""}<button class="more" data-edit="${i.id}" aria-label="Düzenle">${svg("dots")}</button></div>
+    </div>`}).join(""):`<div class="empty">${query?"Sonuç yok.":db.ideas.length?"Bu filtrede fikir yok.":"Henüz fikir yok. Sağ alttaki <b>+ Fikir</b> ile ilkini ekle."}</div>`}</div>`;
   on("[data-f]",b=>{filter.ideas=b.dataset.f;render()});
   on("[data-edit]",b=>ideaForm(db.ideas.find(i=>i.id===b.dataset.edit)));
   on("[data-next]",b=>{
     const i=db.ideas.find(x=>x.id===b.dataset.next), app=i.appId&&db.apps.find(a=>a.id===i.appId);
-    if(app){go("apps",app.id);itemForm(app,null,"todo",{text:i.title+(i.note?"\n"+i.note:""),ideaId:i.id})}
+    if(app){go("apps",app.id,"todo");itemForm(app,null,"todo",{text:i.title+(i.note?"\n"+i.note:""),ideaId:i.id})}
     else planForm(null,{title:i.title,note:i.note,ideaId:i.id});
   });
+  bindSearch();
 }
 function ideaForm(i,appId){
-  const x=i||{title:"",note:"",tag:"",status:"yeni",date:today(),appId:appId||null};
+  const x=i||{title:"",note:"",tag:"",status:"yeni",date:today(),appId:appId||(filter.ideas.startsWith("app:")?filter.ideas.slice(4):null)};
   openForm(`<h2>${i?"Fikri düzenle":"Yeni fikir"}</h2>
     <div class="field"><label for="f-t">Fikir</label><input id="f-t" required maxlength="200" value="${esc(x.title)}" placeholder="Ör: Grafik ekranı ekle"></div>
     <div class="field"><label for="f-n">Not</label><textarea id="f-n" placeholder="Detaylar, neden önemli, ilk adım…">${esc(x.note)}</textarea></div>
@@ -532,17 +718,15 @@ function viewPlans(){
   let list=db.plans.slice().sort((a,b)=>order[planState(a)]-order[planState(b)]||(parseDue(a.due)||Infinity)-(parseDue(b.due)||Infinity)||b.pri-a.pri);
   if(f==="aktif")list=list.filter(p=>!p.done); else if(f==="bugun")list=list.filter(p=>["late","today"].includes(planState(p))); else if(f==="bitti")list=list.filter(p=>p.done).sort((a,b)=>(b.doneDate||"").localeCompare(a.doneDate||""));
   $("view").innerHTML=`
-  <div class="head"><div><h1>Planlar</h1><p class="lead">Tarih ve saat ver, zamanı gelince hatırlatayım.</p></div><button class="btn" id="add">+ Plan</button></div>
   <div class="seg">${[["aktif","Yapılacak"],["bugun","Bugün / geciken"],["bitti","Biten"]].map(([k,l])=>`<button data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
   <div class="list">${list.length?list.map(p=>{const st=planState(p);return `
     <div class="item ${st==="late"?"late":st==="today"?"soon":st==="done"?"done":""}">
-      <button class="check${p.done?" on":""}" data-done="${p.id}" aria-label="${p.done?"Geri al":"Tamamlandı"}">${p.done?CHECK:""}</button>
-      <div class="body"><div class="t">${esc(p.title)}</div>${p.note?`<div class="n">${esc(p.note)}</div>`:""}
+      <button class="check${p.done?" on":""}" data-done="${p.id}" aria-label="${p.done?"Geri al":"Tamamlandı"}">${p.done?`<svg viewBox="0 0 24 24">${I.check}</svg>`:""}</button>
+      <div class="body"><div class="t b">${esc(p.title)}</div>${p.note?`<div class="n">${esc(p.note)}</div>`:""}
         <div class="meta">${p.due?`<span class="chip${st==="late"?" r":st==="today"?" w":""}">${st==="late"?"Gecikti · ":""}${esc(niceDate(p.due))}</span>`:""}${p.repeat!=="none"?`<span class="chip">↻ ${REPEAT[p.repeat]}</span>`:""}${p.pri==3?`<span class="chip r">Önemli</span>`:""}${p.done?`<span>${esc(niceDate(p.doneDate))} bitti</span>`:""}</div></div>
-      <div class="acts">${p.due&&!p.done?`<button class="mini" data-ics="${p.id}" title="Telefon takvimine alarmlı ekle">Takvime</button>`:""}<button class="mini" data-edit="${p.id}">Düzenle</button></div>
-    </div>`}).join(""):`<div class="empty">${db.plans.length?"Bu filtrede plan yok.":"Henüz plan yok. “+ Plan” ile ekle."}</div>`}</div>
+      <div class="acts">${p.due&&!p.done?`<button class="mini" data-ics="${p.id}" title="Telefon takvimine alarmlı ekle">Takvime</button>`:""}<button class="more" data-edit="${p.id}" aria-label="Düzenle">${svg("dots")}</button></div>
+    </div>`}).join(""):`<div class="empty">${db.plans.length?"Bu filtrede plan yok.":"Henüz plan yok. Sağ alttaki <b>+ Plan</b> ile ekle."}</div>`}</div>
   <p class="small">İpucu: Uygulama kapalıyken de hatırlatma istiyorsan “Takvime” ile planı telefon takvimine alarmlı ekle.</p>`;
-  $("add").onclick=()=>planForm();
   on("[data-f]",b=>{filter.plans=b.dataset.f;render()});
   on("[data-edit]",b=>planForm(db.plans.find(p=>p.id===b.dataset.edit)));
   on("[data-ics]",b=>icsFor(db.plans.find(p=>p.id===b.dataset.ics)));
@@ -585,7 +769,8 @@ function planForm(p,preset){
 /* ================= ortak form ================= */
 function openForm(html,onSave,onDelete){
   const dlg=$("dlg"),form=$("form");
-  form.innerHTML=html+`<div class="formacts">${onDelete?`<button type="button" class="ghost danger left" id="f-del">Sil</button>`:""}<button type="button" class="ghost" id="f-x">Vazgeç</button><button class="btn" id="f-ok">Kaydet</button></div>`;
+  if($("sheet").open)$("sheet").close();
+  form.innerHTML=html+`<div class="formacts">${onDelete?`<button type="button" class="ghost danger left" id="f-del">${svg("trash")} Sil</button>`:""}<button type="button" class="ghost" id="f-x">Vazgeç</button><button class="btn" id="f-ok">Kaydet</button></div>`;
   form.onsubmit=e=>{e.preventDefault();if(onSave()===false)return;dlg.close();render()};
   $("f-x").onclick=()=>dlg.close();
   if(onDelete)$("f-del").onclick=()=>{if(confirm("Silinsin mi? Bu geri alınamaz.")){onDelete();dlg.close();render();toast("Silindi")}};
@@ -617,13 +802,13 @@ function checkReminders(){
   }
   if(changed){
     const keys=Object.keys(db.notified); if(keys.length>500)keys.slice(0,keys.length-500).forEach(k=>delete db.notified[k]);
-    save(); if(!$("dlg").open)render();
+    save(); if(!anyOpen())render();
   }
 }
 setInterval(checkReminders,30000);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden){checkReminders();loadAsc();if(!$("dlg").open)render()}});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){checkReminders();loadAsc();if(!anyOpen())render()}});
 
-/* Takvim dosyası (.ics): telefonun takvimine alarmlı ekler */
+/* Takvim dosyası (.ics) */
 function icsFor(p){
   const d=parseDue(p.due), allDay=p.due.length===10;
   const f=x=>`${x.getFullYear()}${pad(x.getMonth()+1)}${pad(x.getDate())}`;
