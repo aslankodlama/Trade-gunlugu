@@ -1,0 +1,10 @@
+{
+  "appId": "com.aslankodlama.fikirler",
+  "appName": "Fikirler",
+  "webDir": "www",
+  "backgroundColor": "#0b0f14",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#0b0f14"
+  }
+}

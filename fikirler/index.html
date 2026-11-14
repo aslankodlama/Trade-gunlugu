@@ -11,8 +11,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Fikirler">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon-v2.png">
-<link rel="icon" type="image/png" sizes="192x192" href="../icon-192-v2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -555,9 +555,12 @@ function pickIcon(cb){
 
 /* ================= App Store Connect ================= */
 let ASC=null;
+// iPhone uygulaması (Capacitor) içinde dosyalar cihazdan açılır; güncel App Store bilgisini siteden al
+const NATIVE=!!window.Capacitor||location.protocol==="capacitor:";
+const SITE="https://aslankodlama.github.io/Trade-gunlugu/";
 async function loadAsc(){
   try{
-    const r=await fetch("appstore.json",{cache:"no-store"}); if(!r.ok)return;
+    const r=await fetch(NATIVE?SITE+"fikirler/appstore.json":"appstore.json",{cache:"no-store"}); if(!r.ok)return;
     ASC=await r.json(); if(!Array.isArray(ASC.apps)){ASC=null;return}
     if(syncAsc())save();
     if(!anyOpen())render();
@@ -662,7 +665,7 @@ function openMenu(){
     ${sheetBtn("exp",svg("down"),"Yedek indir","Tüm verileri dosya olarak kaydet")}
     ${sheetBtn("imp",svg("upl"),"Yedekten yükle","Başka cihazdan aktar")}
     ${ASC?sheetBtn("asc",svg("store"),"App Store Connect",`${ASC.apps.length} uygulama · ${niceDate(isoDay(ASC.updated))} güncellendi`):""}
-    <a href="../"><span class="ai">${svg("chart")}</span><span><b>Trade Günlüğü</b><span class="d">Diğer uygulamana geç</span></span></a>`,
+    <a href="${NATIVE?SITE:"../"}"${NATIVE?' target="_blank" rel="noopener"':""}><span class="ai">${svg("chart")}</span><span><b>Trade Günlüğü</b><span class="d">Diğer uygulamana geç</span></span></a>`,
   ()=>{
     bindSheet({week:()=>sheet(`<div style="display:grid;gap:10px">${weekHtml(weekStats(0),false)}${weekHtml(weekStats(1),false)}</div>`),apps:()=>go("apps"),ideas:()=>go("ideas"),plans:()=>go("plans"),notif:askNotify,exp:exportData,imp:importData,
       asc:()=>{go("apps");const n=ASC.apps.filter(x=>!db.apps.some(y=>y.ascId===x.id)).length;n?importAllAsc():toast("App Store Connect'teki tüm uygulamalar ekli")}});
@@ -1206,8 +1209,8 @@ async function notify(title,body,tag){
   toast(`${title}: ${body}`);
   if(!("Notification" in window)||Notification.permission!=="granted")return;
   try{const reg=await navigator.serviceWorker?.getRegistration();
-    if(reg)reg.showNotification(title,{body,tag,icon:"../icon-192-v2.png",badge:"../icon-192-v2.png"});
-    else new Notification(title,{body,tag,icon:"../icon-192-v2.png"});
+    if(reg)reg.showNotification(title,{body,tag,icon:"icon-192.png",badge:"icon-192.png"});
+    else new Notification(title,{body,tag,icon:"icon-192.png"});
   }catch{try{new Notification(title,{body,tag})}catch{}}
 }
 function checkReminders(){
