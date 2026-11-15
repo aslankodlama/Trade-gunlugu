@@ -567,6 +567,53 @@ async function loadAsc(){
   }catch{}
 }
 const ascFor=a=>ASC&&a.ascId?ASC.apps.find(x=>x.id===a.ascId):null;
+
+/* ================= Gün sonu: Claude'un konuşmalardan çıkardığı notlar (fikirler/gunsonu.json) ================= */
+async function loadGunSonu(){
+  try{
+    const r=await fetch(NATIVE?SITE+"fikirler/gunsonu.json":"gunsonu.json",{cache:"no-store"}); if(!r.ok)return;
+    const d=await r.json(); if(!Array.isArray(d.items))return;
+    if(mergeGunSonu(d.items)){save();if(!anyOpen())render()}
+  }catch{}
+}
+function findAppByName(name){
+  const n=norm(name.trim());
+  return db.apps.find(a=>norm(a.name)===n)||db.apps.find(a=>norm(a.name).startsWith(n)||n.startsWith(norm(a.name)))
+    ||(ASC&&(()=>{const x=ASC.apps.find(x=>norm(x.name)===n);return x&&db.apps.find(a=>a.ascId===x.id)})());
+}
+function mergeGunSonu(items){
+  db.gs=db.gs||{}; let n=0;
+  for(const it of items){
+    if(!it.id||!it.app||!it.text)continue;
+    let a=findAppByName(it.app);
+    if(!a){
+      const x=ASC&&ASC.apps.find(x=>norm(x.name)===norm(it.app));
+      a={id:uid(),name:it.app,version:"",url:"",every:0,last:"",ascId:x?.id||null,items:[],history:[],imported:{},where:{text:"",date:""}};
+      if(x)mergeAsc(a,x); db.apps.push(a);
+    }
+    const seen=db.gs[it.id];
+    if(it.kind==="where"){
+      const key=it.date+"|"+it.text;
+      if(seen!==key&&(!a.where.date||(it.date||"")>=a.where.date)){a.where={text:it.text,date:it.date||today()};db.gs[it.id]=key;n++}
+      continue;
+    }
+    if(seen){ // daha önce eklendiyse: sadece "bitti" bilgisini taşı
+      if(it.done){const t=a.items.find(i=>i.id===seen);if(t&&t.kind==="todo"&&!t.done){t.done=true;t.doneDate=it.doneDate||today();n++}}
+      continue;
+    }
+    if(it.kind==="idea"){
+      const id=uid();db.ideas.push({id,title:it.text,note:"",tag:"",status:"yeni",date:it.date||today(),appId:a.id,created:Date.now(),updated:Date.now(),src:"gunsonu"});db.gs[it.id]=id;
+    }else{
+      const id=uid(),done=it.kind==="done";
+      a.items.push(done?{id,kind:"done",text:it.text,version:it.version||"",date:it.date||today(),src:"gunsonu"}
+                       :{id,kind:"todo",text:it.text,version:it.version||"",date:it.date||"",must:!!it.must,done:!!it.done,doneDate:it.done?(it.doneDate||today()):null,src:"gunsonu"});
+      db.gs[it.id]=id;
+    }
+    n++;
+  }
+  if(n)toast(`Gün sonu: ${n} yeni bilgi eklendi`);
+  return n>0;
+}
 function syncAsc(){
   let changed=false;
   for(const x of ASC.apps){
@@ -805,7 +852,7 @@ function todoRow(a,t){const s=dueState(t.date);return `
   </div></div>`}
 function doneRow(d){return `<div class="item tap" data-iedit="${d.id}">
     <div class="body"><div class="t">${esc(d.text)}</div>
-      <div class="meta"><span>${esc(niceDate(d.doneDate||d.date))}</span>${d.version?`<span class="chip">v${esc(d.version)}</span>`:""}${d.src==="asc"?`<span class="chip">App Store</span>`:""}${d.kind==="todo"?`<span class="chip g">Yapılacaklardan</span>`:""}</div>${thumbs(d.imgs)}</div>
+      <div class="meta"><span>${esc(niceDate(d.doneDate||d.date))}</span>${d.version?`<span class="chip">v${esc(d.version)}</span>`:""}${d.src==="asc"?`<span class="chip">App Store</span>`:d.src==="gunsonu"?`<span class="chip">🌙 Gün sonu</span>`:""}${d.kind==="todo"?`<span class="chip g">Yapılacaklardan</span>`:""}</div>${thumbs(d.imgs)}</div>
     <span class="more" aria-hidden="true">${svg("dots")}</span></div>`}
 function ideaRow(i){return `<div class="item">
     <div class="body"><div class="t">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:""}
@@ -1227,7 +1274,7 @@ function checkReminders(){
   }
 }
 setInterval(checkReminders,30000);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden){checkReminders();loadAsc();if(!anyOpen())render()}});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){checkReminders();loadAsc().then(loadGunSonu);if(!anyOpen())render()}});
 
 /* Takvim dosyası (.ics) */
 function icsFor(p){
@@ -1333,7 +1380,7 @@ $("qmic").onclick=()=>{
 
 render();
 checkReminders();
-loadAsc();
+loadAsc().then(loadGunSonu);
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>

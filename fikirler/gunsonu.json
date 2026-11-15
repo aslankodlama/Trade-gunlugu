@@ -1,0 +1,40 @@
+{
+ "updated": "2026-11-15T20:45:00Z",
+ "sessions": {
+  "session_01VqkcAPqR8ryWf2vt4j5ipo": "2026-11-14T03:31:01Z",
+  "session_01VqkcAPiioBKdDkjW3fwfvf": "2026-11-08T17:49:04Z",
+  "session_01VqkcANYFV2odHzFUxvQBxQ": "2026-11-01T15:15:12Z",
+  "session_01VqkcAPCsT1uLNsZT3NzZTD": "2026-11-14T03:31:01Z",
+  "session_01VqkcAPs5bhSYhMqf8L4yKu": "2026-11-15T20:45:00Z"
+ },
+ "items": [
+  {"id": "ss-where-1113", "app": "Son Siper", "kind": "where", "date": "2026-11-13", "text": "1.0 sürümü Apple incelemesinde kilitli, derleme 9 seçilemiyor. Yol: yeni 1.1 sürümü açıp derleme 8'i bağlamak ve incelemeye göndermek."},
+  {"id": "ss-todo-11-surum", "app": "Son Siper", "kind": "todo", "must": true, "date": "", "text": "App Store Connect → Distribution → ＋ ile 1.1 sürümünü aç, Build bölümünde derleme 8'i seç."},
+  {"id": "ss-todo-magaza", "app": "Son Siper", "kind": "todo", "must": true, "date": "", "text": "1.1 sayfasına MAGAZA_SAYFASI.md'deki Promotional Text, Description ve Keywords metinlerini; magaza_goruntuleri/iphone_6.3_v1.1 klasöründeki 7 ekran görüntüsünü yükle."},
+  {"id": "ss-todo-advertising", "app": "Son Siper", "kind": "todo", "must": true, "date": "", "text": "App Information → Age Rating → Advertising = Yes olduğundan emin ol."},
+  {"id": "ss-todo-review", "app": "Son Siper", "kind": "todo", "must": true, "date": "", "text": "Apple'ın ret mesajına (Guideline 2.1(a), ödüllü reklam) yanıt yaz: reklam gelmezse ödül en geç 8 saniyede veriliyor. Sonra Submit for Review."},
+  {"id": "ss-todo-expire7", "app": "Son Siper", "kind": "todo", "must": false, "date": "", "text": "TestFlight'ta derleme 7'yi Expire Build ile testten kaldır (arkadaşlar gerçek reklama tıklamasın). Derleme 8'e dokunma, 1.1 için kullanılacak."},
+  {"id": "ss-done-1109-boss", "app": "Son Siper", "kind": "done", "date": "2026-11-09", "text": "20 boss sistemi: her bölümde 2 boss, türe göre davranış. Bölüm başına ana ekran görselleri."},
+  {"id": "ss-done-1109-mayin", "app": "Son Siper", "kind": "done", "date": "2026-11-09", "text": "Sessiz Tuzak mayın atar silaha çevrildi, düşman canları dengelendi."},
+  {"id": "ss-done-1110-b6", "app": "Son Siper", "kind": "done", "version": "1.0", "date": "2026-11-10", "text": "TestFlight 1.0 (6): mayın düzeltmeleri, düşman dengesi, test reklamlarıyla."},
+  {"id": "ss-done-1110-b7", "app": "Son Siper", "kind": "done", "version": "1.1", "date": "2026-11-10", "text": "1.1 (7) gerçek reklamlarla App Store Connect'e yüklendi; yayın öncesi kontrol listesi YAPILACAKLAR.md'ye yazıldı."},
+  {"id": "ss-done-1113-reddet", "app": "Son Siper", "kind": "done", "date": "2026-11-13", "text": "Apple 1.0'ı Guideline 2.1(a) ile reddetti (ödüllü reklam açılmıyordu). Düzeltme: reklam gelmezse yeniden dene, yine de ödülü ver."},
+  {"id": "ss-done-1113-b9", "app": "Son Siper", "kind": "done", "version": "1.0", "date": "2026-11-13", "text": "1.0 (9) reklam düzeltmesiyle yüklendi (10 bölüm, 20 boss); TestFlight'ta Ready to Submit."},
+
+  {"id": "ng-where-1114", "app": "Ne Giysem: Dijital Gardırop", "kind": "where", "date": "2026-11-14", "text": "fal.ai anahtarı 401 veriyor. Karar bekleniyor: 1) sadece fal.ai, 2) sadece Anthropic, 3) ikisi birden. Gerçekçi prova için 1. öneriliyor."},
+  {"id": "ng-todo-karar", "app": "Ne Giysem: Dijital Gardırop", "kind": "todo", "must": true, "date": "", "text": "Anahtar yolu kararını ver ve Claude'a söyle: 1 (sadece fal.ai), 2 (sadece Anthropic) veya 3 (ikisi birden)."},
+  {"id": "ng-todo-falkey", "app": "Ne Giysem: Dijital Gardırop", "kind": "todo", "must": true, "date": "", "text": "fal.ai → Dashboard → Keys → Add key (yetki: API, model kısıtı boş) → açılan penceredeki kopyala ile tam anahtarı al → Ne Giysem → Ayarlar → yapıştır → Kaydet. 'Kayıtlı anahtar' bölümünü kontrol et."},
+  {"id": "ng-todo-test", "app": "Ne Giysem: Dijital Gardırop", "kind": "todo", "must": false, "date": "", "text": "TestFlight'tan 1.0 (4)'e güncelle; önce Kombin öner, sonra Üstümde dene'yi dene. Hata olursa ekran görüntüsü gönder."},
+  {"id": "ng-done-1114-v2", "app": "Ne Giysem: Dijital Gardırop", "kind": "done", "version": "1.0", "date": "2026-11-14", "text": "1.0 (2): eksik anahtar uyarısı ve hata mesajları iyileştirildi."},
+  {"id": "ng-done-1114-v4", "app": "Ne Giysem: Dijital Gardırop", "kind": "done", "version": "1.0", "date": "2026-11-14", "text": "1.0 (4): tek anahtar (fal.ai). Kombin önerisi fal üzerinden Claude ile, Üstümde dene FASHN ile. Ayarlar'da kayıtlı anahtar kontrol bölümü."},
+  {"id": "ng-done-1114-revoke", "app": "Ne Giysem: Dijital Gardırop", "kind": "done", "date": "2026-11-14", "text": "Sohbete yazılan Anthropic anahtarı iptal edildi."},
+
+  {"id": "fk-where-1115", "app": "Fikirler: Proje Takibi", "kind": "where", "date": "2026-11-15", "text": "TestFlight derlemesi imzalama aşamasında. Admin anahtarı, Bundle ID ve App Store Connect kaydı hazır; derleme otomasyonu düzeltiliyor."},
+  {"id": "fk-todo-testflight", "app": "Fikirler: Proje Takibi", "kind": "todo", "must": true, "date": "", "text": "Build TestFlight'a düşünce telefondaki TestFlight'tan Yükle."},
+  {"id": "fk-todo-pr", "app": "Fikirler: Proje Takibi", "kind": "todo", "must": true, "date": "", "text": "Claude'un açtığı son PR'ı (TestFlight düzeltmesi + gün sonu) GitHub'da birleştir."},
+  {"id": "fk-idea-bildirim", "app": "Fikirler: Proje Takibi", "kind": "idea", "date": "2026-11-15", "text": "iPhone uygulamasında, uygulama kapalıyken de gelen gerçek bildirimler."},
+  {"id": "fk-done-1114-app", "app": "Fikirler: Proje Takibi", "kind": "done", "date": "2026-11-14", "text": "Fikirler uygulaması: uygulama sayfaları, App Store Connect eşitleme, pano, zaman çizelgesi, hızlı yazma, sesle not, haftalık özet."},
+  {"id": "fk-done-1114-glass", "app": "Fikirler: Proje Takibi", "kind": "done", "date": "2026-11-14", "text": "Cam tema ve Mac kenar çubuğu; iPhone projesi (Capacitor) ve ikon."},
+  {"id": "fk-done-1115-asc", "app": "Fikirler: Proje Takibi", "kind": "done", "date": "2026-11-15", "text": "Admin API anahtarı eklendi; Bundle ID ve App Store Connect kaydı açıldı."}
+ ]
+}
