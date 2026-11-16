@@ -319,6 +319,16 @@ textarea{resize:vertical;min-height:84px;line-height:1.45}
 [data-theme="glass"] .subtabs button[aria-pressed="true"]{background:rgb(255 255 255 / .14)}
 [data-theme="glass"] .tabs button[aria-current="page"]{background:rgb(111 240 192 / .12)}
 [data-theme="glass"] .toast{background:rgb(240 245 243 / .95);color:#0b0f14}
+.toast{display:flex;align-items:center;gap:12px}
+.toast button{background:none;border:0;color:inherit;font-weight:700;text-decoration:underline;padding:4px 2px;white-space:nowrap}
+.confirm{display:grid;gap:12px;padding:14px 12px 6px}
+.confirm .q{font-size:1.05rem;font-weight:700;text-align:center}
+.confirm .tx{background:var(--sunk);border-radius:12px;padding:10px 12px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+.confirm .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.confirm .row button{min-height:50px;justify-content:center;font-size:1rem}
+.acts-list .confirm .btn{background:var(--accent);color:var(--accent-fg);font-weight:700}
+.acts-list .confirm .btn:hover{background:var(--accent);filter:brightness(1.08)}
+.acts-list .confirm .ghost{border:1px solid var(--line)}
 
 /* ===== Mac / geniş ekran: kenar çubuğu ===== */
 #side{display:none}
@@ -568,11 +578,13 @@ async function loadAsc(){
 }
 const ascFor=a=>ASC&&a.ascId?ASC.apps.find(x=>x.id===a.ascId):null;
 
+let GS_ITEMS=[];
 /* ================= Gün sonu: Claude'un konuşmalardan çıkardığı notlar (fikirler/gunsonu.json) ================= */
 async function loadGunSonu(){
   try{
     const r=await fetch(NATIVE?SITE+"fikirler/gunsonu.json":"gunsonu.json",{cache:"no-store"}); if(!r.ok)return;
     const d=await r.json(); if(!Array.isArray(d.items))return;
+    GS_ITEMS=d.items;
     if(mergeGunSonu(d.items)){save();if(!anyOpen())render()}
   }catch{}
 }
@@ -670,10 +682,53 @@ $("fab").onclick=fabAction;
 window.addEventListener("scroll",()=>$("top").classList.toggle("scrolled",scrollY>4),{passive:true});
 const anyOpen=()=>$("dlg").open||$("sheet").open;
 
-function toast(msg){
+function toast(msg,undo){
   document.querySelector(".toast")?.remove();
-  const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=msg;
-  document.body.appendChild(t);setTimeout(()=>t.remove(),2800);
+  const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");
+  const sp=document.createElement("span");sp.textContent=msg;t.appendChild(sp);
+  if(undo){const b=document.createElement("button");b.textContent="Geri al";b.onclick=()=>{t.remove();undo();save();render();toast("Geri alındı")};t.appendChild(b)}
+  document.body.appendChild(t);setTimeout(()=>t.remove(),undo?7000:2800);
+}
+/* "Bitirdin mi?" sorusu */
+function askDone(text,onYes){
+  sheet(`<div class="confirm"><div class="q">Bunu bitirdin mi?</div><div class="tx">${esc(text)}</div>
+    <div class="row"><button class="ghost" data-s="no">Hayır</button><button class="btn" data-s="yes">✓ Evet, bitirdim</button></div></div>`,
+    ()=>bindSheet({yes:onYes,no:()=>{}}));
+}
+function finishTodo(t){
+  const prev={done:t.done,doneDate:t.doneDate};
+  t.done=true;t.doneDate=today();save();render();
+  toast("Yaptıklarına eklendi ✔",()=>{t.done=prev.done;t.doneDate=prev.doneDate});
+}
+/* ---------- çöp kutusu: silinenler 30 gün saklanır ---------- */
+function trash(type,data,extra){
+  db.trash=db.trash||[];
+  db.trash.unshift({id:uid(),type,data:JSON.parse(JSON.stringify(data)),at:Date.now(),...extra});
+  const lim=Date.now()-30*DAY;
+  for(const x of db.trash.filter(x=>x.at<lim))for(const k of (x.data.imgs||[]))idb.del(k).catch(()=>{});
+  db.trash=db.trash.filter(x=>x.at>=lim).slice(0,200);
+}
+function restoreTrash(x){
+  if(x.type==="item"){const a=db.apps.find(a=>a.id===x.appId);if(!a){toast("Uygulaması silinmiş, önce onu geri al");return false}a.items.push(x.data)}
+  else if(x.type==="idea")db.ideas.push(x.data);
+  else if(x.type==="plan")db.plans.push(x.data);
+  else if(x.type==="app"){db.apps.push(x.data);(x.ideaIds||[]).forEach(id=>{const i=db.ideas.find(i=>i.id===id);if(i)i.appId=x.data.id})}
+  db.trash=db.trash.filter(y=>y!==x);return true;
+}
+const trashLabel=x=>x.type==="item"?x.data.text:x.type==="idea"?x.data.title:x.type==="plan"?x.data.title:x.data.name;
+const trashKind=x=>({item:x.data.kind==="todo"&&!x.data.done?"Yapılacak":"Yaptım",idea:"Fikir",plan:"Plan",app:"Uygulama"})[x.type];
+function trashSheet(){
+  const list=(db.trash||[]);
+  // gün sonundan gelip silinmiş maddeler (eski sürümde çöp kutusu yoktu)
+  const lost=(GS_ITEMS||[]).filter(it=>it.kind!=="where"&&db.gs?.[it.id]&&!(it.kind==="idea"?db.ideas.some(i=>i.id===db.gs[it.id]):db.apps.some(a=>a.items.some(i=>i.id===db.gs[it.id])))&&!list.some(x=>x.data.id===db.gs[it.id]));
+  sheet(`<h3>Silinenler · 30 gün saklanır</h3>
+    ${list.length||lost.length?"":`<div class="empty" style="margin:8px">Silinen bir şey yok.</div>`}
+    ${list.map((x,i)=>`<button data-tr="${i}"><span class="ai">↩</span><span><b>${esc(trashLabel(x).split("\n")[0].slice(0,80))}</b><span class="d">${trashKind(x)}${x.appName?" · "+esc(x.appName):""} · ${esc(niceDate(dkey(new Date(x.at))))} silindi · dokun: geri al</span></span></button>`).join("")}
+    ${lost.length?`<h3>Gün sonundan gelip silinenler</h3>${lost.map((it,i)=>`<button data-lost="${i}"><span class="ai">↩</span><span><b>${esc(it.text.slice(0,80))}</b><span class="d">${esc(it.app)} · ${KINDS[it.kind]?.slice(3)||""} · dokun: geri al</span></span></button>`).join("")}`:""}`,
+  ()=>{
+    document.querySelectorAll("#sheetBody [data-tr]").forEach(b=>b.onclick=()=>{if(restoreTrash(list[+b.dataset.tr])){save();render();toast("Geri getirildi");trashSheet()}});
+    document.querySelectorAll("#sheetBody [data-lost]").forEach(b=>b.onclick=()=>{const it=lost[+b.dataset.lost];delete db.gs[it.id];mergeGunSonu([it]);save();render();toast("Geri getirildi");trashSheet()});
+  });
 }
 const on=(sel,fn)=>document.querySelectorAll(sel).forEach(b=>b.onclick=e=>{e.stopPropagation();fn(b,e)});
 
@@ -705,6 +760,7 @@ function openMenu(){
     ${sheetBtn("ideas",svg("idea"),"Fikirler",`${db.ideas.filter(i=>i.status!=="bitti").length} aktif fikir`)}
     ${sheetBtn("plans",svg("plan"),"Planlar",`${db.plans.filter(p=>!p.done).length} yapılacak plan`)}
     ${sheetBtn("week",svg("week"),"Haftalık özet","Geçen hafta ne yaptın")}
+    ${sheetBtn("trash",svg("trash"),"Silinenler","Yanlışlıkla sildiğini geri getir")}
     <hr><h3>Görünüm</h3>
     <div class="themes">${[["glass","Cam"],["dark","Koyu"],["light","Açık"],["auto","Oto"]].map(([k,l])=>`<button class="ghost" data-th="${k}" aria-pressed="${th===k}">${l}</button>`).join("")}</div>
     <hr><h3>Ayarlar</h3>
@@ -714,7 +770,7 @@ function openMenu(){
     ${ASC?sheetBtn("asc",svg("store"),"App Store Connect",`${ASC.apps.length} uygulama · ${niceDate(isoDay(ASC.updated))} güncellendi`):""}
     <a href="${NATIVE?SITE:"../"}"${NATIVE?' target="_blank" rel="noopener"':""}><span class="ai">${svg("chart")}</span><span><b>Trade Günlüğü</b><span class="d">Diğer uygulamana geç</span></span></a>`,
   ()=>{
-    bindSheet({week:()=>sheet(`<div style="display:grid;gap:10px">${weekHtml(weekStats(0),false)}${weekHtml(weekStats(1),false)}</div>`),apps:()=>go("apps"),ideas:()=>go("ideas"),plans:()=>go("plans"),notif:askNotify,exp:exportData,imp:importData,
+    bindSheet({trash:trashSheet,week:()=>sheet(`<div style="display:grid;gap:10px">${weekHtml(weekStats(0),false)}${weekHtml(weekStats(1),false)}</div>`),apps:()=>go("apps"),ideas:()=>go("ideas"),plans:()=>go("plans"),notif:askNotify,exp:exportData,imp:importData,
       asc:()=>{go("apps");const n=ASC.apps.filter(x=>!db.apps.some(y=>y.ascId===x.id)).length;n?importAllAsc():toast("App Store Connect'teki tüm uygulamalar ekli")}});
     document.querySelectorAll("#sheetBody [data-app]").forEach(b=>b.onclick=()=>{$("sheet").close();go("apps",b.dataset.app)});
     document.querySelectorAll("#sheetBody [data-th]").forEach(b=>b.onclick=()=>{pref("theme",b.dataset.th);applyTheme(b.dataset.th);openMenu()});
@@ -853,7 +909,7 @@ function todoRow(a,t){const s=dueState(t.date);return `
 function doneRow(d){return `<div class="item tap" data-iedit="${d.id}">
     <div class="body"><div class="t">${esc(d.text)}</div>
       <div class="meta"><span>${esc(niceDate(d.doneDate||d.date))}</span>${d.version?`<span class="chip">v${esc(d.version)}</span>`:""}${d.src==="asc"?`<span class="chip">App Store</span>`:d.src==="gunsonu"?`<span class="chip">🌙 Gün sonu</span>`:""}${d.kind==="todo"?`<span class="chip g">Yapılacaklardan</span>`:""}</div>${thumbs(d.imgs)}</div>
-    <span class="more" aria-hidden="true">${svg("dots")}</span></div>`}
+    ${d.kind==="todo"?`<button class="mini" data-reopen="${d.id}" title="Yapılacaklara geri al">↩ Geri al</button>`:`<span class="more" aria-hidden="true">${svg("dots")}</span>`}</div>`}
 function ideaRow(i){return `<div class="item">
     <div class="body"><div class="t">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:""}
       <div class="meta">${i.date?`<span>${esc(niceDate(i.date))}</span>`:""}${i.status!=="yeni"?`<span class="chip w">${IDEA_ST[i.status]}</span>`:""}${i.tag?`<span class="chip">#${esc(i.tag)}</span>`:""}</div></div>
@@ -937,7 +993,8 @@ function viewApp(a){
   $("updNow")&&($("updNow").onclick=()=>updateForm(a));
   on("[data-add]",b=>({todo:()=>itemForm(a,null,"todo"),done:()=>itemForm(a,null,"done"),idea:()=>ideaForm(null,a.id)})[b.dataset.add]());
   on("[data-iedit]",b=>itemForm(a,a.items.find(i=>i.id===b.dataset.iedit)));
-  on("[data-tdone]",b=>{const t=a.items.find(i=>i.id===b.dataset.tdone);t.done=true;t.doneDate=today();save();render();toast("Yaptıklarına eklendi ✔")});
+  on("[data-tdone]",b=>{const t=a.items.find(i=>i.id===b.dataset.tdone);askDone(t.text,()=>finishTodo(t))});
+  on("[data-reopen]",b=>{const t=a.items.find(i=>i.id===b.dataset.reopen);t.done=false;t.doneDate=null;save();render();toast("Yapılacaklara geri alındı",()=>{t.done=true;t.doneDate=today()})});
   on("[data-ideaedit]",b=>ideaForm(db.ideas.find(i=>i.id===b.dataset.ideaedit)));
   on("[data-totodo]",b=>{const i=db.ideas.find(x=>x.id===b.dataset.totodo);itemForm(a,null,"todo",{text:i.title+(i.note?"\n"+i.note:""),ideaId:i.id})});
   bindSwipe(a); bindBoard(a);
@@ -992,9 +1049,9 @@ function bindSwipe(a){
       it.style.transform=`translateX(${dx>0?"110%":"-110%"})`;navigator.vibrate?.(8);
       const t=a.items.find(i=>i.id===w.dataset.sw);
       setTimeout(()=>{
-        if(dx>0){t.done=true;t.doneDate=today();toast("Yaptıklarına eklendi ✔")}
-        else{const d=new Date();d.setDate(d.getDate()+1);t.date=dkey(d);toast("Yarına ertelendi")}
-        save();render();
+        if(dx>0){finishTodo(t);return}
+        const old=t.date,d=new Date();d.setDate(d.getDate()+1);t.date=dkey(d);save();render();
+        toast("Yarına ertelendi",()=>{t.date=old});
       },170);
     });
     it.addEventListener("pointercancel",()=>{active=false;reset()});
@@ -1080,7 +1137,7 @@ function itemForm(a,it,kind,preset){
     else{a.items.push({id:uid(),...v,ideaId:x.ideaId||null});
       const idea=x.ideaId&&db.ideas.find(i=>i.id===x.ideaId); if(idea){idea.status=k==="todo"?"plan":"bitti";idea.updated=Date.now()}}
     save();toast("Kaydedildi");
-  }, it&&(()=>{(it.imgs||[]).forEach(i=>idb.del(i).catch(()=>{}));a.items=a.items.filter(y=>y!==it);save()}));
+  }, it&&(()=>{trash("item",it,{appId:a.id,appName:a.name});a.items=a.items.filter(y=>y!==it);save()}));
   let imgs=(x.imgs||[]).slice();
   const drawImgs=()=>{$("f-imgs").innerHTML=imgs.map(k=>`<span class="th"><img data-img="${esc(k)}" alt=""><button type="button" data-rm="${esc(k)}" aria-label="Kaldır">✕</button></span>`).join("")+`<span class="add" id="f-addimg" role="button" aria-label="Resim ekle">＋</span>`;
     hydrateImgs();
@@ -1128,7 +1185,7 @@ function appForm(a){
     const z=ascFor(t); if(z)mergeAsc(t,z);
     save();toast("Uygulama kaydedildi");
     if(!a)go("apps",t.id);
-  }, a&&(()=>{db.apps=db.apps.filter(y=>y!==a);db.ideas.forEach(i=>{if(i.appId===a.id)i.appId=null});save();if(history.state?.app)history.back();openApp=null}));
+  }, a&&(()=>{trash("app",a,{ideaIds:db.ideas.filter(i=>i.appId===a.id).map(i=>i.id)});db.apps=db.apps.filter(y=>y!==a);db.ideas.forEach(i=>{if(i.appId===a.id)i.appId=null});save();if(history.state?.app)history.back();openApp=null}));
   const refresh=()=>{$("f-ic").innerHTML=iconHtml({...x,name:$("f-a").value||x.name,icon},56)};
   $("f-ip").onclick=()=>pickIcon(d=>{icon=d;refresh()});
   $("f-ir")&&($("f-ir").onclick=()=>{icon=null;refresh()});
@@ -1177,7 +1234,7 @@ function ideaForm(i,appId){
     if(!v.title)return false;
     if(i)Object.assign(i,v,{updated:Date.now()}); else db.ideas.push({id:uid(),...v,created:Date.now(),updated:Date.now()});
     save();toast("Fikir kaydedildi");
-  }, i&&(()=>{db.ideas=db.ideas.filter(y=>y!==i);save()}));
+  }, i&&(()=>{trash("idea",i);db.ideas=db.ideas.filter(y=>y!==i);save()}));
 }
 
 /* ================= PLANLAR ================= */
@@ -1201,10 +1258,14 @@ function viewPlans(){
   on("[data-done]",b=>togglePlan(db.plans.find(p=>p.id===b.dataset.done)));
 }
 function togglePlan(p){
-  if(p.done){p.done=false;p.doneDate=null;save();render();return}
-  if(p.repeat!=="none"&&p.due){p.due=advance(p.due,p.repeat);p.count=(p.count||0)+1;toast(`Tamamlandı. Sıradaki: ${niceDate(p.due)}`)}
-  else{p.done=true;p.doneDate=today();toast("Tamamlandı ✔")}
-  save();render();
+  if(p.done){p.done=false;p.doneDate=null;save();render();toast("Yapılacaklara geri alındı",()=>{p.done=true;p.doneDate=today()});return}
+  askDone(p.title,()=>{
+    const prev={due:p.due,count:p.count,done:p.done,doneDate:p.doneDate};
+    if(p.repeat!=="none"&&p.due){p.due=advance(p.due,p.repeat);p.count=(p.count||0)+1}
+    else{p.done=true;p.doneDate=today()}
+    save();render();
+    toast(p.done?"Tamamlandı ✔":`Tamamlandı. Sıradaki: ${niceDate(p.due)}`,()=>Object.assign(p,prev));
+  });
 }
 function planForm(p,preset){
   const x=p||Object.assign({title:"",note:"",due:"",repeat:"none",pri:2},preset);
@@ -1231,7 +1292,7 @@ function planForm(p,preset){
     }
     save();toast("Plan kaydedildi");
     if(preset?.ideaId){filter.plans="aktif";go("plans")}
-  }, p&&(()=>{db.plans=db.plans.filter(y=>y!==p);save()}));
+  }, p&&(()=>{trash("plan",p);db.plans=db.plans.filter(y=>y!==p);save()}));
 }
 
 /* ================= ortak form ================= */
@@ -1241,7 +1302,7 @@ function openForm(html,onSave,onDelete){
   form.innerHTML=html+`<div class="formacts">${onDelete?`<button type="button" class="ghost danger left" id="f-del">${svg("trash")} Sil</button>`:""}<button type="button" class="ghost" id="f-x">Vazgeç</button><button class="btn" id="f-ok">Kaydet</button></div>`;
   form.onsubmit=e=>{e.preventDefault();if(onSave()===false)return;dlg.close();render()};
   $("f-x").onclick=()=>dlg.close();
-  if(onDelete)$("f-del").onclick=()=>{if(confirm("Silinsin mi? Bu geri alınamaz.")){onDelete();dlg.close();render();toast("Silindi")}};
+  if(onDelete)$("f-del").onclick=()=>{onDelete();dlg.close();render();const x=db.trash?.[0];toast("Silindi",x?()=>restoreTrash(x):null)};
   if(!dlg.open)dlg.showModal();
   setTimeout(()=>form.querySelector("input:not([type=date]):not([type=time]):not([type=checkbox]),textarea")?.focus(),30);
 }
