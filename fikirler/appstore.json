@@ -1,6 +1,40 @@
 {
- "updated": "2026-11-14T02:29:19.077Z",
+ "updated": "2026-11-16T06:32:55.558Z",
  "apps": [
+  {
+   "id": "6835206499",
+   "name": "Fikirler: Proje Takibi",
+   "bundleId": "com.aslankodlama.fikirler",
+   "sku": "fikirler",
+   "versions": [
+    {
+     "id": "5c768451-c43e-4187-be5b-080c8fb4a133",
+     "version": "1.0",
+     "state": "PREPARE_FOR_SUBMISSION",
+     "platform": "IOS",
+     "created": "2026-11-15T12:28:39-08:00",
+     "whatsNew": ""
+    }
+   ],
+   "builds": [
+    {
+     "build": "10",
+     "version": "",
+     "uploaded": "2026-11-15T12:49:35-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "9",
+     "version": "",
+     "uploaded": "2026-11-15T12:45:27-08:00",
+     "state": "VALID",
+     "expired": false
+    }
+   ],
+   "live": null,
+   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/cd/f2/0c/cdf20c8a-47f1-9163-3f34-22f8067b8a80/AppIcon76x76@2x_U007eipad.png/256x256bb.png"
+  },
   {
    "id": "6834604273",
    "name": "Ne Giysem: Dijital Gardırop",
