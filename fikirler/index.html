@@ -593,8 +593,25 @@ function findAppByName(name){
   return db.apps.find(a=>norm(a.name)===n)||db.apps.find(a=>norm(a.name).startsWith(n)||n.startsWith(norm(a.name)))
     ||(ASC&&(()=>{const x=ASC.apps.find(x=>norm(x.name)===n);return x&&db.apps.find(a=>a.ascId===x.id)})());
 }
+const BOZUK=/[√ƒ∂]|‚Ä|Ä±|ÅŸ/;   // bozuk Türkçe karakter izi (ör. "Gardƒ±rop")
+function repairGunSonu(items){
+  // 17 Kasım'daki bozuk dosyadan kalanları düzelt: adı bozuk boş uygulamalar ve bozuk yazılar
+  let n=0;
+  const before=db.apps.length;
+  db.apps=db.apps.filter(a=>!(BOZUK.test(a.name)&&!a.items.length&&!db.ideas.some(i=>i.appId===a.id)));
+  n+=before-db.apps.length;
+  const byLocal={};for(const it of items)if(db.gs?.[it.id])byLocal[db.gs[it.id]]=it;
+  for(const a of db.apps){
+    if(BOZUK.test(a.where.text||"")){a.where.text="";a.where.date="";n++}
+    for(const t of a.items){const it=byLocal[t.id];if(it&&BOZUK.test(t.text)&&!BOZUK.test(it.text)){t.text=it.text;n++}}
+  }
+  for(const i of db.ideas){const it=byLocal[i.id];if(it&&BOZUK.test(i.title)&&!BOZUK.test(it.text)){i.title=it.text;n++}}
+  // bozuk "nerede kaldım" anahtarlarını sıfırla ki doğrusu yeniden yazılsın
+  for(const it of items)if(it.kind==="where"&&BOZUK.test(String(db.gs?.[it.id]||"")))delete db.gs[it.id];
+  return n;
+}
 function mergeGunSonu(items){
-  db.gs=db.gs||{}; let n=0;
+  db.gs=db.gs||{}; let n=repairGunSonu(items);
   for(const it of items){
     if(!it.id||!it.app||!it.text)continue;
     let a=findAppByName(it.app);
