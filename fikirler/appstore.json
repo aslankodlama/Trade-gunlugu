@@ -1,6 +1,123 @@
 {
- "updated": "2026-11-14T02:29:19.077Z",
+ "updated": "2026-11-22T06:51:55.943Z",
  "apps": [
+  {
+   "id": "6832213447",
+   "name": "Kaleo",
+   "bundleId": "com.abdullahaslan.kaleo",
+   "sku": "kaleo001",
+   "versions": [
+    {
+     "id": "8188c842-ce12-49bb-87ab-c3c8d470c1b9",
+     "version": "1.0",
+     "state": "PREPARE_FOR_SUBMISSION",
+     "platform": "IOS",
+     "created": "2026-11-08T02:01:52-08:00",
+     "whatsNew": ""
+    }
+   ],
+   "builds": [
+    {
+     "build": "11",
+     "version": "",
+     "uploaded": "2026-11-21T13:29:12-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "8",
+     "version": "",
+     "uploaded": "2026-11-21T12:23:39-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "7",
+     "version": "",
+     "uploaded": "2026-11-08T03:33:08-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "5",
+     "version": "",
+     "uploaded": "2026-11-08T03:12:15-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "4",
+     "version": "",
+     "uploaded": "2026-11-08T03:04:46-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "3",
+     "version": "",
+     "uploaded": "2026-11-08T02:27:33-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "2",
+     "version": "",
+     "uploaded": "2026-11-08T02:14:32-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "1",
+     "version": "",
+     "uploaded": "2026-11-08T02:05:53-08:00",
+     "state": "VALID",
+     "expired": false
+    }
+   ],
+   "live": null,
+   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/24/2c/dc/242cdc4c-86e7-7c64-bc88-6c8f9e738660/AppIcon60x60@2x.png/256x256bb.png"
+  },
+  {
+   "id": "6835206499",
+   "name": "Fikirler: Proje Takibi",
+   "bundleId": "com.aslankodlama.fikirler",
+   "sku": "fikirler",
+   "versions": [
+    {
+     "id": "5c768451-c43e-4187-be5b-080c8fb4a133",
+     "version": "1.0",
+     "state": "PREPARE_FOR_SUBMISSION",
+     "platform": "IOS",
+     "created": "2026-11-15T12:28:39-08:00",
+     "whatsNew": ""
+    }
+   ],
+   "builds": [
+    {
+     "build": "11",
+     "version": "",
+     "uploaded": "2026-11-17T06:43:08-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "10",
+     "version": "",
+     "uploaded": "2026-11-15T12:49:35-08:00",
+     "state": "VALID",
+     "expired": false
+    },
+    {
+     "build": "9",
+     "version": "",
+     "uploaded": "2026-11-15T12:45:27-08:00",
+     "state": "VALID",
+     "expired": false
+    }
+   ],
+   "live": null,
+   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/28/b3/78/28b378de-a6a5-3f11-ec3a-7bef59012c2e/AppIcon76x76@2x_U007eipad.png/256x256bb.png"
+  },
   {
    "id": "6834604273",
    "name": "Ne Giysem: Dijital Gardırop",
@@ -131,68 +248,6 @@
    ],
    "live": null,
    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ff/76/f3/ff76f3bc-e4a8-d2e3-747c-54e3f451697b/AppIcon60x60@2x.png/256x256bb.png"
-  },
-  {
-   "id": "6832213447",
-   "name": "Kaleo",
-   "bundleId": "com.abdullahaslan.kaleo",
-   "sku": "kaleo001",
-   "versions": [
-    {
-     "id": "8188c842-ce12-49bb-87ab-c3c8d470c1b9",
-     "version": "1.0",
-     "state": "PREPARE_FOR_SUBMISSION",
-     "platform": "IOS",
-     "created": "2026-11-08T02:01:52-08:00",
-     "whatsNew": ""
-    }
-   ],
-   "builds": [
-    {
-     "build": "7",
-     "version": "",
-     "uploaded": "2026-11-08T03:33:08-08:00",
-     "state": "VALID",
-     "expired": false
-    },
-    {
-     "build": "5",
-     "version": "",
-     "uploaded": "2026-11-08T03:12:15-08:00",
-     "state": "VALID",
-     "expired": false
-    },
-    {
-     "build": "4",
-     "version": "",
-     "uploaded": "2026-11-08T03:04:46-08:00",
-     "state": "VALID",
-     "expired": false
-    },
-    {
-     "build": "3",
-     "version": "",
-     "uploaded": "2026-11-08T02:27:33-08:00",
-     "state": "VALID",
-     "expired": false
-    },
-    {
-     "build": "2",
-     "version": "",
-     "uploaded": "2026-11-08T02:14:32-08:00",
-     "state": "VALID",
-     "expired": false
-    },
-    {
-     "build": "1",
-     "version": "",
-     "uploaded": "2026-11-08T02:05:53-08:00",
-     "state": "VALID",
-     "expired": false
-    }
-   ],
-   "live": null,
-   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/1d/5e/8f/1d5e8f6c-e215-9308-fca7-67007c719e46/AppIcon60x60@2x.png/256x256bb.png"
   }
  ]
 }
