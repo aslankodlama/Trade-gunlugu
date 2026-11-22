@@ -51,7 +51,9 @@ Kurallar:
 ## 4. Kaydetme
 
 1. `fikirler/gunsonu.json` içinde: yeni maddeleri `items` sonuna ekle, değişenleri güncelle, `sessions` içindeki zamanları okuduğun en son `updated_at` ile güncelle, `updated` alanına şimdiki zamanı yaz.
-2. Doğrula: `python3 -c "import json;json.load(open('fikirler/gunsonu.json'))"`
+2. Dosyayı **UTF-8** olarak yaz (Python'da `json.dump(..., ensure_ascii=False)` ve `open(..., "w", encoding="utf-8")`). Sonra mutlaka doğrula:
+   `python3 scripts/gunsonu-check.py`
+   Hata verirse (ör. "Gardƒ±rop", "s√ºr√ºm√º" gibi bozuk Türkçe karakter) önce `python3 scripts/gunsonu-check.py --fix` çalıştır, sonra kontrolü tekrar et. Kontrol geçmeden commit etme. (17 Kasım'da bu yüzden uygulamada bozuk yazılar ve fazladan bir "Ne Giysem" görünmüştü.)
 3. Commit et ve çalıştığın dala push et. Ardından `main` için PR aç (başlık: "Gün sonu: <tarih>"). Site ve iPhone uygulaması `main` birleşince güncellenir.
 
 ## 5. Kullanıcıya rapor
