@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T21:19:34.285Z",
+ "updated": "2026-11-28T20:06:41.033Z",
  "apps": [
   {
    "id": "6832213447",
@@ -17,6 +17,13 @@
     }
    ],
    "builds": [
+    {
+     "build": "15",
+     "version": "",
+     "uploaded": "2026-11-28T02:46:25-08:00",
+     "state": "VALID",
+     "expired": false
+    },
     {
      "build": "14",
      "version": "",
@@ -79,17 +86,10 @@
      "uploaded": "2026-11-08T02:27:33-08:00",
      "state": "VALID",
      "expired": false
-    },
-    {
-     "build": "2",
-     "version": "",
-     "uploaded": "2026-11-08T02:14:32-08:00",
-     "state": "VALID",
-     "expired": false
     }
    ],
    "live": null,
-   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f3/3b/80/f33b80ff-feeb-c38b-7a85-adeb3b6653cd/AppIcon60x60@2x.png/256x256bb.png"
+   "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/7d/b2/ee/7db2eefe-20a9-de98-bf92-37ff5222c5c0/AppIcon60x60@2x.png/256x256bb.png"
   },
   {
    "id": "6835206499",
